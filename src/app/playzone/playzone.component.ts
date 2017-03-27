@@ -6,12 +6,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-playzone',
   templateUrl: './playzone.component.html',
-  styleUrls: ['./playzone.component.css'],
-  providers: [GamePlayService]
+  styleUrls: ['./playzone.component.css']
 })
 export class PlayzoneComponent implements OnDestroy {
 
   private _user: TUser;
+  public activeField: boolean = false;
   public field: TCard[][];
   public _activeCards: TCard[];
   public difficulty = {
@@ -42,12 +42,14 @@ export class PlayzoneComponent implements OnDestroy {
     this.field = data.cards;
     this.difficulty[data.difficulty] = true;
     this._user = data.user;
+    this.activeField = data.user.isActive;
     this._activeCards = data.activeCards || [];
   }
 
 
   private _updateField(data): void {
     this._user = data.user;
+    this.activeField = data.user.isActive;
     this._activeCards = data.activeCards;
     this.field.forEach(cardRow => {
       cardRow.forEach(card => {

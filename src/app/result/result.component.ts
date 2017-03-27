@@ -42,27 +42,29 @@ export class ResultComponent implements OnInit {
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-             ){}
+             ){
+        this._activatedRoute.params.forEach((param: Params) => {
+          this._roomId = param['id'];
+        });
+
+        this._roomObservable = this._dbService.getObjectFromFB(`rooms/${this._roomId}`);
+        this._room = this._roomObservable.subscribe(data=> {
+
+          if (data.$value === null) {
+            this._room.unsubscribe();
+            return;
+
+          }
+
+          this._getUserResult(data.users);
+          this._preparePlayAgain(data);
+          this._countStars(data.difficulty);
+          setTimeout(() => this.showModal = true);
+        });
+  }
 
   ngOnInit(){
-    this._activatedRoute.params.forEach((param: Params) => {
-      this._roomId = param['id'];
-    });
 
-    this._roomObservable = this._dbService.getObjectFromFB(`rooms/${this._roomId}`);
-    this._room = this._roomObservable.subscribe(data=> {
-
-      if (data.$value === null) {
-        this._room.unsubscribe();
-        return;
-
-      }
-
-      this._getUserResult(data.users);
-      this._preparePlayAgain(data);
-      this._countStars(data.difficulty);
-      setTimeout(() => this.showModal = true);
-    });
   }
 
   private _preparePlayAgain(options: TStoreData): void {
