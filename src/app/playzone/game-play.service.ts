@@ -250,7 +250,7 @@ export class GamePlayService {
     this.removeSubscriptions();
     this._sidebarService.stopTimer();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
-      .then(() => console.log("Result")) /*this._router.navigate([`playzone/${this._roomId}/result`]));*/
+      .then(() => this._router.navigate([`playzone/${this._roomId}/result`]));
 
   }
 

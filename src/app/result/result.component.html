@@ -1,0 +1,27 @@
+
+
+<div class="md-modal md-effect-6" [class.md-show]="showModal" id="modal-6">
+  <div class="md-content">
+    <h2 *ngIf="isWin" class="text-center"><img src="assets/img/win.png" class="win" height="150"/><span
+      class="happiness"></span></h2>
+    <h2 *ngIf="isLose" class="text-danger text-center"><img src="assets/img/loser.png" class="lose" height="150"/><span
+      class="sad"></span></h2>
+    <h2 *ngIf="draw" class="text-danger text-center"><strong>You have the same score with your opponent</strong><span
+      class="draw"></span></h2>
+    <div class="stars_box col-xs-12">
+      <p class="title_diff">Difficulty:</p>
+      <span [class.done]="starsDone.small" class="star col-xs-3 col-xs-offset-1"></span>
+      <span [class.done]="starsDone.medium" class="star col-xs-3 col-xs-offset-1"></span>
+      <span [class.done]="starsDone.large" class="star col-xs-3 col-xs-offset-1"></span>
+    </div>
+    <div class="col-xs-12">
+      <p><strong>Your score:</strong> <span>  {{score}}</span></p>
+    </div>
+    <div class="col-xs-12 btn_bar">
+      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgain()">Try again</button>
+      <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
+
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>

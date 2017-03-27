@@ -19,6 +19,8 @@ import { PlayzoneComponent } from './playzone/playzone.component';
 import { GamePlayService } from "./playzone/game-play.service";
 import { SidebarComponent } from './playzone/sidebar/sidebar.component'
 
+import { ResultComponent } from './result/result.component';
+
 import { LocalStorageService } from "./local-storage.service";
 import { DBService } from './db.service';
 import { JoinGameService } from "./main-menu/join-game.service"
@@ -47,6 +49,9 @@ const routes = [
   },
   {
     path: "playzone/:id", component: PlayzoneComponent
+  },
+  {
+    path: "playzone/:id/result", component: ResultComponent
   }
 ];
 
@@ -57,7 +62,8 @@ const routes = [
     PlayzoneComponent,
     MultiplayerMenuComponent,
     SingleplayerMenuComponent,
-    SidebarComponent
+    SidebarComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,

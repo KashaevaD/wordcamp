@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy" : "./node_modules/.bin/deploy"
+    "deploy": "./node_modules/.bin/deploy"
   },
   "private": true,
   "dependencies": {
@@ -24,11 +24,10 @@
     "@angular/platform-browser-dynamic": "4.0.0-rc.2",
     "@angular/platform-server": "4.0.0-rc.2",
     "@angular/router": "4.0.0-rc.2",
-    "angularfire2": "^2.0.0-beta.8",
-    "bootstrap": "^3.3.7",
+    "angularfire2": "2.0.0-beta.8",
+    "bootstrap": "3.3.7",
     "core-js": "2.4.1",
-    "firebase": "^3.7.0",
-    "ng-deploy-gh-pages": "0.0.5",
+    "firebase": "3.7.0",
     "rxjs": "5.1.0",
     "zone.js": "0.7.6"
   },
@@ -43,9 +42,10 @@
     "karma": "1.4.1",
     "karma-chrome-launcher": "2.0.0",
     "karma-cli": "1.0.1",
+    "karma-coverage-istanbul-reporter": "0.2.0",
     "karma-jasmine": "1.1.0",
     "karma-jasmine-html-reporter": "0.2.2",
-    "karma-coverage-istanbul-reporter": "0.2.0",
+    "ng-deploy-gh-pages": "1.0.0",
     "protractor": "5.1.0",
     "ts-node": "2.0.0",
     "tslint": "4.4.2",
