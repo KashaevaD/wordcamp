@@ -33,11 +33,11 @@ const routes = [
     path: "mainmenu", component: MainMenuComponent,
     children: [
       {
-        path: 'single', component: SingleplayerMenuComponent
-      },
-      {
         path: 'multi', component: MultiplayerMenuComponent
       }]
+  },
+  {
+    path: "mainmenu/single", component: SingleplayerMenuComponent
   },
   {
     path: "mainmenu/multi/:id", component: MainMenuComponent

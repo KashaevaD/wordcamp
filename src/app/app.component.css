@@ -1,5 +1,5 @@
 .main_container{
-  margin: 50px auto 100px;
+  margin: 0 auto;
   font-family: merriweather;
   /*width: 0%;*/
 }
@@ -7,10 +7,5 @@
   position: relative;
 }*/
 * {
-  font-size: 12px;
-}
-@media screen and (max-width: 1200px)  {
-  * {
-      font-size: 10px;      
-    }
+  font-size: 14px;
 }

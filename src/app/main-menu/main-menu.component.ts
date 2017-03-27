@@ -15,6 +15,7 @@ export class MainMenuComponent {
 
   public isNewUser: boolean;
   public isMainMenuPage: boolean;
+  public isOpenVideoIntro:boolean;
 
   public isWait: boolean = false;
   public shareAbleLink: string = "";
@@ -27,6 +28,7 @@ export class MainMenuComponent {
     private _localSrorage: LocalStorageService,
     private _dbService: DBService
     ) {
+    this.isOpenVideoIntro = false;
 
     this.isNewUser = this._checkIsNewUser();
     this.isMainMenuPage = this._getUrlActivatedRoute();
@@ -85,6 +87,15 @@ export class MainMenuComponent {
         this.isWait = false;
         this._router.navigate(['mainmenu/single']);
       })
+  }
+
+  public showVideo(event) {
+    this.isOpenVideoIntro = !this.isOpenVideoIntro;
+    event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
+  }
+
+  public sendUserToSingleMenu() {
+     this._router.navigate(['mainmenu/single']);
   }
 
 }
