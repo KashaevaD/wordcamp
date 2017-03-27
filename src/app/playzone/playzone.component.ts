@@ -22,11 +22,13 @@ export class PlayzoneComponent implements OnDestroy {
 
   private startGameSubscriber: Subscription;
   private updateFieldSubscriber: Subscription;
+  private pauseSubscriber: Subscription;
 
   constructor(private _activatedRoute: ActivatedRoute,
     private _gamePlayService: GamePlayService) {
     this.startGameSubscriber = this._gamePlayService.startGame.subscribe((data) => this._initFirstData(data));
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));
+    this.pauseSubscriber = this._gamePlayService.pause.subscribe(() => this._user.isActive = false);
     this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
   }
 
@@ -34,6 +36,7 @@ export class PlayzoneComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.startGameSubscriber.unsubscribe();
     this.updateFieldSubscriber.unsubscribe();
+    this.pauseSubscriber.unsubscribe();
     if (this.field) this._gamePlayService.removeSubscriptions();
   }
 

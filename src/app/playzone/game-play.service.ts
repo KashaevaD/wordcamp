@@ -24,6 +24,7 @@ export class GamePlayService {
   public startGame: Subject<any>;
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
+  public pause: Subject<any>;
 
 
   constructor(
@@ -32,6 +33,7 @@ export class GamePlayService {
     private _sidebarService: SidebarService,) {
     this.startGame = new Subject();
     this.updateField = new Subject();
+    this.pause = new Subject();
   }
 
 
@@ -89,13 +91,13 @@ export class GamePlayService {
         this.endGame();
       }
       else if (this._gameType === 'multi') {
+        if(this._timerId)clearTimeout(this._timerId);
         this._currentUser.score -= 5;
         this._changeUserScore();
 
+        this.pause.next();
         this._users.forEach(user => user.isActive = !user.isActive);
         this._activeCards.forEach( card => card.isOpen = false );
-
-        if(this._timerId)clearTimeout(this._timerId);
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
       }
     });
