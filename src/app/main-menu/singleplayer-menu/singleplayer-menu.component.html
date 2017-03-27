@@ -3,25 +3,31 @@
 
   <form [formGroup]="menuGame" (ngSubmit)="onSubmit($event)">
 
-    <div class="form-group">
+    <div class="form-group row">
       <label for="username" class="title">Enter Username</label>
       <input type="text" class="form-control" autocomplete="off" placeholder="username" id="username" required name="username"
         formControlName="username">
     </div>
 
-    <div class="form-group type">
-      <p class="crafty_girls title">Choose Type Of Game:</p>
+    <div class="form-group type row">
+      <div class="col-xs-12">
+        <p class="crafty_girls title">Choose Type Of Game:</p>
+      </div>
 
-      <input hidden type="radio" id="single" value="single" name="type" formControlName="type">
-      <label class="single" for="single">SINGLE</label>
+      <div class="col-xs-offset-2 col-xs-4">
+        <input hidden type="radio" id="single" value="single" name="type" formControlName="type">
+        <label class="single" for="single"><img src="/assets/img/human1.png" height="75px"></label>
+      </div>
 
-      <input hidden type="radio" id="multi" value="multi" name="type" formControlName="type">
-      <label class="multi" for="multi">MULTIPLE</label>
-
+      <div class="col-xs-offset-2 col-xs-4">
+        <input hidden type="radio" id="multi" value="multi" name="type" formControlName="type">
+        <label class="multi" for="multi"><img class="hum1" src="/assets/img/human2.png" height="75px"></label>
+      </div>
+      
       <div class="clearfix"></div>
     </div>
 
-    <div class="form-group lang">
+    <div class="form-group lang row">
       <p class="crafty_girls title">Choose Languages:</p>
 
       <input hidden type="radio" id="en_ru" value="en_ru" name="languages" formControlName="languages">
@@ -36,7 +42,7 @@
       <div class="clearfix"></div>
     </div>
 
-    <div class="form-group difficulty">
+    <!--<div class="form-group difficulty">
       <p class="crafty_girls title">Choose Difficulty:</p>
 
       <input hidden type="radio" id="small" value="small" name="difficulty" formControlName="difficulty">
@@ -49,8 +55,8 @@
       <label class="large" for="large">Large</label>
 
       <div class="clearfix"></div>
-    </div>
-    <div class="submit">
+    </div>-->
+    <div class="submit row">
       <button type="submit" class="btn btn-info pull-right btn-lg">START GAME</button>
     </div>
 
