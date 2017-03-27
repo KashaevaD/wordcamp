@@ -54,9 +54,6 @@ export class GamePlayService {
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
-
-    console.log(this._roomObservable);
-
   }
 
 
@@ -95,10 +92,10 @@ export class GamePlayService {
         this._currentUser.score -= 5;
         this._changeUserScore();
 
-
         this._users.forEach(user => user.isActive = !user.isActive);
         this._activeCards.forEach( card => card.isOpen = false );
 
+        if(this._timerId)clearTimeout(this._timerId);
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
       }
     });
@@ -186,8 +183,8 @@ export class GamePlayService {
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
     } else {
-      if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
       this._timerId = setTimeout(() => {
+        if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
         activeCards.forEach(card => card.isOpen = false);
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
       }, 500);
@@ -246,7 +243,6 @@ export class GamePlayService {
         }
       }
       else this._users[0].result = 'win';
-
       this.endGame();
     }
 
