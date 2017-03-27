@@ -2,7 +2,7 @@ import { Subscription, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
-import { SidebarService } from './sidebar/sidebar.service'
+import { SidebarService } from './sidebar/sidebar.service';
 
 @Injectable()
 export class GamePlayService {
@@ -18,6 +18,8 @@ export class GamePlayService {
   private _timerId: any;
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
+
+  public _roomObservable;
 
   public startGame: Subject<any>;
   public updateField: Subject<any>;
@@ -50,8 +52,10 @@ export class GamePlayService {
         firstDataSubscriber.unsubscribe();
       });
 
-    let roomSubscriberForFistData = this._dbService.getObjectFromFB(`rooms/${roomId}`)
+    this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
+
+    console.log(this._roomObservable);
 
   }
 
@@ -169,7 +173,6 @@ export class GamePlayService {
   public prepareNewState(activeCards: TCard[]) {
     if (activeCards.length === 2) {
       this._checkactiveCards(activeCards);
-      if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
     }
     this._updateCards(activeCards);
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
@@ -183,6 +186,7 @@ export class GamePlayService {
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
     } else {
+      if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
       this._timerId = setTimeout(() => {
         activeCards.forEach(card => card.isOpen = false);
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
@@ -197,7 +201,10 @@ export class GamePlayService {
     this._users.forEach(user => {
       if (user.id === this._currentUser.id) {
         user.score = this._currentUser.score;
-        if (user.score < 0) user.score = 0;
+        if (user.score < 0){
+          this._currentUser.score = 0;
+          user.score = 0;
+        }
       }
     });
   }
@@ -258,7 +265,7 @@ export class GamePlayService {
   public removeSubscriptions() {
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
+    this._roomObservable.unsubscribe();
   }
-
 
 }
