@@ -81,12 +81,12 @@ export class GamePlayService {
 
   }
 
+
   private _initSidebar(data) {
 
     this._sidebarService.initSidebar(data);
 
     this._timeSubscriber = this._sidebarService.timeIsUp.subscribe(() => {
-
       if (this._gameType === 'single') {
         this.endGame();
       }
@@ -137,10 +137,6 @@ export class GamePlayService {
         if (!this._currentUser.isActive) {
           this._updateCards(activeCards);
         }
-        if (this._gameType === 'multi') {
-          this._sidebarService.stopTimer();
-          this._sidebarService.startTimer();
-        }
         break;
       case 1:
         if (!this._currentUser.isActive) {
@@ -171,14 +167,14 @@ export class GamePlayService {
 
   public prepareNewState(activeCards: TCard[]) {
     if (activeCards.length === 2) {
-      this._checkactiveCards(activeCards);
+      this._checkActiveCards(activeCards);
     }
     this._updateCards(activeCards);
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
   }
 
 
-  private _checkactiveCards(activeCards: TCard[]) {
+  private _checkActiveCards(activeCards: TCard[]) {
     if (activeCards[0].wordId === activeCards[1].wordId) {
       activeCards[0].isHide = true;
       activeCards[1].isHide = true;
@@ -209,7 +205,6 @@ export class GamePlayService {
   }
 
 
-
   private _updateCards(activeCards: TCard[]) {
     this._activeCards = activeCards;
     this._cards.forEach(cardRow => {
@@ -223,7 +218,6 @@ export class GamePlayService {
       });
     });
   }
-
 
 
   private _isWin(cells: TCard[][]): void {
