@@ -146,8 +146,12 @@ export class GamePlayService {
         break;
       case 2:
         this._isWin(this._cards);
-        if (this._currentUser.isActive) {
           if (!activeCards[0].isOpen || activeCards[0].isHide) {
+             if(this._gameType === 'multi'){
+               this._sidebarService.stopTimer();
+               this._sidebarService.startTimer();
+             }
+            if (this._currentUser.isActive) {
             this._timerId = setTimeout(() => {
               this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock);
             }, 500);
@@ -180,6 +184,7 @@ export class GamePlayService {
       activeCards[1].isHide = true;
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
+      this._sidebarService.stopTimer();
     } else {
       this._timerId = setTimeout(() => {
         if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
