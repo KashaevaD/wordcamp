@@ -7,7 +7,7 @@ export class SingleplayerService {
   constructor(private _localStorage: LocalStorageService) { }
 
   public setUserNameAtLocalStorage(name: string): void {
-    let currentName: string = this._localStorage.getLocalStorageValue("username");
+  // let currentName: string = this._localStorage.getLocalStorageValue("username");
     let setValueUsername: string = name;
 
      if (name === "") {

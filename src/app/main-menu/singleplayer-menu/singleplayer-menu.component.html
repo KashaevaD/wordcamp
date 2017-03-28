@@ -1,33 +1,45 @@
-<div class="create_game col-xs-8 center">
-  <h2 class="text-center crafty_girls">Create new game</h2>
+<div class="create_game center">
+   <div class="row">
+      <h1 class="text-center">Word-Camp Game</h1>
+    </div>
 
   <form [formGroup]="menuGame" (ngSubmit)="onSubmit($event)">
 
-    <div class="form-group row">
-      <label for="username" class="title">Enter Username</label>
-      <input type="text" class="form-control" autocomplete="off" placeholder="username" id="username" required name="username"
-        formControlName="username">
+    <div class="form-group exists-name" *ngIf="!isEditing">
+      <div class="col-xs-12 text-center">
+        <span>Hello, <strong>{{userName}}</strong>!</span>
+        <img src="/assets/img/pen.png" title="Edit name" (click)="setStateIsEditing()" class="pen-edit">
+      </div>
+       <div class="clearfix"></div> 
     </div>
 
-    <div class="form-group type row">
-      <div class="col-xs-12">
-        <p class="crafty_girls title">Choose Type Of Game:</p>
+    <div class="form-group has-success new-name"  *ngIf="isEditing">
+        <label for="username" class="username col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter New Name</label>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+          <input type="text" placeholder="username" autocomplete="off" class="form-control center-block" id="username" required name="username" formControlName="username">
+        </div>
+        <div class="clearfix"></div>        
+    </div>
+
+    <div class="form-group type">
+      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-5">
+        <p class="title">Choose Type Of Game:</p>
       </div>
 
-      <div class="col-xs-offset-2 col-xs-4">
+      <div class="col-lg-offset-0  col-md-offset-0  col-sm-offset-0 col-lg-4 col-md-4 col-sm-3  col-xs-offset-0 col-xs-3 ">
         <input hidden type="radio" id="single" value="single" name="type" formControlName="type">
-        <label class="single" for="single"><img src="/assets/img/human1.png" height="75px"></label>
+        <label class="single" for="single"><img class="type-human" src="/assets/img/human1.png"></label>
       </div>
 
-      <div class="col-xs-offset-2 col-xs-4">
+      <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
         <input hidden type="radio" id="multi" value="multi" name="type" formControlName="type">
-        <label class="multi" for="multi"><img class="hum1" src="/assets/img/human2.png" height="75px"></label>
+        <label class="multi" for="multi"><img class="type-human" src="/assets/img/human2.png"> </label>
       </div>
       
       <div class="clearfix"></div>
     </div>
 
-    <div class="form-group lang row">
+    <!--<div class="form-group lang row">
       <p class="crafty_girls title">Choose Languages:</p>
 
       <input hidden type="radio" id="en_ru" value="en_ru" name="languages" formControlName="languages">
@@ -40,7 +52,7 @@
       <label class="de_ru" for="de_ru"></label>
 
       <div class="clearfix"></div>
-    </div>
+    </div>-->
 
     <!--<div class="form-group difficulty">
       <p class="crafty_girls title">Choose Difficulty:</p>
@@ -56,8 +68,8 @@
 
       <div class="clearfix"></div>
     </div>-->
-    <div class="submit row">
-      <button type="submit" class="btn btn-info pull-right btn-lg">START GAME</button>
+    <div class="submit">
+      <button type="submit" class="btn btn-info pull-right">START GAME</button>
     </div>
 
   </form>

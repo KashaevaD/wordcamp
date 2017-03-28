@@ -1,9 +1,7 @@
 .center {
-     float: none;
+    float: none;
     margin: 2% auto;
-}
-.create_game {
-  padding-bottom: 30px;
+    /*padding-bottom: 30px;*/
 }
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948; /* green */
@@ -11,58 +9,47 @@
 .ng-invalid:not(form) {
   border-left: 5px solid #a94442; /* red */
 }
-.title {
+/*.title {
   font-weight: bold;
   font-size: 1.5em;
-}
-input {
-  padding: 10px 20px;
-  height: 50px;
-  font-size: 2em;
-}
-.form-group {
+}*/
+/*.form-group {
   padding: 1% 0;
-}
+}*/
 
-h2 {
-  padding:10px 30px;
-  font-size: 3em;
-  text-shadow: 1px 2px 5px #4A708B;
-}
 
 /*******radio btn type game*************/
 .type label {
-  width: 200px;
-  height: 30px;
-  position: relative;
+  /*width: 200px;*/
+  
+  /*position: relative;
   margin-right: 40px;
-  display: inline-block;
+  display: inline-block;*/
   cursor: pointer;
-  opacity: .6;
+  opacity: .4;
   transition: opacity .3s;
-  font-size: 2em;
+}
+.type label .type-human {
+  height: 150px;
 }
 
-.type label:before, .type label:after {
+/*.type label:before, .type label:after {
   content: "";
   position: absolute;
   left: 0;
   top: 0;
-  width: 200px;
-  height: 50px;
   transition: all .3s;
-}
+}*/
 .type label:hover {
-  opacity: .9;
+  opacity: .8;
 }
 .type input:checked + label {
   opacity: 1;
-  text-shadow: -2px -2px 4px rgba(125, 146, 249, 1);
-  color: 	#104E8B;
+  /*box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;*/
   transition: all .3s;
 }
 /************Start radio lang******************/
-.lang label {
+/*.lang label {
   width: 90px;
   height: 50px;
   position: relative;
@@ -113,10 +100,10 @@ h2 {
 }
 .en_ru:after{
   background: url("/assets/img/icons/russia.svg");
-}
+}*/
 
 /*Start radio difficult*/
-.difficulty {
+/*.difficulty {
   padding: 10px 0;
   width: 360px;
   margin: auto;
@@ -194,5 +181,107 @@ h2 {
 
 .submit .btn.btn-info{
   box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+}*/
+
+
+/*+++++++++++++++++++++++++++++++++=*/
+.exists-name .pen-edit {
+  width: 4%;
+  cursor: pointer;
+}
+.exists-name span, .title {
+  font-size: 1.8em;
+}
+.exists-name{
+  padding: 2% 0 0 0;
 }
 
+.title {
+    margin-top: 15%;
+}
+div.new-name {
+  height: auto;
+  margin: 3% 0 3% 0;
+}
+
+
+div.new-name label {
+   font-size: 1.7em;
+   font-weight: normal;
+   /*line-height: 10px;*/
+}
+.new-name input {
+  font-size: 14px;
+}
+.new-name div {
+  padding-right: 0px;
+}
+
+.submit .btn {
+  margin: 2% 0 2% 0;
+}
+
+
+
+/******** media **********/
+
+@media screen and (min-width: 1024px)  {
+  /*.intro span, .intro h2, .intro .link {
+    font-size: 1.5em;
+  }*/
+  .new-name input {
+     font-size: 20px;
+     padding: 20px 10px 20px 10px;
+  }
+
+}
+
+@media screen and (max-width: 992px)  {
+  h1 {
+    font-size: 3em;
+  }
+  .exists-name span, .title {
+    font-size: 1.5em;
+  }
+  .exists-name .pen-edit {
+    width: 7%;
+  }
+  .type label .type-human {
+    height: 90px;
+  }
+}
+
+@media screen and (max-width: 768px)  {
+  .title {
+    margin-top: 7%;
+  }
+}
+
+@media screen and (max-width: 500px)  {
+  h1{
+    font-size: 2em;
+  }
+  .exists-name span, .title {
+    font-size: 1em;
+  }
+  div.new-name label {
+     font-size: 1em;
+      padding: 1% auto 1% auto;
+  }
+  .type label .type-human {
+    height: 60px;
+  }
+  .title {
+    margin-top: 0;
+  }
+  label.username {
+   text-align: left;
+  }
+  
+}
+
+@media screen and (max-width: 320px)  {
+  h1{
+    font-size: 1.8em;
+  }
+}

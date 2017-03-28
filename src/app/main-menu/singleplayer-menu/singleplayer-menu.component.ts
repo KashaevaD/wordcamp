@@ -13,6 +13,8 @@ import { JoinGameService } from "../join-game.service";
 export class SingleplayerMenuComponent {
 
   public menuGame: FormGroup;
+  public userName: string;
+  public isEditing:boolean = false;
 
   constructor(private _build: FormBuilder,
     private _singleService: SingleplayerService,
@@ -20,14 +22,16 @@ export class SingleplayerMenuComponent {
     private _localSrorage: LocalStorageService,
     private _createGameService: CreateGameService) {
 
-    let name: string = this._localSrorage.getLocalStorageValue("username");
+    //let name: string = this._localSrorage.getLocalStorageValue("username");
+
+    this.userName = this._localSrorage.getLocalStorageValue("username")
 
     //reactive form for user
     this.menuGame = this._build.group({
-      username: new FormControl(name),
-      type: new FormControl('single'),
-      languages: new FormControl('en_ru'),
-      difficulty: new FormControl('small')
+      username: new FormControl(this.userName),
+      type: new FormControl('single')
+      // languages: new FormControl('en_ru'),
+      // difficulty: new FormControl('small')
     });
 
     this._joingameService.getValueFromFormSubscribe = this.menuGame.valueChanges.subscribe(() => {
@@ -38,11 +42,16 @@ export class SingleplayerMenuComponent {
 
 
   public onSubmit(event: Event): void {
-    this._localSrorage.setLocalStorageValue("userid", "0");
-    this._joingameService.getValueFromFormSubscribe.unsubscribe();
-    this._singleService.setUserNameAtLocalStorage(this.menuGame.value.username);
-    this._createGameService.makePlayZone(this.menuGame.value);
+    console.log(this.menuGame.value);
+
+    // this._localSrorage.setLocalStorageValue("userid", "0");
+    // this._joingameService.getValueFromFormSubscribe.unsubscribe();
+    // this._singleService.setUserNameAtLocalStorage(this.menuGame.value.username);
+    // this._createGameService.makePlayZone(this.menuGame.value);
     event.preventDefault();
   }
 
+  public setStateIsEditing() {
+    this.isEditing = true;
+  }
 }

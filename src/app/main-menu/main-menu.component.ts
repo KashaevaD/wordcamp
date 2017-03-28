@@ -30,7 +30,7 @@ export class MainMenuComponent {
     ) {
     this.isOpenVideoIntro = false;
 
-    //this._isShowMainPageForUser();
+    this._isShowMainPageForUser();
 
     //if user created a multiplayer game
     this._waitForUserSubscriber = this._creategameService.waitForSecondUserMultiplayer.subscribe((id) => {
@@ -81,7 +81,42 @@ export class MainMenuComponent {
   public showVideo(event) {
     this.isOpenVideoIntro = !this.isOpenVideoIntro;
     event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
+    this.animate(
+      {duration: 1000,
+        timing: function(timeFraction) {
+            return timeFraction;
+        },
+        draw: function(progress) {
+            window.scrollTo(0, 0 + (progress * 350));
+        }
+    });
+
   }
+
+private animate(options) {
+
+    var start = performance.now();
+
+    requestAnimationFrame(function _animate(time) {
+        // timeFraction от 0 до 1
+        var timeFraction = (time - start) / options.duration;
+        if (timeFraction > 1) timeFraction = 1;
+
+        // текущее состояние анимации
+        var progress = options.timing(timeFraction);
+
+        //Отрисовка
+        options.draw(progress);
+
+        if (timeFraction < 1) {
+            requestAnimationFrame(_animate);
+        }else {
+            //Колбэк по завершении анимации
+            options.cb && options.cb();
+        }
+
+    });
+}
 
   public sendUserToSingleMenu() {
     let name = (this.userName)? this.userName: "Anonimous";
