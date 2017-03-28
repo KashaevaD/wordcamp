@@ -13,13 +13,13 @@ import { JoinGameService } from "./join-game.service";
 })
 export class MainMenuComponent {
 
-  public isNewUser: boolean;
-  public isMainMenuPage: boolean;
   public isOpenVideoIntro:boolean;
 
   public isWait: boolean = false;
   public shareAbleLink: string = "";
   private _waitForUserSubscriber: Subscription;
+
+  public userName = "";
 
   constructor(private _creategameService: CreateGameService,
     private _joingameService: JoinGameService,
@@ -30,8 +30,7 @@ export class MainMenuComponent {
     ) {
     this.isOpenVideoIntro = false;
 
-    this.isNewUser = this._checkIsNewUser();
-    this.isMainMenuPage = this._getUrlActivatedRoute();
+    //this._isShowMainPageForUser();
 
     //if user created a multiplayer game
     this._waitForUserSubscriber = this._creategameService.waitForSecondUserMultiplayer.subscribe((id) => {
@@ -63,22 +62,12 @@ export class MainMenuComponent {
     });
    }
 
-  public hideIntroForUser(): void {
-    this.isMainMenuPage = false;
-  }
-
-  private _checkIsNewUser(): boolean {
+  private _isShowMainPageForUser() {
     if (this._localSrorage.getLocalStorageValue("username")) {
       this._router.navigate(['mainmenu/single']);
-      return false;
-    } else {
-      return true;
     }
   }
 
-  private _getUrlActivatedRoute(): boolean {
-    return this._activatedRoute.firstChild === null;
-  }
 
   public goToMainMenu(): void {
     let array: string[] = this.shareAbleLink.split("/");
@@ -95,7 +84,9 @@ export class MainMenuComponent {
   }
 
   public sendUserToSingleMenu() {
-     this._router.navigate(['mainmenu/single']);
+    let name = (this.userName)? this.userName: "Anonimous";
+    this._localSrorage.setLocalStorageValue("username", name);
+    this._router.navigate(['mainmenu/single']);
   }
 
 }
