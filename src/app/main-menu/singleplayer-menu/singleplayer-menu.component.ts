@@ -29,9 +29,9 @@ export class SingleplayerMenuComponent {
     //reactive form for user
     this.menuGame = this._build.group({
       username: new FormControl(this.userName),
-      type: new FormControl('single')
+      type: new FormControl('single'),
       // languages: new FormControl('en_ru'),
-      // difficulty: new FormControl('small')
+      difficulty: new FormControl('small')
     });
 
     this._joingameService.getValueFromFormSubscribe = this.menuGame.valueChanges.subscribe(() => {

@@ -3,6 +3,36 @@
     margin: 2% auto;
     /*padding-bottom: 30px;*/
 }
+.title {
+    margin-top: 15%;
+}
+
+/*******userName*********/
+.exists-name .pen-edit {
+  width: 4%;
+  cursor: pointer;
+}
+.exists-name span, .title {
+  font-size: 1.8em;
+}
+.exists-name{
+  padding: 2% 0 0 0;
+}
+div.new-name {
+  height: auto;
+  margin: 3% 0 3% 0;
+}
+div.new-name label {
+   font-size: 1.7em;
+   font-weight: normal;
+   /*line-height: 10px;*/
+}
+.new-name input {
+  font-size: 14px;
+}
+.new-name div {
+  padding-right: 0px;
+}
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948; /* green */
 }
@@ -29,7 +59,7 @@
   opacity: .4;
   transition: opacity .3s;
 }
-.type label .type-human {
+.type label img.type-human {
   height: 150px;
 }
 
@@ -103,6 +133,12 @@
 }*/
 
 /*Start radio difficult*/
+
+.difficulty img.type-difficulty {
+  height: 150px;
+  margin: 0 auto;
+}
+
 /*.difficulty {
   padding: 10px 0;
   width: 360px;
@@ -184,44 +220,10 @@
 }*/
 
 
-/*+++++++++++++++++++++++++++++++++=*/
-.exists-name .pen-edit {
-  width: 4%;
-  cursor: pointer;
-}
-.exists-name span, .title {
-  font-size: 1.8em;
-}
-.exists-name{
-  padding: 2% 0 0 0;
-}
-
-.title {
-    margin-top: 15%;
-}
-div.new-name {
-  height: auto;
-  margin: 3% 0 3% 0;
-}
-
-
-div.new-name label {
-   font-size: 1.7em;
-   font-weight: normal;
-   /*line-height: 10px;*/
-}
-.new-name input {
-  font-size: 14px;
-}
-.new-name div {
-  padding-right: 0px;
-}
-
+/**************btn start************/
 .submit .btn {
   margin: 2% 0 2% 0;
 }
-
-
 
 /******** media **********/
 
@@ -246,8 +248,11 @@ div.new-name label {
   .exists-name .pen-edit {
     width: 7%;
   }
-  .type label .type-human {
+  .type label img.type-human {
     height: 90px;
+  }
+  .difficulty img.type-difficulty {
+    height: 70px;
   }
 }
 
@@ -261,15 +266,17 @@ div.new-name label {
   h1{
     font-size: 2em;
   }
-  .exists-name span, .title {
+  .exists-name span, .title, div.new-name label {
     font-size: 1em;
   }
   div.new-name label {
-     font-size: 1em;
-      padding: 1% auto 1% auto;
+    padding: 1% auto 1% auto;
   }
-  .type label .type-human {
+  .type label img.type-human {
     height: 60px;
+  }
+  .difficulty img.type-difficulty {
+    height: 30px;
   }
   .title {
     margin-top: 0;
