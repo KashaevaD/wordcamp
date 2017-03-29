@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { GamePlayService } from './game-play.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -12,13 +12,15 @@ export class PlayzoneComponent implements OnDestroy {
 
   private _user: TUser;
   public activeField: boolean = false;
-  public field: TCard[][];
+  public field: TCard[];
   public _activeCards: TCard[];
+  public gameDifficulty;
   public difficulty = {
     small: false,
     medium: false,
     large: false
   };
+
 
   private startGameSubscriber: Subscription;
   private updateFieldSubscriber: Subscription;
@@ -30,6 +32,7 @@ export class PlayzoneComponent implements OnDestroy {
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));
     this.pauseSubscriber = this._gamePlayService.pause.subscribe(() => this._user.isActive = false);
     this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
+
   }
 
 
@@ -42,7 +45,9 @@ export class PlayzoneComponent implements OnDestroy {
 
 
   private _initFirstData(data): void {
+
     this.field = data.cards;
+    this.gameDifficulty = data.difficulty;
     this.difficulty[data.difficulty] = true;
     this._user = data.user;
     this.activeField = data.user.isActive;
@@ -54,14 +59,12 @@ export class PlayzoneComponent implements OnDestroy {
     this._user = data.user;
     this.activeField = data.user.isActive;
     this._activeCards = data.activeCards;
-    this.field.forEach(cardRow => {
-      cardRow.forEach(card => {
-        this._activeCards.forEach(activeCard => {
-          if (card.id === activeCard.id) {
-            card.isOpen = activeCard.isOpen;
-            card.isHide = activeCard.isHide;
-          }
-        });
+    this.field.forEach(card => {
+      this._activeCards.forEach(activeCard => {
+        if (card.id === activeCard.id) {
+          card.isOpen = activeCard.isOpen;
+          card.isHide = activeCard.isHide;
+        }
       });
     });
   }

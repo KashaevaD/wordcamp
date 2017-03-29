@@ -9,7 +9,7 @@ export class GamePlayService {
 
   private _roomId: number;
   private _users: TUser[];
-  private _cards: TCard[][];
+  private _cards: TCard[];
   private _gameType: string;
   private _activeCards: TCard[];
 
@@ -30,7 +30,7 @@ export class GamePlayService {
   constructor(
     private _dbService: DBService,
     private _router: Router,
-    private _sidebarService: SidebarService,) {
+    private _sidebarService: SidebarService) {
     this.startGame = new Subject();
     this.updateField = new Subject();
     this.pause = new Subject();
@@ -170,6 +170,8 @@ export class GamePlayService {
 
 
   public prepareNewState(activeCards: TCard[]) {
+    console.log('active',activeCards);
+    console.log('all',this._cards);
     if (activeCards.length === 2) {
       this._checkActiveCards(activeCards);
     }
@@ -212,21 +214,19 @@ export class GamePlayService {
 
   private _updateCards(activeCards: TCard[]) {
     this._activeCards = activeCards;
-    this._cards.forEach(cardRow => {
-      cardRow.forEach(card => {
-        activeCards.forEach(activeCard => {
-          if (card.id === activeCard.id) {
-            card.isOpen = activeCard.isOpen;
-            card.isHide = activeCard.isHide;
-          }
-        });
+    this._cards.forEach(card => {
+      activeCards.forEach(activeCard => {
+        if (card.id === activeCard.id) {
+          card.isOpen = activeCard.isOpen;
+          card.isHide = activeCard.isHide;
+        }
       });
     });
   }
 
 
-  private _isWin(cells: TCard[][]): void {
-    if (this.countHiddenBlock === (cells.length * cells[0].length) / 2) {
+  private _isWin(cells: TCard[]): void {
+    if (this.countHiddenBlock === (cells.length / 2) ) {
 
       if (this._gameType === 'multi') {
         let diff: number = this._users[0].score - this._users[1].score;
