@@ -4,7 +4,9 @@ import { LocalStorageService } from "../../local-storage.service";
 import { Subscription } from "rxjs";
 import { JoinGameService } from "../join-game.service";
 import { DBService } from '../../db.service';
-
+import { ActivatedRoute, Params } from '@angular/router';
+import { CreateGameService } from "../create-game.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-multiplayer-menu',
@@ -19,6 +21,9 @@ export class MultiplayerMenuComponent implements OnInit {
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
               private _localSrorage: LocalStorageService,
+              private _activatedRoute: ActivatedRoute,
+              private _router: Router,
+              private _createGameService: CreateGameService,
               private _dbService: DBService) {
 
    this.subscribe = this._dbService.getAllMultiPlayerRoom().subscribe(data => {
@@ -31,13 +36,26 @@ export class MultiplayerMenuComponent implements OnInit {
             });
    });
 
+    // event on starting game
+    let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
+      startGameSubscriber.unsubscribe();
+       this._router.navigate(['playzone', id]);  // send user  on game-field
+    });
+
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._activatedRoute.params.forEach((param: Params) => {
+      let idRoom:number = param['id'];
+        if (idRoom) {
+          this._joingameService.doIfShareableLinkIsActivated(idRoom);
+        }
+    });
+  }
 
   public startGame(idRoom: number):void {
-    this._joingameService.getValueFromFormSubscribe.unsubscribe();
     this.subscribe.unsubscribe();
+    console.log("dfdf");
     this._joingameService.addUserToFireBase(idRoom);
     this._localSrorage.setLocalStorageValue("userid", "1");
   }

@@ -2,7 +2,7 @@
 
 <div class="settings">
 
-  <div class="start_box" *ngIf="!isWait">
+  <div class="start_box" >
 
     <div class="row">
       <h1 class="text-center">Welcome to Word-Camp</h1>
@@ -37,53 +37,10 @@
       <div class="col-xs-12 block-gif" *ngIf="isOpenVideoIntro">
         <img class="center-block intro-gif" src="assets/img/wait.gif">
       </div>
-    </div><!--row-->
-
-  
-
-      <!--<nav class="col-sm-12 col-md-12 col-xs-12 menu">
-        <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-          <a (click)="hideIntroForUser()" routerLink="/mainmenu/single" routerLinkActive="active" class="btn btn-info btn-lg link">New Game</a>
-        </div>
-        <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-sm-6  col-xs-12">
-          <a (click)="hideIntroForUser()" routerLink="/mainmenu/multi" routerLinkActive="active" class="btn btn-info btn-lg link">Open Games</a>
-        </div>
-      </nav>
-
-      <router-outlet></router-outlet>-->
-   
+    </div><!--row-->   
 
   </div><!--start_box-->
 
-  <div class=" waiting start_box" *ngIf="isWait">
 
-    <div class="row">
-      <div class="col-xs-12">
-        <a href="#" class="mainmenu btn btn-info btn-lg" (click)="goToMainMenu()">Main menu</a>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <h1 class="title-wait text-center">Wait for second user=)</h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group share">
-        <label for="share_link" class="col-xs-12 col-md-5 control-label text-center">Share link to friend:</label>
-        <div class="col-xs-12 col-md-7 share-input">
-          <input type="text" class="form-control center-block" id="share_link" [value]="shareAbleLink">
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <img class="center-block image-wait" src="assets/img/wait.gif">
-      </div>
-    </div>
-
-  </div>
 
 </div>

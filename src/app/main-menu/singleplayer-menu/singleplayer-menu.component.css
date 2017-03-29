@@ -1,12 +1,14 @@
 .center {
     float: none;
     margin: 2% auto;
-    /*padding-bottom: 30px;*/
 }
 .title {
     margin-top: 15%;
+    font-size: 1.5em;
 }
-
+.header h1, .header h1{
+  display: inline-block;
+}
 /*******userName*********/
 .exists-name .pen-edit {
   width: 4%;
@@ -25,7 +27,6 @@ div.new-name {
 div.new-name label {
    font-size: 1.7em;
    font-weight: normal;
-   /*line-height: 10px;*/
 }
 .new-name input {
   font-size: 14px;
@@ -39,194 +40,136 @@ div.new-name label {
 .ng-invalid:not(form) {
   border-left: 5px solid #a94442; /* red */
 }
-/*.title {
-  font-weight: bold;
-  font-size: 1.5em;
-}*/
-/*.form-group {
-  padding: 1% 0;
-}*/
-
-
-/*******radio btn type game*************/
-.type label {
-  /*width: 200px;*/
-  
-  /*position: relative;
-  margin-right: 40px;
-  display: inline-block;*/
-  cursor: pointer;
-  opacity: .4;
-  transition: opacity .3s;
+/************Start radio lang******************/
+.box{
+  display: inline-block;
 }
-.type label img.type-human {
+.lang button {
+  width: 150px;
   height: 150px;
+  background: rgba(0,0,0,0);
+  border-radius: 50%;
+  border:none;
+  cursor: pointer;
 }
-
-/*.type label:before, .type label:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  transition: all .3s;
-}*/
+.lang button img {
+   -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
+.dropdown-item img.languages:hover {
+   -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
+.dropdown-item img.languages {
+  width: 60px;
+}
+ul li {
+  padding: 10px;
+  display: inline-block;
+}
+.dropdown-menu {
+  background-color: rgba(240, 248, 255, 1);
+  min-width: 260px;
+  border-radius: 10%;
+}
+div.lang.last  {
+  margin-left: -45px;
+}
+/*******************radio buttons*****************/
+/*********type of game and difficulty*************/
+/*type of game*/
+.type label {
+  opacity: .4;
+}
 .type label:hover {
   opacity: .8;
 }
 .type input:checked + label {
   opacity: 1;
-  /*box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;*/
   transition: all .3s;
 }
-/************Start radio lang******************/
-/*.lang label {
-  width: 90px;
-  height: 50px;
-  position: relative;
-  margin-left: 10px;
-  display: inline-block;
-  cursor: pointer;
-  opacity: .6;
+/*difficulty*/
+.difficulty label{
+  opacity: .5;
+}
+.difficulty label:hover{
+  opacity: .7;
+}
+.difficulty input:checked  + label{
+  opacity: 1;
+}
+.difficulty input:checked  + label .img_box img {
+  border-radius: 10px;
+   text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+}
+/********the same***********/
+.difficulty label, .type label {
+  cursor:pointer;
+  width: 100%;
+  height: 120px;
   transition: opacity .3s;
 }
-.lang label:before, .lang label:after {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  transition: all .3s;
+.difficulty .size_img, .type  .size_img{
+  height: 100px;
 }
-.lang label:before {
-  left:0;
+.difficulty .img_box, .type .img_box  {
+  height: 80px;
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
 }
-.lang label:after {
-  left:40px;
+.difficulty img, .type img {
+  display: block;
+  height: 100%;
+  width:auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.lang label:hover {
-  opacity: .75;
-}
-.lang input:checked + label {
-  opacity: 1;
-}
-.lang input:checked + label:before, .lang input:checked + label:after {
-  -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-}
-.de_ru:before{
-  background: url("/assets/img/icons/germany.svg");
-}
-.de_ru:after{
-  background: url("/assets/img/icons/russia.svg");
-}
-.en_de:before{
-  background: url("/assets/img/icons/united-kingdom.svg");
-}
-.en_de:after{
-  background: url("/assets/img/icons/germany.svg");
-}
-.en_ru:before{
-  background: url("/assets/img/icons/united-kingdom.svg");
-}
-.en_ru:after{
-  background: url("/assets/img/icons/russia.svg");
-}*/
-
-/*Start radio difficult*/
-
-.difficulty img.type-difficulty {
-  height: 150px;
-  margin: 0 auto;
-}
-
-/*.difficulty {
-  padding: 10px 0;
-  width: 360px;
-  margin: auto;
-  min-height: 150px;
-}
-.difficulty label{
-  font-family: merriweather;
-  font-size: 1.2em;
-  opacity: .5;
-  float: left;
-
-  margin-left: 30px;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: 5px solid #a9a9a9;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+.difficulty .size_desc, .type .size_desc{
   text-align: center;
-  -o-text-overflow: clip;
-  text-overflow: clip;
-  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  height: 20px;
+  font-size: 1em;
 }
-.difficulty label.small{
-    width:80px;
-    height: 80px;
-    line-height: 70px;
-    margin-top: 5%;
-}
-
-.difficulty label.medium{
-    width:100px;
-    height: 100px;
-    line-height: 90px;
-     margin-top: 2%;
-}
-
-.difficulty label.large{
-    width:120px;
-    height: 120px;
-    line-height: 110px;
-}
-
-
-.difficulty label:hover{
-  text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
-  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  opacity: .8;
-}
-.difficulty label.small{
-  margin-left: 0;
-}
-.difficulty input:checked + label{
-  text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
-  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  opacity: 1;
-}
-
-.small{
-  background: #32CD32;
-}
-.medium{
-  background:#DAA520;
-}
-.large{
-  background: #cb4a3e;
-}
-.submit {
-  padding: 20px;
-}
-
-.submit .btn.btn-info{
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-}*/
-
-
 /**************btn start************/
 .submit .btn {
   margin: 2% 0 2% 0;
 }
-
+/********wait******/
+.waiting {
+  margin: 4% auto;
+}
+.waiting .title-wait{
+  text-shadow: 1px 2px 5px #20B2AA;
+  margin-top: 3%;
+}
+label {
+  font-size: 2em;
+}
+input {
+    font-size:1.2em;
+}
+.form-group.share {
+  margin-top: 4%;
+}
+.image-wait {
+  margin: 2% auto;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+  border-radius: 20px;
+  width: 55%;
+}
+.btn.btn-info.mainmenu{
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  float: right !important;
+}
+.share-input {
+  margin: 0 auto;
+}
 /******** media **********/
-
 @media screen and (min-width: 1024px)  {
   /*.intro span, .intro h2, .intro .link {
     font-size: 1.5em;
@@ -235,9 +178,7 @@ div.new-name label {
      font-size: 20px;
      padding: 20px 10px 20px 10px;
   }
-
 }
-
 @media screen and (max-width: 992px)  {
   h1 {
     font-size: 3em;
@@ -248,20 +189,44 @@ div.new-name label {
   .exists-name .pen-edit {
     width: 7%;
   }
-  .type label img.type-human {
+  .difficulty label, .type label {
+    height: 100px;
+  }
+  .difficulty .size_img, .type .size_img{
     height: 90px;
   }
-  .difficulty img.type-difficulty {
-    height: 70px;
+  .difficulty .size_desc, .type .size_desc {
+    height: 10px;
+    font-size: .8em;
   }
+   .difficulty .img_box, .type .img_box{
+    height: 70px; 
+  }
+  .title {  
+    font-size: 1.2em;
+  } 
 }
-
 @media screen and (max-width: 768px)  {
   .title {
     margin-top: 7%;
   }
+  .lang button {
+    width: 110px;
+    height: 110px;
+  }
+  .dropdown-item img.languages {
+    width: 40px;
+  }
+  ul li {
+    padding: 10px;
+  }
+  .dropdown-menu {
+    min-width: 195px;
+  }
+  .title {  
+    font-size: 1em;
+  } 
 }
-
 @media screen and (max-width: 500px)  {
   h1{
     font-size: 2em;
@@ -272,21 +237,46 @@ div.new-name label {
   div.new-name label {
     padding: 1% auto 1% auto;
   }
-  .type label img.type-human {
+  .difficulty label, .type label {
+    height: 80px;
+  }
+  .difficulty .size_img, .type .size_img {
     height: 60px;
   }
-  .difficulty img.type-difficulty {
-    height: 30px;
+  .difficulty .size_desc, .type .size_desc{
+    height: 20px;
+    font-size: .5em;
+  }
+  .difficulty .img_box, .type .img_box{
+    height: 45px; 
   }
   .title {
-    margin-top: 0;
+    margin-top: 10%;
+    margin-left: -15px;
   }
   label.username {
    text-align: left;
   }
-  
+  .difficulty input:checked  + label .img_box img {
+    border-radius: 5px;
+  }
+  .form-group {
+    margin: 0 auto;
+  }
+  .lang button {
+    width: 80px;
+    height: 80px;
+  }
+  .dropdown-item img.languages {
+    width: 27px;
+  }
+  ul li {
+    padding: 4px;
+  }
+  .dropdown-menu {
+    min-width: 120px;
+  }
 }
-
 @media screen and (max-width: 320px)  {
   h1{
     font-size: 1.8em;

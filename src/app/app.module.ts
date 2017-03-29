@@ -27,20 +27,20 @@ import { JoinGameService } from "./main-menu/join-game.service"
 import { SidebarService } from "./playzone/sidebar/sidebar.service";
 
 import { AppComponent } from './app.component';
+import { DropdownModule } from 'ng2-bootstrap';
 
 const routes = [
-   {
-    path: "mainmenu", component: MainMenuComponent,
-    children: [
-      {
-        path: 'multi', component: MultiplayerMenuComponent
-      }]
+  {
+    path: "mainmenu", component: MainMenuComponent
+  },
+  {
+    path: "mainmenu/multi", component: MultiplayerMenuComponent
   },
   {
     path: "mainmenu/single", component: SingleplayerMenuComponent
   },
   {
-    path: "mainmenu/multi/:id", component: MainMenuComponent
+    path: "mainmenu/multi/:id", component: MultiplayerMenuComponent
   },
   {
     path: '',
@@ -72,6 +72,7 @@ const routes = [
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule.forRoot(routes),
+    DropdownModule.forRoot()
   ],
   providers: [CreateGameService, SingleplayerService, LocalStorageService, MultiplayerService, JoinGameService, GamePlayService, DBService, SidebarService],
   bootstrap: [AppComponent],

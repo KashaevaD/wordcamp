@@ -28,7 +28,7 @@
     height: 35px;
 }
 /******Language********/
-.lang div {
+/*.lang div {
   width: 70px;
   height: 30px;
   position: relative;
@@ -68,7 +68,7 @@
 }
 .en_ru:after{
   background: url("/assets/img/icons/russia.svg");
-}
+}*/
 /**** btn join ***********/
 button.join {
     padding: 5px 40px;

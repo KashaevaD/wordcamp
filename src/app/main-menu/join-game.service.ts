@@ -6,7 +6,6 @@ import { DBService } from '../db.service';
 
 @Injectable()
 export class JoinGameService {
-   public getValueFromFormSubscribe;
 
    constructor(private _dbService: DBService,
               private _createGameService: CreateGameService,

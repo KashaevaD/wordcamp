@@ -1,6 +1,10 @@
-<div class="create_game center">
+<div class="create_game center" *ngIf="!isWait">
    <div class="row">
-      <h1 class="text-center">Word-Camp Game</h1>
+     <div class="col-lg-12 header">
+       <h1>Word-Camp</h1>
+        <!--<a class="btn btn-primary" routerLink="/mainmenu/multi">Open exists</a>
+        <router-outlet></router-outlet>-->
+     </div>
     </div>
 
   <form [formGroup]="menuGame" (ngSubmit)="onSubmit($event)">
@@ -16,43 +20,86 @@
     <div class="form-group has-success new-name"  *ngIf="isEditing">
         <label for="username" class="username col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter New Name</label>
         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-          <input type="text" placeholder="username" autocomplete="off" class="form-control center-block" id="username" required name="username" formControlName="username">
+          <input type="text" placeholder="username" autocomplete="off" [value]="userName"
+          class="form-control center-block" id="username" required name="username" 
+          ormControlName="username" (blur)="changeUserNameAtLocalStorage($event)">
         </div>
         <div class="clearfix"></div>        
     </div>
 
+    <div class="form-group lang row" formGroupName="languages">
+
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          <p class="title">Choose Difficulty:</p>
+      </div>
+
+      <div class="col-lg-offset-3 col-lg-5 col-md-offset-3 col-md-5 col-sm-offset-1 col-sm-7 col-xs-offset-1 col-xs-7">
+
+        <div dropdown class="box lang">
+          <button type="button" dropdownToggle>
+            <img src="/assets/img/icons/united-kingdom.svg" name ="en" class="img-responsive">
+          </button>
+          <ul dropdownMenu role="menu" aria-labelledby="single-button" >
+            <li role="menuitem" *ngFor="let lang of imageOfLanguages">
+              <div class="dropdown-item">
+                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="setNameForControllToForm($event)">
+              </div>
+            </li>
+          </ul>
+        </div>
+
+         <div dropdown class="box lang last">
+          <button type="button" dropdownToggle>
+            <img src="/assets/img/icons/united-kingdom.svg" name ="en" class="img-responsive">
+          </button>
+          <ul dropdownMenu role="menu" aria-labelledby="single-button" >
+            <li role="menuitem" *ngFor="let lang of imageOfLanguages">
+              <div class="dropdown-item">
+                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="setNameForControllToForm($event)">
+              </div>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+
+    </div>
+
     <div class="form-group type">
-      <div class="col-lg-4 col-md-4 col-sm-6 col-xs-5">
+      <div class="col-lg-4 col-md-4 col-sm-5 col-xs-5">
         <p class="title">Choose Type Of Game:</p>
       </div>
 
-      <div class="col-lg-offset-0  col-md-offset-0  col-sm-offset-0 col-lg-4 col-md-4 col-sm-3  col-xs-offset-0 col-xs-3 ">
+      <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3 ">
         <input hidden type="radio" id="single" value="single" name="type" formControlName="type">
-        <label class="single" for="single"><img class="type-human" src="/assets/img/human1.png"></label>
+        <label  class="single" for="single">
+          <div class="size_img">
+            <div class="img_box">
+              <img src="/assets/img/human1.png">
+            </div>
+          </div>
+          <div class="size_desc">
+            Alone
+          </div>
+        </label>
       </div>
 
-      <div class="col-lg-4 col-md-4 col-sm-3 col-xs-3">
+      <div class="col-lg-4 col-md-4 col-sm-3 col-xs-4">
         <input hidden type="radio" id="multi" value="multi" name="type" formControlName="type">
-        <label class="multi" for="multi"><img class="type-human" src="/assets/img/human2.png"> </label>
+        <label class="multi" for="multi">
+          <div class="size_img">
+            <div class="img_box">
+              <img src="/assets/img/human2.png">
+            </div>
+          </div>
+          <div class="size_desc">
+            With friend
+          </div>
+        </label>
       </div>
       
       <div class="clearfix"></div>
     </div>
-
-    <!--<div class="form-group lang row">
-      <p class="crafty_girls title">Choose Languages:</p>
-
-      <input hidden type="radio" id="en_ru" value="en_ru" name="languages" formControlName="languages">
-      <label class="en_ru" for="en_ru"></label>
-
-      <input hidden type="radio" id="en_de" value="en_de" name="languages" formControlName="languages">
-      <label class="en_de" for="en_de"></label>
-
-      <input hidden type="radio" id="de_ru" value="de_ru" name="languages" formControlName="languages">
-      <label class="de_ru" for="de_ru"></label>
-
-      <div class="clearfix"></div>
-    </div>-->
 
     <div class="form-group difficulty">
 
@@ -60,38 +107,44 @@
         <p class="title">Choose Difficulty:</p>
       </div>
 
-      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
-        <input hidden type="radio" id="small" value="small" name="difficulty" formControlName="difficulty">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 first">
+        <input hidden type="radio" id="small" value="small" name="difficulty" formControlName="difficulty">        
         <label class="small" for="small">
-          <div class="col-lg-12">
-            <img class="type-difficulty" src="/assets/img/small.jpg">
+          <div class="col-lg-12 size_img">
+            <div class="img_box">
+              <img src="/assets/img/small.jpg">
+            </div>
           </div>
-          <div class="col-lg-12">
-            <span>4x4</span>
+          <div class="col-lg-12 size_desc">
+            4x4
           </div>
         </label>
       </div>
 
-      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 first">
         <input hidden type="radio" id="medium" value="medium" name="difficulty" formControlName="difficulty">
         <label class="medium" for="medium">
-          <div class="col-lg-12">
-           <img class="type-difficulty" src="/assets/img/medium.jpg">
+          <div class="col-lg-12 size_img">
+            <div class="img_box">
+              <img src="/assets/img/medium.jpg">
+            </div>
           </div>
-          <div class="col-lg-12">
-            <span>6x4</span>
+          <div class="col-lg-12 size_desc">
+            6x4
           </div>
         </label>
       </div>
 
-       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 first">
         <input hidden type="radio" id="large" value="large" name="difficulty" formControlName="difficulty">
         <label class="large" for="large">
-          <div class="col-lg-12">
-           <img class="type-difficulty" src="/assets/img/large.jpg">
+          <div class="col-lg-12 size_img">
+           <div class="img_box">
+              <img src="/assets/img/large.jpg">
+            </div>
           </div>
-          <div class="col-lg-12">
-            <span>8x5</span>
+          <div class="col-lg-12 size_desc">
+            8x5
           </div>
         </label>
       </div>
@@ -106,3 +159,36 @@
   </form>
 
 </div>
+
+
+<!--WAIT FOR USER-->
+  <div class=" waiting start_box" *ngIf="isWait">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="mainmenu btn btn-info btn-lg" (click)="goToMainMenu()">Main menu</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="title-wait text-center">Wait for second user=)</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group share">
+        <label for="share_link" class="col-xs-12 col-md-5 control-label text-center">Share link to friend:</label>
+        <div class="col-xs-12 col-md-7 share-input">
+          <input type="text" class="form-control center-block" id="share_link" [value]="shareAbleLink">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <img class="center-block image-wait" src="assets/img/wait.gif">
+      </div>
+    </div>
+
+  </div>

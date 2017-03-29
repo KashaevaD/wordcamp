@@ -7,14 +7,17 @@ export class SingleplayerService {
   constructor(private _localStorage: LocalStorageService) { }
 
   public setUserNameAtLocalStorage(name: string): void {
-  // let currentName: string = this._localStorage.getLocalStorageValue("username");
     let setValueUsername: string = name;
 
      if (name === "") {
        setValueUsername = "Anonimous";
      }
     this._localStorage.setLocalStorageValue("username", setValueUsername);
+  }
 
+  public getShariableLink(roomId: number): string {
+    let base = document.querySelector('base').getAttribute("href") || "/";
+    return window.location.origin.concat(base, "mainmenu/multi/", roomId.toString());
   }
 
 }
