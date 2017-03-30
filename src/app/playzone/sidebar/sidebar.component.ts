@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
@@ -9,7 +9,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
 
   private _roomId:number;
   private _roomSubscriber:Subscription;
@@ -49,10 +49,7 @@ export class SidebarComponent implements OnInit {
         this._roomSubscriber.unsubscribe()
       }
     });
-
   }
-
-  ngOnInit() {}
 
   private _setSidebar(options:TStoreData): void {
     (options.type !== "single") ? this.multi = true : this.multi = false;
