@@ -1,66 +1,46 @@
-<div class="container settings">
+<router-outlet></router-outlet>
 
-  <div class="start_box" *ngIf="!isWait">
+<div class="settings">
 
-    <div class="row">
-      <h1 class="text-center crafty_girls">Welcome to Word-Camp</h1>
-    </div>
+  <div class="start_box" >
 
     <div class="row">
-      <div class="col-xs-12 intro" *ngIf="isNewUser && isMainMenuPage">
+      <h1 class="text-center text-info">Welcome to Word-Camp</h1>
+    </div><!--row-->
+
+    <div class="row">
+      <div class="col-xs-12  intro">
         <h2 class="col-xs-12 text-center">Hello, My Dear Friend!!!</h2>
-        <span class="col-xs-12 text-center">I am happy to see you =)</span>
-        <span class="col-xs-12 text-center "> <span class="bold">Here you can learn new words and challenge each other!</span></span>
+        <span class="col-xs-12 text-center bold">Here you can learn new words and challenge each other!</span>
+        <span class="col-xs-12 text-justify">Here you can learn new words and challenge each other! Here you can learn new words and challenge each other!
+          Here you can learn new words and challenge each other! Here you can learn new words and challenge each other!
+        </span>
       </div>
-    </div>
+    </div><!--row-->
 
     <div class="row">
 
-      <nav class="col-sm-12 col-md-12 col-xs-12 menu">
-        <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-sm-6 col-xs-12">
-          <a (click)="hideIntroForUser()" routerLink="/mainmenu/single" routerLinkActive="active" class="btn btn-primary btn-lg link">New Game</a>
+      <div class="name form-group has-success">
+        <label for="username" class="col-xs-6 col-sm-6 col-md-3 col-md-offset-1 col-lg-3 col-lg-offset-1 text-success text-center">Enter Your Name</label>
+        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+          <input type="text" placeholder="Enter" autocomplete="off" class="form-control center-block" id="username" required name="username" [(ngModel)]="userName">
         </div>
-        <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-sm-6  col-xs-12">
-          <a (click)="hideIntroForUser()" routerLink="/mainmenu/multi" routerLinkActive="active" class="btn btn-primary btn-lg link">Open Games</a>
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+          <a class="btn btn-info center-block next-step" (click)="sendUserToSingleMenu()">Next step</a>
         </div>
-      </nav>
+      </div> 
+   
 
-      <router-outlet></router-outlet>
+       <a class="link col-xs-12 text-center" (click)="showVideo($event)">Show intro video↓</a>
+    </div><!--row-->
 
-    </div>
-
-  </div>
-  <!--start_box-->
-
-  <div class=" waiting start_box" *ngIf="isWait">
 
     <div class="row">
-      <div class="col-xs-12">
-        <a href="#" class="mainmenu btn btn-primary btn-lg" (click)="goToMainMenu()">Main menu</a>
+      <div class="col-xs-12 block-gif" *ngIf="isOpenVideoIntro">
+        <img class="center-block intro-gif" src="assets/img/wait.gif">
       </div>
-    </div>
+    </div><!--row-->   
 
-    <div class="row">
-      <div class="col-xs-12">
-        <h1 class="title-wait text-center">Wait for second user=)</h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="form-group share">
-        <label for="share_link" class="col-xs-12 col-md-5 control-label text-center">Share link to friend:</label>
-        <div class="col-xs-12 col-md-7 share-input">
-          <input type="text" class="form-control center-block" id="share_link" [value]="shareAbleLink">
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <img class="center-block image-wait" src="assets/img/wait.gif">
-      </div>
-    </div>
-
-  </div>
+  </div><!--start_box-->
 
 </div>

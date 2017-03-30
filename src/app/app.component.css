@@ -1,6 +1,6 @@
 .main_container{
-  font-family: merriweather;
+  margin: 0 auto;
 }
-.row{
-  position: relative;
+* {
+  font-size: 14px;
 }
