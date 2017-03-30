@@ -10,9 +10,9 @@ export class DBService {
   public getObjectFromFB(path: string):FirebaseObjectObservable<any>  {
     return this._af.database.object(path);
   }
-  
 
-  public updateStateOnFireBase(id: number, cards:TCard[][], activeCards:TCard[],  users: TUser[], countHiddenBlock){
+
+  public updateStateOnFireBase(id: number, cards:TCard[], activeCards:TCard[],  users: TUser[], countHiddenBlock){
     return this._af.database.object(`rooms/${id}`).update({cards: cards, activeCards: activeCards, users: users, countHiddenBlock: countHiddenBlock });
   }
 
@@ -27,7 +27,7 @@ export class DBService {
 
     return queryObservable;
   }
-  
+
   public deleteRoom(id){
     return this._af.database.object(`rooms/${id}`).remove();
   }

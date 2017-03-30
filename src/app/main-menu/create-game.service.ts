@@ -29,7 +29,7 @@ export class CreateGameService {
     let score = 20;
     let size: { w: number, h: number } = SIZE[difficulty];
     let [lang1, lang2] = languages.split('_');
-    let cards: TCard[][] = [];
+    let cards: TCard[] = [];
     let idRoom: number = this._getGeneratedIdForRoom();
 
 
@@ -56,7 +56,7 @@ export class CreateGameService {
   }
 
 
-  private _createPlayingCards(col: number, row: number): TCard[][] {
+  private _createPlayingCards(col: number, row: number): TCard[] {
     let arr: TCard[] = [];
     let wordIdList: number[] = this._getWordIdList(row * col);
 
@@ -71,7 +71,8 @@ export class CreateGameService {
       arr.push(square);
     }
     arr.sort(this._sortRandom);
-    return this._createMatrix(arr, row, col);
+   // return this._createMatrix(arr, row, col);
+    return arr;
   }
 
   private _createMatrix(array: TCard[], row: number, col: number): TCard[][] {
