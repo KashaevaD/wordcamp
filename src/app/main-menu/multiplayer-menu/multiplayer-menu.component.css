@@ -18,6 +18,9 @@
 .find-user {
   margin: 2% 0 2% 0;
 }
+td.center {
+  text-align: center;
+}
 /******Difficulty********/
 .stars {
     display: inline;
@@ -47,24 +50,30 @@ button.join {
     float: none;
     margin: 2% auto;
 }
-.header h1{
+/*.header h1{
   display: inline-block;
   margin-right: 2%;
-}
-.header  {
+}*/
+/*.header  {
   padding-left: 35%;
-}
+}*/
 .header a.btn {
   padding: 10px;
-  margin-top: -15px;
 }
 .lang p, .type p, .difficulty p {
   text-align: center;
 }
 /******media********/
-@media screen and (max-width: 992px)  {
+@media screen and (max-width: 1124px)  {
   .table-wrap {
     height: 500px;
+  }
+  .header h1{
+    display: inline-block;
+    margin-right: 2%;
+  }
+  .header  {
+    padding-left: 35%;
   }
 }
 @media screen and (max-width: 768px)  {
@@ -81,6 +90,7 @@ button.join {
   .lang img {
     width: 27px;
   }
+  
 }
 @media screen and (max-width: 500px)  {
   h1 {
@@ -104,7 +114,7 @@ button.join {
     margin-left: -14px;
   }
   button.join {
-    padding: 5px 5px;
+    padding: 2px 4px;
     font-size: 1em;
   }
   .table-wrap {
@@ -117,13 +127,21 @@ button.join {
    .table-wrap .table td {
     padding: 2px;
   }
+  .header  {
+    padding-left: 10%;
+  }
+  input {
+    padding: 0;
+    padding-left: 10px;
+    
+  }
 }
 @media screen and (max-width: 320px)  {
   h1 {
     font-size: 1.8em;
   }
   .header  {
-    padding-left: 10%;
+    padding-left: 5%;
   }
   .header a.btn {
     padding: 4px;
@@ -141,7 +159,7 @@ button.join {
     margin-left: -10px;
   }
   button.join {
-    padding: 5px 5px;
+    padding: 2px 3px;
     font-size: .8em;
   }
   .table-wrap {

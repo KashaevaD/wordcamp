@@ -1,8 +1,8 @@
 <div class="center" >
  <div class="row">
     <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 header">
-      <h1 class="head" >Word-Camp</h1>
-      <a class="btn btn-info" routerLink="/mainmenu/single">Create new</a>
+      <h1 class="col-lg-offset-5 col-lg-4 head text-info" >Word-Camp</h1>
+      <a class="col-lg-offset-2 col-lg-1 btn btn-info" routerLink="/mainmenu/single">Create new</a>
       <router-outlet></router-outlet>
   </div>
 </div>
@@ -29,19 +29,19 @@
     <tbody>
 
       <tr class="default data " *ngFor="let item of rooms">
-        <td>{{item.player}}</td>
-        <td>
+        <td >{{item.player}}</td>
+        <td class="center">
           <div class="lang">
             <img class="first" [src]="item.language.first.src">
             <img class="last" [src]="item.language.last.src">
           </div>
         </td>
-        <td>
+        <td class="center">
           <div  class="stars" *ngFor="let img of item.difficulty">
             <img [src]="img.src">
           </div>
-        </td>
-        <td ><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
+        </td >
+        <td class="center"><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
       </tr>
     
     </tbody>
