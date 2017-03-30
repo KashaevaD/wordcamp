@@ -73,7 +73,7 @@ export class CreateGameService {
     }
     arr.sort(this._sortRandom);
     return arr;
-   // return this._createMatrix(arr, row, col);
+
   }
 
   private _sortRandom(): number {

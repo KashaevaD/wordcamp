@@ -1,57 +1,252 @@
-* {
-  font-size: 1em;
-}
-@media screen and (max-width: 1300px)  {
-  * {
-      font-size: 18px;
-    }
-}
-
-.name-container {
- padding-left: 25px;
-
-}
-
 .sidebar {
   line-height: 80px;
   height: 80px;
   box-sizing: border-box;
   -webkit-box-shadow: 0 3px 8px 4px rgba(0, 0, 0, 0.4);
   box-shadow: 0 3px 8px 4px rgba(0, 0, 0, 0.4);
-  font-size: 2.5rem;
-  transform: translateX(-10px);
-  width: 105%;
+  font-size: 24px;
   position: relative;
+  margin: 0 auto;
 }
 
-.btn.btn-lg.btn-info{
-  display: inline-block;
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-  font-size:.7em;
+.sidebar > div {
+  height: inherit;
 }
 
-.multi{
-  font-size: 2rem;
-  line-height: 35px;
-}
-
-.score{
+.score {
   color: red;
 }
 
-.circle-p1, .circle-p2 {
+.btn{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  font-size:.7em;
+  float: right;
+}
+
+.circle {
   width: 14px;
   height: 14px;
+  top: calc(50% - 7px);
   background: red;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-  border-radius: 7px;
+  border-radius: 50%;
   position: absolute;
-  left:  8px;
+  left: 0;
 }
-.circle-p1 {
-  top: 9px;
+
+.player-name{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.circle-p2 {
-  top: 54px;
+
+.score-container {
+  font-weight: bold;
 }
+
+.player-row {
+  position: relative;
+  height: 50%;
+  line-height: 40px;
+  padding: 0;
+}
+
+/*END BASIC CLASS*/
+
+.sidebar-multi .player-name {
+  padding-left: 20px;
+  width: 60%;
+}
+
+.sidebar-multi .player-name, .sidebar-multi .score-container {
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (max-width: 991px) {
+  .sidebar{
+    font-size: 20px;
+    line-height: 60px;
+    height: 60px;
+  }
+
+  .sidebar-single .score-container, .sidebar-single .time-container {
+    padding-right: 0;
+  }
+
+  .player-row {
+    line-height: 30px;
+  }
+
+  .btn {
+    padding: 7px 10px;
+  }
+
+  .circle {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media screen and (max-width: 767px)  {
+
+  .btn-container {
+    position: absolute;
+    padding: 0;
+    top: -34px;
+    left: 0;
+    width: 100%;
+    height: 34px;
+  }
+
+  .btn {
+    position: static;
+    transform: translateY(0);
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .sidebar{
+    margin-top: 34px;
+  }
+
+  .sidebar-single .player-name{
+    width: 50%;
+  }
+
+  .sidebar-single .score-container{
+    padding: 0;
+    text-align: center;
+  }
+
+  .sidebar-single .time-container {
+    text-align: right;
+  }
+
+  .sidebar-multi .player-name {
+    padding-left: 0;
+  }
+
+  .sidebar-multi .player-container {
+    padding: 0;
+  }
+
+  .sidebar-multi .player-row {
+    height: 100%;
+    line-height: 60px;
+  }
+
+  .sidebar-multi .score-title {
+    display: none;
+  }
+
+  .sidebar-multi .player1 {
+    padding-left: 1%;
+  }
+
+  .sidebar-multi .player1 .player-name {
+    width: auto;
+    max-width: 75%;
+    text-align: right;
+  }
+
+  .sidebar-multi .player1 .score-container {
+    padding: 0;
+    width: auto;
+  }
+
+  .sidebar-multi .player2 .player-name {
+    padding: 0;
+    width: auto;
+    max-width: 70%;
+    text-align: right;
+  }
+
+  .sidebar-multi .player2 {
+    float: right;
+    text-align: right;
+    padding-right: 1%;
+  }
+
+  .sidebar-multi .time-container {
+    position: absolute;
+    margin-left: 50%;
+    padding: 0;
+    border-right: solid 4px #5bc0de;
+    border-left: solid 4px #5bc0de;
+    text-align: center;
+    transform: translateX(-50%);
+  }
+
+  .time {
+    display: none;
+  }
+
+  .player-active {
+    background-color: greenyellow;
+  }
+}
+
+@media screen and (max-width: 550px)  {
+
+  .sidebar {
+    line-height: 40px;
+    height: 40px;
+  }
+
+  .sidebar-multi .player-row {
+    line-height: 40px;
+  }
+
+  .sidebar-single .time-container {
+    margin-right: 3%;
+  }
+
+  .player-container, .time-container {
+    font-size: 16px;
+  }
+
+  .time-container {
+    text-align: center;
+  }
+
+  .player-container {
+    padding-right: 0;
+    padding-left: 3%;
+  }
+
+  .time-container {
+    padding-left: 0;
+    padding-right: 5px;
+  }
+
+  .sidebar-single .player-container{
+    width: 72%;
+  }
+
+  .sidebar-single .player-name{
+    width: auto;
+  }
+
+  .sidebar-multi .player1 .player-name {
+    max-width: 65%;
+  }
+
+  .player-name {
+    max-width: 80%;
+    padding: 0;
+    text-align: right;
+  }
+
+  .score-container {
+    width: auto;
+    padding: 0;
+  }
+
+  .score-title {
+    display: none;
+  }
+}
+

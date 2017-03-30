@@ -2,14 +2,14 @@ import { Subscription, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
-import { SidebarService } from './sidebar/sidebar.service'
+import { SidebarService } from './sidebar/sidebar.service';
 
 @Injectable()
 export class GamePlayService {
 
   private _roomId: number;
   private _users: TUser[];
-  private _cards: TCard[][];
+  private _cards: TCard[];
   private _gameType: string;
   private _activeCards: TCard[];
 
@@ -19,17 +19,21 @@ export class GamePlayService {
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
 
+  public _roomObservable;
+
   public startGame: Subject<any>;
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
+  public pause: Subject<any>;
 
 
   constructor(
     private _dbService: DBService,
     private _router: Router,
-    private _sidebarService: SidebarService,) {
+    private _sidebarService: SidebarService) {
     this.startGame = new Subject();
     this.updateField = new Subject();
+    this.pause = new Subject();
   }
 
 
@@ -50,9 +54,8 @@ export class GamePlayService {
         firstDataSubscriber.unsubscribe();
       });
 
-    let roomSubscriberForFistData = this._dbService.getObjectFromFB(`rooms/${roomId}`)
+    this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
-
   }
 
 
@@ -78,23 +81,23 @@ export class GamePlayService {
 
   }
 
+
   private _initSidebar(data) {
 
     this._sidebarService.initSidebar(data);
 
     this._timeSubscriber = this._sidebarService.timeIsUp.subscribe(() => {
-
       if (this._gameType === 'single') {
         this.endGame();
       }
       else if (this._gameType === 'multi') {
+        if(this._timerId)clearTimeout(this._timerId);
         this._currentUser.score -= 5;
         this._changeUserScore();
 
-
+        this.pause.next();
         this._users.forEach(user => user.isActive = !user.isActive);
         this._activeCards.forEach( card => card.isOpen = false );
-
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
       }
     });
@@ -134,10 +137,6 @@ export class GamePlayService {
         if (!this._currentUser.isActive) {
           this._updateCards(activeCards);
         }
-        if (this._gameType === 'multi') {
-          this._sidebarService.stopTimer();
-          this._sidebarService.startTimer();
-        }
         break;
       case 1:
         if (!this._currentUser.isActive) {
@@ -147,8 +146,12 @@ export class GamePlayService {
         break;
       case 2:
         this._isWin(this._cards);
-        if (this._currentUser.isActive) {
           if (!activeCards[0].isOpen || activeCards[0].isHide) {
+             if(this._gameType === 'multi'){
+               this._sidebarService.stopTimer();
+               this._sidebarService.startTimer();
+             }
+            if (this._currentUser.isActive) {
             this._timerId = setTimeout(() => {
               this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock);
             }, 500);
@@ -168,22 +171,23 @@ export class GamePlayService {
 
   public prepareNewState(activeCards: TCard[]) {
     if (activeCards.length === 2) {
-      this._checkactiveCards(activeCards);
-      if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
+      this._checkActiveCards(activeCards);
     }
     this._updateCards(activeCards);
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
   }
 
 
-  private _checkactiveCards(activeCards: TCard[]) {
+  private _checkActiveCards(activeCards: TCard[]) {
     if (activeCards[0].wordId === activeCards[1].wordId) {
       activeCards[0].isHide = true;
       activeCards[1].isHide = true;
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
+      this._sidebarService.stopTimer();
     } else {
       this._timerId = setTimeout(() => {
+        if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
         activeCards.forEach(card => card.isOpen = false);
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, activeCards, this._users, this.countHiddenBlock);
       }, 500);
@@ -197,31 +201,30 @@ export class GamePlayService {
     this._users.forEach(user => {
       if (user.id === this._currentUser.id) {
         user.score = this._currentUser.score;
-        if (user.score < 0) user.score = 0;
+        if (user.score < 0){
+          this._currentUser.score = 0;
+          user.score = 0;
+        }
       }
     });
   }
 
 
-
   private _updateCards(activeCards: TCard[]) {
     this._activeCards = activeCards;
-    this._cards.forEach(cardRow => {
-      cardRow.forEach(card => {
-        activeCards.forEach(activeCard => {
-          if (card.id === activeCard.id) {
-            card.isOpen = activeCard.isOpen;
-            card.isHide = activeCard.isHide;
-          }
-        });
+    this._cards.forEach(card => {
+      activeCards.forEach(activeCard => {
+        if (card.id === activeCard.id) {
+          card.isOpen = activeCard.isOpen;
+          card.isHide = activeCard.isHide;
+        }
       });
     });
   }
 
 
-
-  private _isWin(cells: TCard[][]): void {
-    if (this.countHiddenBlock === (cells.length * cells[0].length) / 2) {
+  private _isWin(cells: TCard[]): void {
+    if (this.countHiddenBlock === (cells.length / 2) ) {
 
       if (this._gameType === 'multi') {
         let diff: number = this._users[0].score - this._users[1].score;
@@ -239,7 +242,6 @@ export class GamePlayService {
         }
       }
       else this._users[0].result = 'win';
-
       this.endGame();
     }
 
@@ -258,7 +260,7 @@ export class GamePlayService {
   public removeSubscriptions() {
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
+    this._roomObservable.unsubscribe();
   }
-
 
 }
