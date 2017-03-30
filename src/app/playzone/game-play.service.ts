@@ -170,8 +170,6 @@ export class GamePlayService {
 
 
   public prepareNewState(activeCards: TCard[]) {
-    console.log('active',activeCards);
-    console.log('all',this._cards);
     if (activeCards.length === 2) {
       this._checkActiveCards(activeCards);
     }
