@@ -54,9 +54,6 @@ export class GamePlayService {
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
-
-    console.log(this._roomObservable);
-
   }
 
 

@@ -1,31 +1,82 @@
-<div class="row sidebar">
+<div class="row">
 
-  <div *ngIf="!multi" class="col-md-4 col-sm-4 col-xs-3">
-    <strong>User name: {{firstUser.name}}</strong>
-  </div>
-  <div *ngIf="!multi" class="col-md-4 col-sm-3 col-xs-3">
-    <strong>Score: <strong class="score">{{firstUser.score}}</strong></strong>
+  <div *ngIf="!multi">
+
+    <div class="sidebar sidebar-single">
+
+      <div class="col-sm-7 col-xs-9 player-container">
+
+        <div class="col-sm-8 col-xs-8 player-name">
+          <strong>{{firstUser.name}}</strong>
+        </div>
+
+        <div class="col-sm-4 col-xs-4 score-container">
+          <span class="score-title">Score</span>
+          <span>: <span class="score">{{firstUser.score}}</span></span>
+        </div>
+
+      </div>
+
+      <div class="col-sm-2 col-xs-3 time-container">
+        <strong>Time: {{time}}</strong>
+      </div>
+
+      <div class="col-xs-3">
+        <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
+      </div>
+
+    </div>
+
   </div>
 
   <div *ngIf="multi">
-    <div  class="col-md-4 col-sm-4 col-xs-3 multi name-container">
-      <div *ngIf="firstUser.isActive" class="circle-p1"></div><p><strong>Player 1: {{firstUser.name}}</strong></p>
-      <div *ngIf="secondUser.isActive" class="circle-p2"></div><p><strong>Player 2: {{secondUser.name}}</strong></p>
+
+    <div class="sidebar sidebar-multi">
+
+      <div class="col-sm-7 col-xs-12 player-container">
+
+        <div class="player-row player1 col-sm-12 col-xs-5" [class.player-active]="firstUser.isActive">
+          <div class="player-name">
+            <div *ngIf="firstUser.isActive" class="circle hidden-xs"></div>
+            <strong>{{firstUser.name}}</strong>
+          </div>
+
+          <div class="score-container">
+            <span class="score-title">Score</span>
+            <span>: <span class="score">{{firstUser.score}}</span></span>
+          </div>
+        </div>
+
+
+        <div class="player-row player2  col-sm-12 col-sm-offset-0 col-xs-offset-2 col-xs-5" [class.player-active]="secondUser.isActive">
+
+          <div class="player-name">
+            <div *ngIf="secondUser.isActive" class="circle hidden-xs"></div>
+            <strong>{{secondUser.name}}</strong>
+          </div>
+
+          <div class="score-container">
+            <span class="score-title">Score</span>
+            <span>: <span class="score">{{secondUser.score}}</span></span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="col-sm-2 col-xs-2 time-container">
+        <strong class="time">Time: </strong><strong>{{time}}</strong>
+      </div>
+
+
+      <div class="col-xs-3">
+        <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
+      </div>
+
     </div>
-    <div class="col-md-4 col-sm-3 col-xs-3 multi">
-      <p><strong>Score: </strong><strong class="score">{{firstUser.score}}</strong></p>
-      <p><strong>Score: </strong><strong class="score">{{secondUser.score}}</strong></p>
-    </div>
-  </div>
 
-  <div class="col-md-2 col-sm-2 col-xs-3">
-    <strong>Time: {{time}}</strong>
   </div>
-
-  <div class="col-md-2 col-sm-3 col-xs-3">
-    <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
-  </div>
-
 
 </div>
 
