@@ -35,7 +35,6 @@ export class MultiplayerService {
     for (let i:number = 0; i < count; i++ ) {
       arr.push(this._starOfDifficulty[i]);
     }
-
     return arr;
   }
 

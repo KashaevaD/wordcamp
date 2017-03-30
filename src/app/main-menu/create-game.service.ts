@@ -28,7 +28,8 @@ export class CreateGameService {
   public makePlayZone({ languages, difficulty, username, type }): void {
     let score = 20;
     let size: { w: number, h: number } = SIZE[difficulty];
-    let [lang1, lang2] = languages.split('_');
+    let lang1:string = languages.first;
+    let lang2:string = languages.last;
     let cards: TCard[] = [];
     let idRoom: number = this._getGeneratedIdForRoom();
 
@@ -71,22 +72,8 @@ export class CreateGameService {
       arr.push(square);
     }
     arr.sort(this._sortRandom);
-   // return this._createMatrix(arr, row, col);
     return arr;
-  }
 
-  private _createMatrix(array: TCard[], row: number, col: number): TCard[][] {
-    let matrix: TCard[][] = [];
-    let count: number = 0;
-
-    for (let i: number = 0; i < row; i++) {
-      matrix[i] = [];
-      for (let j: number = 0; j < col; j++) {
-        matrix[i][j] = array[count];
-        count++;
-      }
-    }
-    return matrix;
   }
 
   private _sortRandom(): number {
@@ -112,9 +99,5 @@ export class CreateGameService {
     return new Date().getTime();
   }
 
-  public getShariableLink(roomId: number): string {
-    let base = document.querySelector('base').getAttribute("href") || "/";
-    return window.location.origin.concat(base, "mainmenu/multi/", roomId.toString());
-  }
 }
 
