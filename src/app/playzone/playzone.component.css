@@ -1,7 +1,7 @@
 .field {
-  min-height: 768px;
+  max-height: 768px;
   width:100%;
-  padding: 5% 0 0;
+  padding: 5% 0;
   position: relative;
 }
 
@@ -93,6 +93,10 @@
 
 @media (min-width: 992px)  {
 
+  .flipper {
+    font-size: 14px;
+  }
+
   .large .row{
     width: 970px;
   }
@@ -117,7 +121,7 @@
 @media (min-width: 768px)  {
 
   .flipper {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .medium .flipper {
@@ -134,7 +138,7 @@
 @media (max-width: 767px)  {
 
   .flipper {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .medium .row{
@@ -209,7 +213,7 @@
 @media (max-width: 450px)  {
 
   .flipper {
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .large .flipper {
@@ -227,6 +231,10 @@
 }
 
 @media (max-width: 400px)  {
+
+  .flipper {
+    font-size: 8px;
+  }
 
   .large .flipper {
     width: 50px;
