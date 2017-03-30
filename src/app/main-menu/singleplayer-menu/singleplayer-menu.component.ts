@@ -74,30 +74,25 @@ export class SingleplayerMenuComponent {
     event.preventDefault();
   }
 
-  public setStateIsEditing() {
+  public setStateIsEditing(): void {
     this.isEditing = true;
   }
-  public changeUserNameAtLocalStorage(event) {
+  public changeUserNameAtLocalStorage(event): void {
     this.isEditing = false;
     let name:string = event.target.value;
     this._singleService.setUserNameAtLocalStorage(name);
     this.userName = name;
   }
 
-  public selectAll(e) {
+  public allotAllText(e): void {
     e.target.select();
   }
 
-  public setNameForControllToForm(e) {
+  public setNameForControllToForm(e) : void {
     let src: string = e.target.src;
     let name: string = e.target.name;
-    if (e.target.dataset.order === "first") {
-      this.menuGame.value.languages.first = name;
-    } else {
-      this.menuGame.value.languages.last = name;       
-    }
-
-    // nnnnnnneeeeeeedddddd to ccchhhhaaaannggeeeddddd
+    (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;       
+    //Set the same picture on the main dropdown button
     e.path[3].previousElementSibling.firstElementChild.src = src;
     e.path[3].previousElementSibling.firstElementChild.name = name;
   }

@@ -29,8 +29,6 @@ export class MainMenuComponent {
     }
   }
 
-
-
   public showVideo(event) {
     this.isOpenVideoIntro = !this.isOpenVideoIntro;
     event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
@@ -43,11 +41,9 @@ export class MainMenuComponent {
             window.scrollTo(0, 0 + (progress * 350));
         }
     });
-
   }
 
 private animate(options) {
-
     var start = performance.now();
     requestAnimationFrame(function _animate(time) {
         var timeFraction = (time - start) / options.duration;

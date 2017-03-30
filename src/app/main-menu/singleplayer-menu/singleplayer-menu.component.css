@@ -20,7 +20,6 @@
 .lang p, .type p, .difficulty p {
   text-align: center;
 }
-
 /*******userName*********/
 .exists-name {
   margin-top: 10px;
@@ -88,7 +87,6 @@ div.new-name label {
   box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
   border-radius: 50%;
 }
-
 ul li {
   padding: 10px;
   display: inline-block;
@@ -192,7 +190,6 @@ div.lang.last  {
 .waiting .share-input {
   margin: 0 auto;
 }
-
 /******** media **********/
 @media screen and (min-width: 1024px)  {
   /*.intro span, .intro h2, .intro .link {
@@ -238,8 +235,7 @@ div.lang.last  {
 
   .lang p, .type p, .difficulty p {
   text-align: left;
-}
-
+  }
 }
 @media screen and (max-width: 768px)  {
   .title {

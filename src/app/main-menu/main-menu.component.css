@@ -1,6 +1,5 @@
 h1 {
   font-size: 4em;
-  /*text-shadow: 1px 2px 5px #0E0E69;*/
 }
 
 .start_box {
@@ -14,7 +13,6 @@ div.name {
 div.name label {
    font-size: 1.7em;
    font-weight: normal;
-   /*padding: 10px;*/
 }
 img.intro-gif {
   width: 50%;
@@ -22,27 +20,6 @@ img.intro-gif {
 input {
   font-size: 14px;
 }
-
-/*.menu .link.btn-info{
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-}*/
-
-/*.settings{
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-  width: 100%;
-  height: 850px;
-}*/
-
-/*.menu {
-   float: none;
-   margin: 10px auto;
-   width: 50%;
-}*/
-
-/*.intro {
-  padding: 20px;
-}*/
-
 .intro span, .intro h2, .link {
    font-size: 1.8em;
    padding-top: 1%;
@@ -51,11 +28,9 @@ input {
  .link {
    cursor:pointer;
  }
-
  div.name .next-step, input{
    font-size: 1.2em;
  }
-
 .intro span.bold{
   font-weight: bold;
 }
@@ -66,41 +41,6 @@ input {
 .block-gif {
   padding: 10px 0px 20px 0px;
 }
-/*.row div .intro-gif {
-  padding: 20px;
-}*/
-
-/********wait******/
-/*.waiting {
-  margin: 4% auto;
-}
-.waiting .title-wait{
-  text-shadow: 1px 2px 5px #20B2AA;
-  margin-top: 3%;
-}
-label {
-  font-size: 2em;
-}
-input {
-    font-size:1.2em;
-}
-.form-group.share {
-  margin-top: 4%;
-}
-.image-wait {
-  margin: 2% auto;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  border-radius: 20px;
-  width: 55%;
-}
-.btn.btn-info.mainmenu{
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
-  float: right !important;
-}
-.share-input {
-  margin: 0 auto;
-}*/
-
 /******** media **********/
 
 @media screen and (min-width: 1024px)  {
@@ -108,7 +48,6 @@ input {
     font-size: 1.5em;
   }*/
 }
-
 @media screen and (max-width: 992px)  {
   h1 {
     font-size: 3em;
@@ -117,7 +56,6 @@ input {
     font-size: 1.5em;
   }
 }
-
 @media screen and (max-width: 500px)  {
   h1{
     font-size: 2em;
@@ -139,7 +77,6 @@ input {
     margin: 10px 0 10px 0;
   } 
 }
-
 @media screen and (max-width: 320px)  {
   h1{
     font-size: 1.8em;
