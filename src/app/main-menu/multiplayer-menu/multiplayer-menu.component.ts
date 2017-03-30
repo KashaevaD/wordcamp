@@ -17,6 +17,7 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public rooms: TOutputData[] =[];
   private subscribe: Subscription;
+  private imageOfLanguages: any[] = [];
 
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
@@ -25,17 +26,10 @@ export class MultiplayerMenuComponent implements OnInit {
               private _router: Router,
               private _createGameService: CreateGameService,
               private _dbService: DBService) {
+   this.imageOfLanguages = this._joingameService.imageOfLanguages;
 
-   this.subscribe = this._dbService.getAllMultiPlayerRoom().subscribe(data => {
-      this.rooms  =
-        data.filter(item => {
-                if (item.users.length < 2 && !this._multiService.isItemExistsInCurrentArray(item, this.rooms))  return item;
-            })
-            .map(item => {
-                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: item.languages};
-            });
-   });
-
+   
+   this._updateRooms();
     // event on starting game
     let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
       startGameSubscriber.unsubscribe();
@@ -53,11 +47,47 @@ export class MultiplayerMenuComponent implements OnInit {
     });
   }
 
+  private _updateRooms() {
+    this.subscribe = this._dbService.getAllMultiPlayerRoom().subscribe(data => {
+      this.rooms  =
+        data.filter(item => {
+                if (item.users.length < 2 && !this._multiService.isItemExistsInCurrentArray(item, this.rooms))  return item;
+            })
+            .map(item => {
+                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: this.setSrcForImageLanguage(item.languages)};
+            });
+      });
+  }
+
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
-    console.log("dfdf");
     this._joingameService.addUserToFireBase(idRoom);
     this._localSrorage.setLocalStorageValue("userid", "1");
   }
+
+  public findRoomByUserName(e) {
+    let inputValue = e.target.value;
+    if (inputValue !== "") {
+      let arr = this.rooms.filter((item)=> {
+        let regex = new RegExp(`${inputValue}`, 'ig');
+        if(regex.test(item.player)) return item; 
+      });
+      this.rooms = arr;
+    } else {
+      this._updateRooms();
+    }
+  }
+
+  private setSrcForImageLanguage(lang): {} {
+    let first = lang.first;
+    let last = lang.last;
+    let obj = {first: {}, last: {}};
+    this.imageOfLanguages.forEach((item) => {
+      if (item.name === first) obj.first = item;
+      if (item.name === last) obj.last = item;
+    });
+    return obj;
+  }
+
 
 }

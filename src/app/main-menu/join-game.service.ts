@@ -7,6 +7,25 @@ import { DBService } from '../db.service';
 @Injectable()
 export class JoinGameService {
 
+    public imageOfLanguages: any[] = [
+    {
+      src: "/assets/img/icons/germany.svg",
+      name: "de"
+    },
+    {
+      src: "/assets/img/icons/united-kingdom.svg",
+      name: "en"
+    },
+    {
+      src: "/assets/img/icons/russia.svg",
+      name: "ru"
+    },
+    {
+      src: "/assets/img/icons/netherlandish.svg",
+      name: "nl"
+    }
+  ];
+
    constructor(private _dbService: DBService,
               private _createGameService: CreateGameService,
               private _localSrorage: LocalStorageService) {}

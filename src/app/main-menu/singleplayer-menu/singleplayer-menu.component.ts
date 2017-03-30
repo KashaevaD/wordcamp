@@ -18,20 +18,8 @@ export class SingleplayerMenuComponent {
   private menuGame: FormGroup;
   public userName: string;
   public isEditing:boolean = false;
-  public imageOfLanguages: any[] = [
-    {
-      src: "/assets/img/icons/germany.svg",
-      name: "de"
-    },
-    {
-      src: "/assets/img/icons/united-kingdom.svg",
-      name: "en"
-    },
-    {
-      src: "/assets/img/icons/russia.svg",
-      name: "ru"
-    }
-  ];
+  public imageOfLanguages: any[] = [];
+
 
   public isWait: boolean = false;
   public shareAbleLink: string = "";
@@ -40,10 +28,11 @@ export class SingleplayerMenuComponent {
   constructor(private _build: FormBuilder,
     private _singleService: SingleplayerService,
     private _joingameService: JoinGameService,
-     private _router: Router,
+    private _router: Router,
     private _localSrorage: LocalStorageService,
     private _createGameService: CreateGameService,
     private _dbService: DBService) {
+      this.imageOfLanguages = this._joingameService.imageOfLanguages;
 
     this.userName = this._localSrorage.getLocalStorageValue("username")
 
@@ -94,7 +83,10 @@ export class SingleplayerMenuComponent {
     this._singleService.setUserNameAtLocalStorage(name);
     this.userName = name;
   }
- 
+
+  public selectAll(e) {
+    e.target.select();
+  }
 
   public setNameForControllToForm(e) {
     let src: string = e.target.src;

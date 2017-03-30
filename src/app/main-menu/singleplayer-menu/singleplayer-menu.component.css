@@ -3,13 +3,29 @@
     margin: 2% auto;
 }
 .title {
-    margin-top: 15%;
+    margin-top: 0;
     font-size: 1.5em;
 }
-.header h1, .header h1{
+.header h1{
   display: inline-block;
+  margin-right: 2%;
 }
+.header  {
+  padding-left: 35%;
+}
+.header a.btn {
+  padding: 10px;
+  margin-top: -15px;
+}
+.lang p, .type p, .difficulty p {
+  text-align: center;
+}
+
 /*******userName*********/
+.exists-name {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
 .exists-name .pen-edit {
   width: 4%;
   cursor: pointer;
@@ -41,12 +57,15 @@ div.new-name label {
   border-left: 5px solid #a94442; /* red */
 }
 /************Start radio lang******************/
+.buttons-lang {
+  text-align: center;
+}
 .box{
   display: inline-block;
 }
 .lang button {
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   background: rgba(0,0,0,0);
   border-radius: 50%;
   border:none;
@@ -57,14 +76,19 @@ div.new-name label {
   box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
   border-radius: 50%;
 }
+.dropdown-item img.languages {
+  width: 60px;
+  border: 1px solid grey;
+  border-radius: 50%;
+}
+
 .dropdown-item img.languages:hover {
+   border: none;
    -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
   box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
   border-radius: 50%;
 }
-.dropdown-item img.languages {
-  width: 60px;
-}
+
 ul li {
   padding: 10px;
   display: inline-block;
@@ -143,32 +167,32 @@ div.lang.last  {
 .waiting {
   margin: 4% auto;
 }
-.waiting .title-wait{
-  text-shadow: 1px 2px 5px #20B2AA;
+.waiting h1.title-wait{
   margin-top: 3%;
 }
-label {
+.waiting  label {
   font-size: 2em;
 }
-input {
-    font-size:1.2em;
+.waiting  input {
+   font-size:1.2em;
+    margin: 2% 0 2% 0;
 }
-.form-group.share {
+.waiting  .form-group.share {
   margin-top: 4%;
 }
-.image-wait {
+.waiting  .image-wait {
   margin: 2% auto;
   box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
   border-radius: 20px;
-  width: 55%;
+  width: 60%;
 }
-.btn.btn-info.mainmenu{
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+.waiting .btn.btn-info.mainmenu{
   float: right !important;
 }
-.share-input {
+.waiting .share-input {
   margin: 0 auto;
 }
+
 /******** media **********/
 @media screen and (min-width: 1024px)  {
   /*.intro span, .intro h2, .intro .link {
@@ -180,6 +204,9 @@ input {
   }
 }
 @media screen and (max-width: 992px)  {
+  .title {
+    margin-top: 15%;
+  }
   h1 {
     font-size: 3em;
   }
@@ -197,7 +224,7 @@ input {
   }
   .difficulty .size_desc, .type .size_desc {
     height: 10px;
-    font-size: .8em;
+    font-size: .9em;
   }
    .difficulty .img_box, .type .img_box{
     height: 70px; 
@@ -205,6 +232,14 @@ input {
   .title {  
     font-size: 1.2em;
   } 
+  .waiting  .image-wait {
+    width: 55%;
+  }
+
+  .lang p, .type p, .difficulty p {
+  text-align: left;
+}
+
 }
 @media screen and (max-width: 768px)  {
   .title {
@@ -226,17 +261,23 @@ input {
   .title {  
     font-size: 1em;
   } 
+  .waiting  .image-wait {
+    width: 75%;
+  }
 }
 @media screen and (max-width: 500px)  {
   h1{
     font-size: 2em;
   }
+  .waiting h1.title-wait{
+    font-size: 1.5em;
+  }
   .exists-name span, .title, div.new-name label {
     font-size: 1em;
   }
-  div.new-name label {
-    padding: 1% auto 1% auto;
-  }
+  /*div.new-name label {
+    padding: 1% 0 1% 0;
+  }*/
   .difficulty label, .type label {
     height: 80px;
   }
@@ -245,14 +286,16 @@ input {
   }
   .difficulty .size_desc, .type .size_desc{
     height: 20px;
-    font-size: .5em;
+    font-size: .7em;
   }
   .difficulty .img_box, .type .img_box{
     height: 45px; 
   }
   .title {
     margin-top: 10%;
-    margin-left: -15px;
+  }
+  div.new-name .username, .title  {
+     margin-left: -15px;
   }
   label.username {
    text-align: left;
@@ -263,6 +306,9 @@ input {
   .form-group {
     margin: 0 auto;
   }
+  .exists-name {
+    margin-bottom: 20px;
+  }
   .lang button {
     width: 80px;
     height: 80px;
@@ -271,10 +317,36 @@ input {
     width: 27px;
   }
   ul li {
-    padding: 4px;
+    padding: 6px;
   }
   .dropdown-menu {
     min-width: 120px;
+  }
+  .waiting  label {
+    font-size: 1.1em;
+  }
+  .waiting  input {
+    font-size:.8em;
+  }
+  .waiting  .image-wait {
+    width: 100%;
+    margin: 5% auto;
+  }
+  .waiting .mainmenu {
+    margin: 0px 0 20px 0;
+  }
+  .header  {
+    padding-left: 10%;
+  }
+  .header a.btn {
+    padding: 5px;
+    margin-top: -10px;
+  }
+  .dropdown-item img.languages {
+    border: none;
+    -webkit-box-shadow: 0 0 7px 1px rgba(0,0,0,0.5) ;
+    box-shadow: 0 0 7px 1px rgba(0,0,0,0.5);
+    border-radius: 50%;
   }
 }
 @media screen and (max-width: 320px)  {
