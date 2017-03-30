@@ -1,86 +1,90 @@
 h1 {
-  font-size: 4.5em;
-  text-shadow: 1px 2px 5px #0E0E69;
+  font-size: 4em;
 }
 
 .start_box {
-  min-height: 200px;
+  min-height: 500px;
+}
+div.name {
+  margin: 0 auto;
+  padding: 2% 0 5% 0;
 }
 
-.menu {
-   float: none;
-   margin: 10px auto;
-   width: 50%;
+div.name label {
+   font-size: 1.7em;
+   font-weight: normal;
 }
-
-.menu .link.btn-info{
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-}
-
-
-.settings{
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-  width: 100%;
-  height: 850px;
-
-}
-
- router-outlet {
-   margin: 2%;
- }
- span {
-   font-size: 2em;
-   padding: 15px;
- }
- h2 {
-  padding:10px 30px;
-  font-size: 3em;
-  text-shadow: 1px 2px 5px #4A708B;
-}
-span .bold{
-  font-weight: bold;
-   font-size: inherit;
-   color: #4A708B;
-}
-.info {
-  width: 50px;
-  position:fixed;
-  top: 50px;
-  left: 65%;
-}
-
-.intro {
-  padding: 20px;
-  margin: 20px;
-}
-/********wait******/
-.waiting {
-  /*position: relative;*/
-  margin: 4% auto;
-}
-.waiting .title-wait{
-  text-shadow: 1px 2px 5px #20B2AA;
-  margin-top: 3%;
-}
-label {
-  font-size: 2em;
+img.intro-gif {
+  width: 50%;
 }
 input {
-    font-size:1.2em;
+  font-size: 14px;
 }
-.form-group.share {
-  margin-top: 4%;
+.intro span, .intro h2, .link {
+   font-size: 1.8em;
+   padding-top: 1%;
+   padding-bottom: 1%;
 }
-.image-wait {
-  margin: 2% auto;
+ .link {
+   cursor:pointer;
+ }
+ div.name .next-step, input{
+   font-size: 1.2em;
+ }
+.intro span.bold{
+  font-weight: bold;
+}
+.intro-gif {
   box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  border-radius: 20px;
-  width: 55%;
+  border-radius: 5px;
 }
-.btn.btn-info.mainmenu{
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
-  float: right !important;
+.block-gif {
+  padding: 10px 0px 20px 0px;
 }
-.share-input {
-  margin: 0 auto;
+/******** media **********/
+
+@media screen and (min-width: 1024px)  {
+  /*.intro span, .intro h2, .intro .link {
+    font-size: 1.5em;
+  }*/
+}
+@media screen and (max-width: 992px)  {
+  h1 {
+    font-size: 3em;
+  }
+  .intro span, .intro h2, .link {
+    font-size: 1.5em;
+  }
+}
+@media screen and (max-width: 500px)  {
+  h1{
+    font-size: 2em;
+  }
+  .intro span, .intro h2, .link {
+    font-size: 1em;
+  }
+  div.name label {
+     font-size: 1em;
+      padding: 1%;
+  }
+  img.intro-gif {
+    width: 75%;
+  }
+  div.name .next-step {
+     margin-top: 2%;
+  } 
+  .intro h2 {
+    margin: 10px 0 10px 0;
+  } 
+}
+@media screen and (max-width: 320px)  {
+  h1{
+    font-size: 1.8em;
+  }
+  .intro {
+    margin: 0;
+  }
+  .intro h2 {
+    margin: 5px 0 5px 0;
+  }
 }

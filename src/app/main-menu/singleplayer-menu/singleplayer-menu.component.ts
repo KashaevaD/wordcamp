@@ -4,6 +4,9 @@ import { SingleplayerService } from "./singleplayer.service";
 import { CreateGameService } from "../create-game.service";
 import { LocalStorageService } from "../../local-storage.service";
 import { JoinGameService } from "../join-game.service";
+import { Router } from '@angular/router';
+import { Subscription } from "rxjs";
+import { DBService } from '../../db.service';
 
 @Component({
   selector: 'app-singleplayer-menu',
@@ -12,37 +15,95 @@ import { JoinGameService } from "../join-game.service";
 })
 export class SingleplayerMenuComponent {
 
-  public menuGame: FormGroup;
+  private menuGame: FormGroup;
+  public userName: string;
+  public isEditing:boolean = false;
+  public imageOfLanguages: any[] = [];
+
+
+  public isWait: boolean = false;
+  public shareAbleLink: string = "";
+  private _waitForUserSubscriber: Subscription;
 
   constructor(private _build: FormBuilder,
     private _singleService: SingleplayerService,
     private _joingameService: JoinGameService,
+    private _router: Router,
     private _localSrorage: LocalStorageService,
-    private _createGameService: CreateGameService) {
+    private _createGameService: CreateGameService,
+    private _dbService: DBService) {
+      this.imageOfLanguages = this._joingameService.imageOfLanguages;
 
-    let name: string = this._localSrorage.getLocalStorageValue("username");
+    this.userName = this._localSrorage.getLocalStorageValue("username")
 
     //reactive form for user
     this.menuGame = this._build.group({
-      username: new FormControl(name),
+      username: new FormControl(this.userName),
       type: new FormControl('single'),
-      languages: new FormControl('en_ru'),
+      languages: new FormGroup({
+            first: new FormControl('en'),
+            last: new FormControl('en')
+      }),
       difficulty: new FormControl('small')
     });
 
-    this._joingameService.getValueFromFormSubscribe = this.menuGame.valueChanges.subscribe(() => {
-       this._singleService.setUserNameAtLocalStorage(this.menuGame.value.username);
+    // event on starting game
+    let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
+      startGameSubscriber.unsubscribe();
+       this._router.navigate(['playzone', id]);  // send user  on game-field
+    });
+
+     //if user created a multiplayer game
+    this._waitForUserSubscriber = this._createGameService.waitForSecondUserMultiplayer.subscribe((id) => {
+      this.isWait = true;
+      this.shareAbleLink = this._singleService.getShariableLink(id);
+      
+       let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
+        if (data.$value !== null && data.users.length === 2) {
+          room.unsubscribe();
+          this._router.navigate(['playzone', id]);
+        }
+      });
     });
 
   }
 
-
   public onSubmit(event: Event): void {
     this._localSrorage.setLocalStorageValue("userid", "0");
-    this._joingameService.getValueFromFormSubscribe.unsubscribe();
-    this._singleService.setUserNameAtLocalStorage(this.menuGame.value.username);
     this._createGameService.makePlayZone(this.menuGame.value);
     event.preventDefault();
+  }
+
+  public setStateIsEditing(): void {
+    this.isEditing = true;
+  }
+  public changeUserNameAtLocalStorage(event): void {
+    this.isEditing = false;
+    let name:string = event.target.value;
+    this._singleService.setUserNameAtLocalStorage(name);
+    this.userName = name;
+  }
+
+  public allotAllText(e): void {
+    e.target.select();
+  }
+
+  public setNameForControllToForm(e) : void {
+    let src: string = e.target.src;
+    let name: string = e.target.name;
+    (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;       
+    //Set the same picture on the main dropdown button
+    e.path[3].previousElementSibling.firstElementChild.src = src;
+    e.path[3].previousElementSibling.firstElementChild.name = name;
+  }
+
+    public goToMainMenu(): void {
+    let array: string[] = this.shareAbleLink.split("/");
+    this._dbService.getObjectFromFB(`rooms/${array[array.length - 1]}`).remove()
+      .then(() => {
+        this.isWait = false;
+        this._router.navigate(['mainmenu']);
+      })
   }
 
 }
