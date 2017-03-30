@@ -49,6 +49,10 @@ export class SidebarService {
   private _getActiveUser(users:TUser[]):void {
     users.forEach((user) => {
       if (user.isActive === true){
+        if(this._activeUser && user.id !== this._activeUser.id){
+          this.stopTimer();
+          this.startTimer();
+        }
         this._activeUser = Object.assign({}, user);
       }
     });

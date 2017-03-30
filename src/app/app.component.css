@@ -1,2 +1,6 @@
-
-
+.main_container{
+  font-family: merriweather;
+}
+.row{
+  position: relative;
+}
