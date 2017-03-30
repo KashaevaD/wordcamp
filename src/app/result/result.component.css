@@ -148,6 +148,7 @@ strong{
   }
 
   .win, .lose, .draw {
+    max-width: 100%;
     width: auto;
   }
 }

@@ -1,7 +1,7 @@
 .field {
-  min-height: 768px;
+  max-height: 768px;
   width:100%;
-  padding: 5% 0 0;
+  padding: 5% 0;
   position: relative;
 }
 
