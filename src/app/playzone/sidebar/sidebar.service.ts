@@ -15,7 +15,7 @@ export class SidebarService {
   private _currentUserId:number;
 
   private readonly _timeDuration:{small:number, medium:number, large:number, multi:number} = {
-    small: 3000,
+    small: 60000,
     medium: 120000,
     large : 180000,
     multi: 5000,
