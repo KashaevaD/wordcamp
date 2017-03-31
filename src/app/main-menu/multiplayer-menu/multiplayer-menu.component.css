@@ -21,6 +21,9 @@
 td.center {
   text-align: center;
 }
+.create {
+  margin-top: 2%;
+}
 /******Difficulty********/
 .stars {
     display: inline;
@@ -90,7 +93,9 @@ button.join {
   .lang img {
     width: 27px;
   }
-  
+  .create {
+  margin-top: 0;
+}
 }
 @media screen and (max-width: 500px)  {
   h1 {
