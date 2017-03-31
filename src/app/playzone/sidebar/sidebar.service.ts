@@ -18,7 +18,7 @@ export class SidebarService {
     small: 60000,
     medium: 120000,
     large : 180000,
-    multi: 5000,
+    multi: 7000,
   };
 
 
