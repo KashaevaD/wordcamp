@@ -41,7 +41,7 @@ export class SingleplayerMenuComponent {
       username: new FormControl(this.userName),
       type: new FormControl('single'),
       languages: new FormGroup({
-            first: new FormControl('en'),
+            first: new FormControl('ru'),
             last: new FormControl('en')
       }),
       difficulty: new FormControl('small')
@@ -57,7 +57,7 @@ export class SingleplayerMenuComponent {
     this._waitForUserSubscriber = this._createGameService.waitForSecondUserMultiplayer.subscribe((id) => {
       this.isWait = true;
       this.shareAbleLink = this._singleService.getShariableLink(id);
-      
+
        let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
         if (data.$value !== null && data.users.length === 2) {
           room.unsubscribe();
@@ -91,7 +91,7 @@ export class SingleplayerMenuComponent {
   public setNameForControllToForm(e) : void {
     let src: string = e.target.src;
     let name: string = e.target.name;
-    (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;       
+    (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
     //Set the same picture on the main dropdown button
     e.path[3].previousElementSibling.firstElementChild.src = src;
     e.path[3].previousElementSibling.firstElementChild.name = name;

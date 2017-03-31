@@ -9,19 +9,19 @@ export class JoinGameService {
 
     public imageOfLanguages: any[] = [
     {
-      src: "/assets/img/icons/germany.svg",
+      src: "assets/img/icons/germany.svg",
       name: "de"
     },
     {
-      src: "/assets/img/icons/united-kingdom.svg",
+      src: "assets/img/icons/united-kingdom.svg",
       name: "en"
     },
     {
-      src: "/assets/img/icons/russia.svg",
+      src: "assets/img/icons/russia.svg",
       name: "ru"
     },
     {
-      src: "/assets/img/icons/netherlandish.svg",
+      src: "assets/img/icons/netherlandish.svg",
       name: "nl"
     }
   ];
