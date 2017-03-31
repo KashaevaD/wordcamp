@@ -14,9 +14,6 @@ div.name label {
    font-size: 1.7em;
    font-weight: normal;
 }
-img.intro-gif {
-  width: 50%;
-}
 input {
   font-size: 14px;
 }
@@ -35,8 +32,7 @@ input {
   font-weight: bold;
 }
 .intro-gif {
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  border-radius: 5px;
+  width: 50%;
 }
 .block-gif {
   padding: 10px 0px 20px 0px;
@@ -67,15 +63,15 @@ input {
      font-size: 1em;
       padding: 1%;
   }
-  img.intro-gif {
-    width: 75%;
+  .intro-gif {
+    width: 100%;
   }
   div.name .next-step {
      margin-top: 2%;
-  } 
+  }
   .intro h2 {
     margin: 10px 0 10px 0;
-  } 
+  }
 }
 @media screen and (max-width: 320px)  {
   h1{
