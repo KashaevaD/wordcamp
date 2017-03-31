@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
@@ -19,9 +19,7 @@ export class SidebarComponent {
   public secondUser: TUser = {name: "", score: 0, isActive: false, id: 1, result: "lose"};
   public multi:boolean;
   public time:number;
-  private _$sidebarEl;
 
-  @ViewChild('rootSidebar') _$rootSidebar:ElementRef;
 
   constructor(
     private _dbService: DBService,
@@ -54,14 +52,13 @@ export class SidebarComponent {
     });
   }
 
-  ngAfterViewInit() {
-  }
 
   private _setSidebar(options:TStoreData): void {
     (options.type !== "single") ? this.multi = true : this.multi = false;
     this.firstUser = options.users[0];
     this.secondUser = options.users[1];
   }
+
 
   private _changeUsersState(users: TUser[]): void {
     if (this.multi === false) {
