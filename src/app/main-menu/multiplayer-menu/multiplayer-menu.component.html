@@ -1,5 +1,23 @@
-<div class="table-wrap">
-  <table class="table table-hover " *ngIf="rooms.length > 0">
+<div class="center" >
+ <div class="row">
+    <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 header">
+      <h1 class="col-lg-offset-5 col-lg-4 head text-info" >Word-Camp</h1>
+      <a class="col-lg-offset-2 col-lg-1 btn btn-info" routerLink="/mainmenu/single">Create new</a>
+      <router-outlet></router-outlet>
+  </div>
+</div>
+
+<div class="form-group has-success find-user">
+    <label for="find" class="find col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter Name of Player</label>
+    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+      <input type="text" placeholder="enter name" autocomplete="off"
+      class="form-control center-block" id="find" required name="find" (input)="findRoomByUserName($event)">
+    </div>
+    <div class="clearfix"></div>        
+</div>
+
+<div class="table-wrap col-xs-12">
+  <table class="table table-hover ">
     <thead>
       <tr>
         <th>Player</th>
@@ -10,21 +28,23 @@
     </thead>
     <tbody>
 
-      <tr class="default data" *ngFor="let item of rooms">
-        <td>{{item.player}}</td>
-        <td>
+      <tr class="default data " *ngFor="let item of rooms">
+        <td >{{item.player}}</td>
+        <td class="center">
           <div class="lang">
-            <div [class]="item.language"></div>
+            <img class="first" [src]="item.language.first.src">
+            <img class="last" [src]="item.language.last.src">
           </div>
         </td>
-        <td>
+        <td class="center">
           <div  class="stars" *ngFor="let img of item.difficulty">
             <img [src]="img.src">
           </div>
-        </td>
-        <td><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
+        </td >
+        <td class="center"><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
       </tr>
     
     </tbody>
   </table>
+</div>
 </div>

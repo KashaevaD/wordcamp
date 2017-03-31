@@ -1,9 +1,54 @@
 .center {
-     float: none;
+    float: none;
     margin: 2% auto;
 }
-.create_game {
-  padding-bottom: 30px;
+.title {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+.header h1{
+  display: inline-block;
+  margin-right: 2%;
+}
+.header  {
+  padding-left: 35%;
+}
+.header a.btn {
+  padding: 10px;
+  margin-top: -15px;
+}
+.lang p, .type p, .difficulty p {
+  text-align: center;
+}
+
+/*******userName*********/
+.exists-name {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+.exists-name .pen-edit {
+  width: 4%;
+  cursor: pointer;
+}
+.exists-name span, .title {
+  font-size: 1.8em;
+}
+.exists-name{
+  padding: 2% 0 0 0;
+}
+div.new-name {
+  height: auto;
+  margin: 3% 0 3% 0;
+}
+div.new-name label {
+   font-size: 1.7em;
+   font-weight: normal;
+}
+.new-name input {
+  font-size: 14px;
+}
+.new-name div {
+  padding-right: 0px;
 }
 .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948; /* green */
@@ -11,187 +56,301 @@
 .ng-invalid:not(form) {
   border-left: 5px solid #a94442; /* red */
 }
-.title {
-  font-weight: bold;
-  font-size: 1.5em;
+/************Start radio lang******************/
+.buttons-lang {
+  text-align: center;
 }
-input {
-  padding: 10px 20px;
-  height: 50px;
-  font-size: 2em;
-}
-.form-group {
-  padding: 1% 0;
-}
-
-h2 {
-  padding:10px 30px;
-  font-size: 3em;
-  text-shadow: 1px 2px 5px #4A708B;
-}
-
-/*******radio btn type game*************/
-.type label {
-  width: 200px;
-  height: 30px;
-  position: relative;
-  margin-right: 40px;
+.box{
   display: inline-block;
+}
+.lang button {
+  width: 130px;
+  height: 130px;
+  background: rgba(0,0,0,0);
+  border-radius: 50%;
+  border:none;
   cursor: pointer;
-  opacity: .6;
-  transition: opacity .3s;
-  font-size: 2em;
+}
+.lang button img {
+   -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
+.dropdown-item img.languages {
+  width: 60px;
+  border: 1px solid grey;
+  border-radius: 50%;
 }
 
-.type label:before, .type label:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 200px;
-  height: 50px;
-  transition: all .3s;
+.dropdown-item img.languages:hover {
+   border: none;
+   -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5);
+  border-radius: 50%;
+}
+
+ul li {
+  padding: 10px;
+  display: inline-block;
+}
+.dropdown-menu {
+  background-color: rgba(240, 248, 255, 1);
+  min-width: 260px;
+  border-radius: 10%;
+}
+div.lang.last  {
+  margin-left: -45px;
+}
+/*******************radio buttons*****************/
+/*********type of game and difficulty*************/
+/*type of game*/
+.type label {
+  opacity: .4;
 }
 .type label:hover {
-  opacity: .9;
+  opacity: .8;
 }
 .type input:checked + label {
   opacity: 1;
-  text-shadow: -2px -2px 4px rgba(125, 146, 249, 1);
-  color: 	#104E8B;
   transition: all .3s;
 }
-/************Start radio lang******************/
-.lang label {
-  width: 90px;
-  height: 50px;
-  position: relative;
-  margin-left: 10px;
-  display: inline-block;
-  cursor: pointer;
-  opacity: .6;
+/*difficulty*/
+.difficulty label{
+  opacity: .5;
+}
+.difficulty label:hover{
+  opacity: .7;
+}
+.difficulty input:checked  + label{
+  opacity: 1;
+}
+.difficulty input:checked  + label .img_box img {
+  border-radius: 10px;
+   text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
+  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+}
+/********the same***********/
+.difficulty label, .type label {
+  cursor:pointer;
+  width: 100%;
+  height: 120px;
   transition: opacity .3s;
 }
-.lang label:before, .lang label:after {
-  content: "";
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  transition: all .3s;
+.difficulty .size_img, .type  .size_img{
+  height: 100px;
 }
-.lang label:before {
-  left:0;
+.difficulty .img_box, .type .img_box  {
+  height: 80px;
+  position: relative;
+  top:50%;
+  transform: translateY(-50%);
 }
-.lang label:after {
-  left:40px;
+.difficulty img, .type img {
+  display: block;
+  height: 100%;
+  width:auto;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 }
-.lang label:hover {
-  opacity: .75;
-}
-.lang input:checked + label {
-  opacity: 1;
-}
-.lang input:checked + label:before, .lang input:checked + label:after {
-  -webkit-box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 6px 2px rgba(0,0,0,0.5) ;
-}
-.de_ru:before{
-  background: url("/assets/img/icons/germany.svg");
-}
-.de_ru:after{
-  background: url("/assets/img/icons/russia.svg");
-}
-.en_de:before{
-  background: url("/assets/img/icons/united-kingdom.svg");
-}
-.en_de:after{
-  background: url("/assets/img/icons/germany.svg");
-}
-.en_ru:before{
-  background: url("/assets/img/icons/united-kingdom.svg");
-}
-.en_ru:after{
-  background: url("/assets/img/icons/russia.svg");
-}
-
-/*Start radio difficult*/
-.difficulty {
-  padding: 10px 0;
-  width: 360px;
-  margin: auto;
-  min-height: 150px;
-}
-.difficulty label{
-  font-family: merriweather;
-  font-size: 1.2em;
-  opacity: .5;
-  float: left;
-
-  margin-left: 30px;
-  box-sizing: border-box;
-  cursor: pointer;
-  border: 5px solid #a9a9a9;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+.difficulty .size_desc, .type .size_desc{
   text-align: center;
-  -o-text-overflow: clip;
-  text-overflow: clip;
-  -webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  -moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  -o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
-  transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1);
+  height: 20px;
+  font-size: 1em;
 }
-.difficulty label.small{
-    width:80px;
-    height: 80px;
-    line-height: 70px;
-    margin-top: 5%;
+/**************btn start************/
+.submit .btn {
+  margin: 2% 0 2% 0;
+}
+/********wait******/
+.waiting {
+  margin: 4% auto;
+}
+.waiting h1.title-wait{
+  margin-top: 3%;
+}
+.waiting  label {
+  font-size: 2em;
+}
+.waiting  input {
+   font-size:1.2em;
+    margin: 2% 0 2% 0;
+}
+.waiting  .form-group.share {
+  margin-top: 4%;
+}
+.waiting  .image-wait {
+  margin: 2% auto;
+  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+  border-radius: 20px;
+  width: 70%;
+}
+.waiting .btn.btn-info.mainmenu{
+  float: right !important;
+}
+.waiting .share-input {
+  margin: 0 auto;
 }
 
-.difficulty label.medium{
-    width:100px;
+/******** media **********/
+@media screen and (min-width: 1024px)  {
+  /*.intro span, .intro h2, .intro .link {
+    font-size: 1.5em;
+  }*/
+  .new-name input {
+     font-size: 20px;
+     padding: 20px 10px 20px 10px;
+  }
+}
+@media screen and (max-width: 992px)  {
+  .title {
+    margin-top: 15%;
+  }
+  h1 {
+    font-size: 3em;
+  }
+  .exists-name span, .title {
+    font-size: 1.5em;
+  }
+  .exists-name .pen-edit {
+    width: 7%;
+  }
+  .difficulty label, .type label {
     height: 100px;
-    line-height: 90px;
-     margin-top: 2%;
+  }
+  .difficulty .size_img, .type .size_img{
+    height: 90px;
+  }
+  .difficulty .size_desc, .type .size_desc {
+    height: 10px;
+    font-size: .9em;
+  }
+   .difficulty .img_box, .type .img_box{
+    height: 70px; 
+  }
+  .title {  
+    font-size: 1.2em;
+  } 
+  .waiting  .image-wait {
+    width: 55%;
+  }
+
+  .lang p, .type p, .difficulty p {
+  text-align: left;
 }
 
-.difficulty label.large{
-    width:120px;
-    height: 120px;
-    line-height: 110px;
 }
-
-
-.difficulty label:hover{
-  text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
-  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  opacity: .8;
+@media screen and (max-width: 768px)  {
+  .title {
+    margin-top: 7%;
+  }
+  .lang button {
+    width: 110px;
+    height: 110px;
+  }
+  .dropdown-item img.languages {
+    width: 40px;
+  }
+  ul li {
+    padding: 10px;
+  }
+  .dropdown-menu {
+    min-width: 195px;
+  }
+  .title {  
+    font-size: 1em;
+  } 
+  .waiting  .image-wait {
+    width: 75%;
+  }
 }
-.difficulty label.small{
-  margin-left: 0;
+@media screen and (max-width: 500px)  {
+  h1{
+    font-size: 2em;
+  }
+  .waiting h1.title-wait{
+    font-size: 1.5em;
+  }
+  .exists-name span, .title, div.new-name label {
+    font-size: 1em;
+  }
+  /*div.new-name label {
+    padding: 1% 0 1% 0;
+  }*/
+  .difficulty label, .type label {
+    height: 80px;
+  }
+  .difficulty .size_img, .type .size_img {
+    height: 60px;
+  }
+  .difficulty .size_desc, .type .size_desc{
+    height: 20px;
+    font-size: .7em;
+  }
+  .difficulty .img_box, .type .img_box{
+    height: 45px; 
+  }
+  .title {
+    margin-top: 10%;
+  }
+  div.new-name .username, .title  {
+     margin-left: -15px;
+  }
+  label.username {
+   text-align: left;
+  }
+  .difficulty input:checked  + label .img_box img {
+    border-radius: 5px;
+  }
+  .form-group {
+    margin: 0 auto;
+  }
+  .exists-name {
+    margin-bottom: 20px;
+  }
+  .lang button {
+    width: 80px;
+    height: 80px;
+  }
+  .dropdown-item img.languages {
+    width: 27px;
+  }
+  ul li {
+    padding: 6px;
+  }
+  .dropdown-menu {
+    min-width: 120px;
+  }
+  .waiting  label {
+    font-size: 1.1em;
+  }
+  .waiting  input {
+    font-size:.8em;
+  }
+  .waiting  .image-wait {
+    width: 100%;
+    margin: 5% auto;
+  }
+  .waiting .mainmenu {
+    margin: 0px 0 20px 0;
+  }
+  .header  {
+    padding-left: 10%;
+  }
+  .header a.btn {
+    padding: 5px;
+    margin-top: -10px;
+  }
+  .dropdown-item img.languages {
+    border: none;
+    -webkit-box-shadow: 0 0 7px 1px rgba(0,0,0,0.5) ;
+    box-shadow: 0 0 7px 1px rgba(0,0,0,0.5);
+    border-radius: 50%;
+  }
 }
-.difficulty input:checked + label{
-  text-shadow: 4px 4px 6px rgba(0,0,0,0.5) ;
-  -webkit-box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
-  opacity: 1;
-}
-
-.small{
-  background: #32CD32;
-}
-.medium{
-  background:#DAA520;
-}
-.large{
-  background: #cb4a3e;
-}
-.submit {
-  padding: 20px;
-}
-
-.submit .btn.btn-info{
-  box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
+@media screen and (max-width: 320px)  {
+  h1{
+    font-size: 1.8em;
+  }
 }
