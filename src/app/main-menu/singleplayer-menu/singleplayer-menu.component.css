@@ -56,6 +56,9 @@ div.new-name label {
 .ng-invalid:not(form) {
   border-left: 5px solid #a94442; /* red */
 }
+.pen-edit {
+  margin-top: -3%;
+}
 /************Start radio lang******************/
 .buttons-lang {
   text-align: center;
@@ -184,7 +187,7 @@ div.lang.last  {
   margin: 2% auto;
   box-shadow: 0 0 2px 2px rgba(0,0,0,0.5) ;
   border-radius: 20px;
-  width: 70%;
+  width: 60%;
 }
 .waiting .btn.btn-info.mainmenu{
   float: right !important;
@@ -194,6 +197,12 @@ div.lang.last  {
 }
 
 /******** media **********/
+@media screen and (max-width: 1200px)  {
+  .lang p, .type p, .difficulty p {
+    text-align: left;
+  }
+}
+
 @media screen and (min-width: 1024px)  {
   /*.intro span, .intro h2, .intro .link {
     font-size: 1.5em;
@@ -236,9 +245,7 @@ div.lang.last  {
     width: 55%;
   }
 
-  .lang p, .type p, .difficulty p {
-  text-align: left;
-}
+  
 
 }
 @media screen and (max-width: 768px)  {
@@ -263,6 +270,9 @@ div.lang.last  {
   } 
   .waiting  .image-wait {
     width: 75%;
+  }
+  .header  {
+    padding-left: 25%;
   }
 }
 @media screen and (max-width: 500px)  {
@@ -336,7 +346,7 @@ div.lang.last  {
     margin: 0px 0 20px 0;
   }
   .header  {
-    padding-left: 10%;
+    padding-left: 15%;
   }
   .header a.btn {
     padding: 5px;
