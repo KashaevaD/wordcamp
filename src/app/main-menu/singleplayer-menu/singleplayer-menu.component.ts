@@ -88,11 +88,13 @@ export class SingleplayerMenuComponent {
     e.target.select();
   }
 
-  public setNameForControllToForm(e) : void {
+  public setImageForDropDownButton(e) : void {
     let src: string = e.target.src;
     let name: string = e.target.name;
+    //console.log(e.path, e);
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
-    //Set the same picture on the main dropdown button
+    //Set the same picture on the main dropdown button img
+    //path[3]-ul tag, previousElementSibling - find button, firstElementChild - img in button
     e.path[3].previousElementSibling.firstElementChild.src = src;
     e.path[3].previousElementSibling.firstElementChild.name = name;
   }

@@ -42,7 +42,7 @@
           <ul dropdownMenu role="menu" aria-labelledby="single-button">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">
               <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="setNameForControllToForm($event)">
+                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="setImageForDropDownButton($event)">
               </div>
             </li>
           </ul>
@@ -55,7 +55,7 @@
           <ul dropdownMenu role="menu" aria-labelledby="single-button">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">
               <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="setNameForControllToForm($event)">
+                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="setImageForDropDownButton($event)">
               </div>
             </li>
           </ul>
