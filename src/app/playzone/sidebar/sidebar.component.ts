@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
@@ -19,6 +19,9 @@ export class SidebarComponent {
   public secondUser: TUser = {name: "", score: 0, isActive: false, id: 1, result: "lose"};
   public multi:boolean;
   public time:number;
+  private _$sidebarEl;
+
+  @ViewChild('rootSidebar') _$rootSidebar:ElementRef;
 
   constructor(
     private _dbService: DBService,
@@ -49,6 +52,9 @@ export class SidebarComponent {
         this._roomSubscriber.unsubscribe()
       }
     });
+  }
+
+  ngAfterViewInit() {
   }
 
   private _setSidebar(options:TStoreData): void {

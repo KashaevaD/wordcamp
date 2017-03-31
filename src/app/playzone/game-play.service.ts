@@ -184,7 +184,7 @@ export class GamePlayService {
       activeCards[1].isHide = true;
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
-      this._sidebarService.stopTimer();
+      if (this._gameType === 'multi') this._sidebarService.stopTimer();
     } else {
       this._timerId = setTimeout(() => {
         if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
@@ -250,7 +250,6 @@ export class GamePlayService {
 
   public endGame() {
     this.removeSubscriptions();
-    this._sidebarService.stopTimer();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
       .then(() => this._router.navigate([`playzone/${this._roomId}/result`]));
 
@@ -261,6 +260,7 @@ export class GamePlayService {
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();
+    this._sidebarService.stopTimer();
   }
 
 }

@@ -121,12 +121,13 @@
 @media (min-width: 768px)  {
 
   .flipper {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .medium .flipper {
     width: 95px;
     height: 95px;
+    line-height: 95px;
   }
 
   .small .row{
@@ -138,7 +139,7 @@
 @media (max-width: 767px)  {
 
   .flipper {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .medium .row{
@@ -148,6 +149,7 @@
   .medium .flipper {
     width: 110px;
     height: 110px;
+    line-height: 110px;
   }
 
   .small .row{
@@ -170,6 +172,10 @@
 
 
 @media (max-width: 590px)  {
+
+  .flipper {
+    font-size: 14px;
+  }
 
   .large .flipper {
     width: 80px;
@@ -195,6 +201,10 @@
 }
 
 @media (max-width: 510px)  {
+
+  .flipper {
+    font-size: 13px;
+  }
 
   .large .flipper {
     width: 70px;
@@ -233,7 +243,7 @@
 @media (max-width: 400px)  {
 
   .flipper {
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .large .flipper {
@@ -252,10 +262,6 @@
 }
 
 @media (max-width: 350px)  {
-
-  .flipper{
-    font-size: 12px;
-  }
 
   .large .flipper {
     margin: 3px;
