@@ -184,7 +184,7 @@ export class GamePlayService {
       activeCards[1].isHide = true;
       this._currentUser.score += 10;
       this.countHiddenBlock += 1;
-      this._sidebarService.stopTimer();
+      if (this._gameType === 'multi') this._sidebarService.stopTimer();
     } else {
       this._timerId = setTimeout(() => {
         if (this._gameType === 'multi') this._users.forEach(user => user.isActive = !user.isActive);
