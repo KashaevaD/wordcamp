@@ -1,6 +1,6 @@
 <app-sidebar></app-sidebar>
 
-<div #fieldRow class="field" [class.active] ="activeField"  [class.small] ="difficulty.small" [class.medium] ="difficulty.medium" [class.large] ="difficulty.large">
+<div class="field" [class.active] ="activeField"  [class.small] ="difficulty.small" [class.medium] ="difficulty.medium" [class.large] ="difficulty.large">
   <div class="row">
     <div class="flipper"  *ngFor="let card of field" [class.open] ="card.isOpen">
       <div class="card" [class.isOpen] ="card.isOpen" (click)="openCard(card)"></div>

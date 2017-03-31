@@ -127,6 +127,7 @@
   .medium .flipper {
     width: 95px;
     height: 95px;
+    line-height: 95px;
   }
 
   .small .row{
@@ -148,6 +149,7 @@
   .medium .flipper {
     width: 110px;
     height: 110px;
+    line-height: 110px;
   }
 
   .small .row{
