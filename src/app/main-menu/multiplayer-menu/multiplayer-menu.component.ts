@@ -4,9 +4,8 @@ import { LocalStorageService } from "../../local-storage.service";
 import { Subscription } from "rxjs";
 import { JoinGameService } from "../join-game.service";
 import { DBService } from '../../db.service';
-import { ActivatedRoute, Params } from '@angular/router';
 import { CreateGameService } from "../create-game.service";
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-multiplayer-menu',
@@ -22,29 +21,28 @@ export class MultiplayerMenuComponent implements OnInit {
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
               private _localSrorage: LocalStorageService,
-              private _activatedRoute: ActivatedRoute,
-              private _router: Router,
               private _createGameService: CreateGameService,
               private _dbService: DBService) {
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
+   this._createGameService.getValueFromStorage();
 
    
    this._updateRooms();
     // event on starting game
-    let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
-      startGameSubscriber.unsubscribe();
-       this._router.navigate(['playzone', id]);  // send user  on game-field
-    });
+    // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
+    //   startGameSubscriber.unsubscribe();
+    //    this._router.navigate(['playzone', id]);  // send user  on game-field
+    // });
 
   }
 
   ngOnInit() {
-    this._activatedRoute.params.forEach((param: Params) => {
-      let idRoom:number = param['id'];
-        if (idRoom) {
-          this._joingameService.doIfShareableLinkIsActivated(idRoom);
-        }
-    });
+    // this._activatedRoute.params.forEach((param: Params) => {
+    //   let idRoom:number = param['id'];
+    //     if (idRoom) {
+    //       this._joingameService.doIfShareableLinkIsActivated(idRoom);
+    //     }
+    // });
   }
 
   private _updateRooms() {
@@ -54,7 +52,7 @@ export class MultiplayerMenuComponent implements OnInit {
                 if (item.users.length < 2 && !this._multiService.isItemExistsInCurrentArray(item, this.rooms))  return item;
             })
             .map(item => {
-                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: this.setSrcForImageLanguage(item.languages)};
+                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: this._multiService.setSrcForImageLanguage(this.imageOfLanguages,item.languages)};
             });
       });
   }
@@ -78,15 +76,10 @@ export class MultiplayerMenuComponent implements OnInit {
     }
   }
 
-  private setSrcForImageLanguage(lang): {} {
-    let first = lang.first;
-    let last = lang.last;
-    let obj = {first: {}, last: {}};
-    this.imageOfLanguages.forEach((item) => {
-      if (item.name === first) obj.first = item;
-      if (item.name === last) obj.last = item;
-    });
-    return obj;
+  public startMultiGame(event): void {
+    this._createGameService.defaultOptionsForGame.type ="multi";
+    console.log( this._createGameService.defaultOptionsForGame);
+    this._createGameService.makePlayZone(this._createGameService.defaultOptionsForGame);
   }
 
 

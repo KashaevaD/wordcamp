@@ -3,6 +3,7 @@ import { CreateGameService } from "./create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { Subscription } from "rxjs";
 import { DBService } from '../db.service';
+import { Router} from '@angular/router';
 
 @Injectable()
 export class JoinGameService {
@@ -26,9 +27,12 @@ export class JoinGameService {
     }
   ];
 
+
+
    constructor(private _dbService: DBService,
-              private _createGameService: CreateGameService,
-              private _localSrorage: LocalStorageService) {}
+               private _createGameService: CreateGameService,
+               private _localSrorage: LocalStorageService,
+               private _router: Router) {}
 
   public addUserToFireBase(idRoom: number): void {
 
@@ -41,12 +45,12 @@ export class JoinGameService {
             roomSubscribe.unsubscribe();
 
            this._dbService.getObjectFromFB(`rooms/${idRoom}`).update({users: [currentUser, newUser], state: true})
-            .then(() => this._createGameService.startPlayingGame.next(idRoom));
+           .then(() =>  this._router.navigate(['playzone', idRoom]));
       });
   }
 
   private _getUserNameFromLocalStorage(): string {
-    return this._localSrorage.getLocalStorageValue("username") || "Anonimous";
+    return this._localSrorage.getLocalStorageValue("username");
   }
 
 

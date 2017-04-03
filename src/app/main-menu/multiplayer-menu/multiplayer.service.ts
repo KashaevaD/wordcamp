@@ -38,4 +38,16 @@ export class MultiplayerService {
     return arr;
   }
 
+
+    public setSrcForImageLanguage(images, lang): {} {
+      let first = lang.first;
+      let last = lang.last;
+      let obj = {first: {}, last: {}};
+      images.forEach((item) => {
+        if (item.name === first) obj.first = item;
+        if (item.name === last) obj.last = item;
+      });
+      return obj;
+  }
+
 }

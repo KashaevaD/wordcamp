@@ -1,50 +1,66 @@
-<div class="center" >
- <div class="row">
+
+  <div class="row">
     <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 header">
-      <h1 class="col-lg-offset-5 col-lg-4 head text-primary" >Word-Camp</h1>
-      <a class="col-lg-offset-2 col-lg-1 btn btn-primary create" routerLink="/mainmenu/single">Create new</a>
-      <router-outlet></router-outlet>
-  </div>
-</div>
-
-<div class="form-group has-success find-user">
-    <label for="find" class="find col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter Name of Player</label>
-    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
-      <input type="text" placeholder="enter name" autocomplete="off" autofocus
-      class="form-control center-block" id="find" required name="find" (input)="findRoomByUserName($event)">
+      <h1 class="text-center text-primary">Word-Camp</h1>
     </div>
-    <div class="clearfix"></div>        
-</div>
+  </div>
 
-<div class="table-wrap col-xs-12">
-  <table class="table table-hover ">
-    <thead>
-      <tr>
-        <th>Player</th>
-        <th>Languages</th>
-        <th>Difficulty</th>
-        <th>Join</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="form-group has-success find-user">
+      <label for="find" class="find col-xs-7 col-sm-7 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-3 text-success text-center">Search <span class="search_desc">Game By Username</span></label>
+      <div class="col-xs-5 col-sm-5 col-md-3 col-lg-3">
+        <input type="text" placeholder="enter name" autocomplete="off" autofocus
+        class="form-control center-block" id="find" required name="find" (input)="findRoomByUserName($event)">
+      </div>
+      <div class="clearfix"></div>
+  </div>
 
-      <tr class="default data " *ngFor="let item of rooms">
-        <td >{{item.player}}</td>
-        <td class="center">
-          <div class="lang">
-            <img class="first" [src]="item.language.first.src">
-            <img class="last" [src]="item.language.last.src">
-          </div>
-        </td>
-        <td class="center">
-          <div  class="stars" *ngFor="let img of item.difficulty">
-            <img [src]="img.src">
-          </div>
-        </td >
-        <td class="center"><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
-      </tr>
-    
-    </tbody>
-  </table>
-</div>
-</div>
+  <div class="table-wrap col-xs-12">
+    <table class="table table-hover ">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th class="center">Languages</th>
+          <th class="center">Difficulty</th>
+          <th class="center">Join</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="default data " *ngFor="let item of rooms">
+          <td >{{item.player}}</td>
+          <td class="center">
+            <div class="lang">
+              <img class="first" [src]="item.language.first.src">
+              <img class="last" [src]="item.language.last.src">
+            </div>
+          </td>
+          <td class="center">
+            <div  class="stars" *ngFor="let img of item.difficulty">
+              <img [src]="img.src">
+            </div>
+          </td >
+          <td class="center"><button class="btn btn-primary join" (click)="startGame(item.id)">Join</button></td>
+        </tr>
+
+      </tbody>
+    </table>    
+  </div>
+  <div class="clearfix"></div>
+
+  <div class="row select-btn">
+
+    <div class="col-lg-offset-1 col-lg-2 col-md-offset-1 col-md-3 col-sm-4 col-xs-12 start">
+      <a class="btn btn-primary center-block" (click)="startMultiGame($event)">Start new</a>
+    </div>
+
+     <div class="col-lg-offset-2 col-lg-2 col-md-offset-1 col-md-3 col-sm-4 col-xs-12 options">
+      <a class="btn btn-primary center-block" (click)="goToOptions($event)">Options</a>
+    </div>
+
+     <div class="col-lg-offset-2 col-lg-2 col-md-offset-1 col-md-3 col-sm-4 col-xs-12 back">
+      <a class="btn btn-primary center-block" (click)="goToMainMenu($event)">Back</a>
+    </div>
+  </div>
+
+
+

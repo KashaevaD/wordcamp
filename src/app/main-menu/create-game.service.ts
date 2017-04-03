@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SIZE } from '../constants';
 import { Subscription, Subject } from "rxjs";
 import { DBService } from '../db.service';
+import { Router} from '@angular/router';
+import { LocalStorageService } from "../local-storage.service";
 
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
@@ -18,7 +20,17 @@ export class CreateGameService {
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
 
-  constructor(private _dbService: DBService) {
+  public defaultOptionsForGame = {
+    username: "",
+    difficulty: "",
+    languages : {
+      first: "",
+      last: ""
+    },
+    type: ""
+  };
+
+  constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
     this.startPlayingGame = new Subject();
     this.waitForSecondUserMultiplayer = new Subject();
 
@@ -50,7 +62,9 @@ export class CreateGameService {
 
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
           .then(() => {
-            return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
+            //return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
+            this._router.navigate(['playzone', idRoom]);
+            //return;
             //send roomId to single.components.ts
           });
       });
@@ -97,6 +111,13 @@ export class CreateGameService {
 
   private _getGeneratedIdForRoom(): number {
     return new Date().getTime();
+  }
+
+  public getValueFromStorage(): void {
+     this.defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
+     this.defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
+     this.defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
+     this.defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
   }
 
 }

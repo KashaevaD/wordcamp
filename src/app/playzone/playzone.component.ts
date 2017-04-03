@@ -45,7 +45,7 @@ export class PlayzoneComponent implements OnDestroy {
 
 
   private _initFirstData(data): void {
-
+    //console.log(data);
     this.field = data.cards;
     this.gameDifficulty = data.difficulty;
     this.difficulty[data.difficulty] = true;
