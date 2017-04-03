@@ -19,6 +19,8 @@ export class SingleplayerMenuComponent {
   public userName: string;
   public isEditing:boolean = false;
   public imageOfLanguages: any[] = [];
+  public buttonStart: EventTarget;
+  public currentImageLanguage: EventTarget;
 
 
   public isWait: boolean = false;
@@ -26,13 +28,13 @@ export class SingleplayerMenuComponent {
   private _waitForUserSubscriber: Subscription;
 
   constructor(private _build: FormBuilder,
-    private _singleService: SingleplayerService,
-    private _joingameService: JoinGameService,
-    private _router: Router,
-    private _localSrorage: LocalStorageService,
-    private _createGameService: CreateGameService,
-    private _dbService: DBService) {
-      this.imageOfLanguages = this._joingameService.imageOfLanguages;
+              private _singleService: SingleplayerService,
+              private _joingameService: JoinGameService,
+              private _router: Router,
+              private _localSrorage: LocalStorageService,
+              private _createGameService: CreateGameService,
+              private _dbService: DBService) {
+    this.imageOfLanguages = this._joingameService.imageOfLanguages;
 
     this.userName = this._localSrorage.getLocalStorageValue("username")
 
@@ -41,8 +43,8 @@ export class SingleplayerMenuComponent {
       username: new FormControl(this.userName),
       type: new FormControl('single'),
       languages: new FormGroup({
-            first: new FormControl('ru'),
-            last: new FormControl('en')
+        first: new FormControl('ru'),
+        last: new FormControl('en')
       }),
       difficulty: new FormControl('small')
     });
@@ -50,15 +52,15 @@ export class SingleplayerMenuComponent {
     // event on starting game
     let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
       startGameSubscriber.unsubscribe();
-       this._router.navigate(['playzone', id]);  // send user  on game-field
+      this._router.navigate(['playzone', id]);  // send user  on game-field
     });
 
-     //if user created a multiplayer game
+    //if user created a multiplayer game
     this._waitForUserSubscriber = this._createGameService.waitForSecondUserMultiplayer.subscribe((id) => {
       this.isWait = true;
       this.shareAbleLink = this._singleService.getShariableLink(id);
 
-       let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
+      let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
         if (data.$value !== null && data.users.length === 2) {
           room.unsubscribe();
           this._router.navigate(['playzone', id]);
@@ -70,8 +72,12 @@ export class SingleplayerMenuComponent {
 
   public onSubmit(event: Event): void {
     this._localSrorage.setLocalStorageValue("userid", "0");
+    (this.buttonStart as HTMLElement).setAttribute("disabled", "true");
     this._createGameService.makePlayZone(this.menuGame.value);
     event.preventDefault();
+  }
+  public setDisabledBtnStart(event): void {
+    this.buttonStart = event.target;
   }
 
   public setStateIsEditing(): void {
@@ -88,18 +94,20 @@ export class SingleplayerMenuComponent {
     e.target.select();
   }
 
-  public setImageForDropDownButton(e) : void {
+  public sendImageForDropDownBtn(e) : void {
     let src: string = e.target.src;
     let name: string = e.target.name;
-    //console.log(e.path, e);
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
     //Set the same picture on the main dropdown button img
-    //path[3]-ul tag, previousElementSibling - find button, firstElementChild - img in button
-    e.path[3].previousElementSibling.firstElementChild.src = src;
-    e.path[3].previousElementSibling.firstElementChild.name = name;
+    (this.currentImageLanguage as HTMLElement).setAttribute("src", src);
+    (this.currentImageLanguage as HTMLElement).setAttribute("name", name);
   }
 
-    public goToMainMenu(): void {
+  public setNewLanguageImage(e): void {
+    this.currentImageLanguage = e.target;
+  }
+
+  public goToMainMenu(): void {
     let array: string[] = this.shareAbleLink.split("/");
     this._dbService.getObjectFromFB(`rooms/${array[array.length - 1]}`).remove()
       .then(() => {

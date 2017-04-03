@@ -11,7 +11,7 @@
   margin-right: 2%;
 }
 .header  {
-  padding-left: 35%;
+  text-align: center;
 }
 .header a.btn {
   padding: 10px;
@@ -216,9 +216,7 @@ div.lang.last  {
   .title {
     margin-top: 15%;
   }
-  h1 {
-    font-size: 3em;
-  }
+
   .exists-name span, .title {
     font-size: 1.5em;
   }
@@ -236,16 +234,16 @@ div.lang.last  {
     font-size: .9em;
   }
    .difficulty .img_box, .type .img_box{
-    height: 70px; 
+    height: 70px;
   }
-  .title {  
+  .title {
     font-size: 1.2em;
-  } 
+  }
   .waiting  .image-wait {
     width: 55%;
   }
 
-  
+
 
 }
 @media screen and (max-width: 768px)  {
@@ -265,14 +263,11 @@ div.lang.last  {
   .dropdown-menu {
     min-width: 195px;
   }
-  .title {  
+  .title {
     font-size: 1em;
-  } 
+  }
   .waiting  .image-wait {
     width: 75%;
-  }
-  .header  {
-    padding-left: 25%;
   }
 }
 @media screen and (max-width: 500px)  {
@@ -299,7 +294,7 @@ div.lang.last  {
     font-size: .7em;
   }
   .difficulty .img_box, .type .img_box{
-    height: 45px; 
+    height: 45px;
   }
   .title {
     margin-top: 10%;
@@ -344,9 +339,6 @@ div.lang.last  {
   }
   .waiting .mainmenu {
     margin: 0px 0 20px 0;
-  }
-  .header  {
-    padding-left: 15%;
   }
   .header a.btn {
     padding: 5px;
