@@ -37,12 +37,12 @@
 
         <div dropdown class="box lang">
           <button type="button" dropdownToggle >
-            <img src="assets/img/icons/russia.svg" name ="ru" class="img-responsive">
+            <img src="assets/img/icons/russia.svg" name ="ru" class="img-responsive" (click)="setNewLanguageImage($event)">
           </button>
           <ul dropdownMenu role="menu" aria-labelledby="single-button">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">
               <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="setImageForDropDownButton($event)">
+                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="sendImageForDropDownBtn($event)">
               </div>
             </li>
           </ul>
@@ -50,12 +50,12 @@
 
          <div dropdown class="box lang last">
           <button type="button" dropdownToggle>
-            <img src="assets/img/icons/united-kingdom.svg" name ="en" class="img-responsive">
+            <img src="assets/img/icons/united-kingdom.svg" name ="en" class="img-responsive" (click)="setNewLanguageImage($event)">
           </button>
           <ul dropdownMenu role="menu" aria-labelledby="single-button">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">
               <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="setImageForDropDownButton($event)">
+                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="sendImageForDropDownBtn($event)">
               </div>
             </li>
           </ul>
@@ -153,7 +153,7 @@
     </div>
 
     <div class="submit">
-      <button type="submit" class="btn btn-info pull-right">START GAME</button>
+      <button type="submit" class="btn btn-info pull-right" (click)="setDisabledBtnStart($event)">START GAME</button>
     </div>
 
   </form>

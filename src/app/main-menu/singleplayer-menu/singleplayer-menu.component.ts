@@ -19,6 +19,8 @@ export class SingleplayerMenuComponent {
   public userName: string;
   public isEditing:boolean = false;
   public imageOfLanguages: any[] = [];
+  public buttonStart: EventTarget;
+  public currentImageLanguage: EventTarget;
 
 
   public isWait: boolean = false;
@@ -70,8 +72,12 @@ export class SingleplayerMenuComponent {
 
   public onSubmit(event: Event): void {
     this._localSrorage.setLocalStorageValue("userid", "0");
+    (this.buttonStart as HTMLElement).setAttribute("disabled", "true");
     this._createGameService.makePlayZone(this.menuGame.value);
     event.preventDefault();
+  }
+  public setDisabledBtnStart(event): void {
+    this.buttonStart = event.target; 
   }
 
   public setStateIsEditing(): void {
@@ -88,15 +94,17 @@ export class SingleplayerMenuComponent {
     e.target.select();
   }
 
-  public setImageForDropDownButton(e) : void {
+  public sendImageForDropDownBtn(e) : void {
     let src: string = e.target.src;
     let name: string = e.target.name;
-    //console.log(e.path, e);
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
     //Set the same picture on the main dropdown button img
-    //path[3]-ul tag, previousElementSibling - find button, firstElementChild - img in button
-    e.path[3].previousElementSibling.firstElementChild.src = src;
-    e.path[3].previousElementSibling.firstElementChild.name = name;
+    (this.currentImageLanguage as HTMLElement).setAttribute("src", src);
+    (this.currentImageLanguage as HTMLElement).setAttribute("name", name);
+  }
+
+  public setNewLanguageImage(e): void {
+    this.currentImageLanguage = e.target;
   }
 
     public goToMainMenu(): void {
