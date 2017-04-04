@@ -43,11 +43,9 @@ const routes = [
   {
     path: "mainmenu/multi/:id", component: MultiplayerMenuComponent
   },
-  // {
-  //   path: '',
-  //   redirectTo: '/mainmenu',
-  //   pathMatch: 'full'
-  // },
+  {
+    path: "result", component: ResultComponent
+  },
   {
     path: "playzone/:id", component: PlayzoneComponent
   },

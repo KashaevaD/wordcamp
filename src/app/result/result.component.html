@@ -18,7 +18,8 @@
       <p><strong>Your score:</strong> <span>  {{score}}</span></p>
     </div>
     <div class="col-xs-12 btn_bar">
-      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgain()">Try again</button>
+      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgainAlone()">Try again alone</button>
+      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgainWithFriend()">Try again with friend</button>
       <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
 
     </div>
