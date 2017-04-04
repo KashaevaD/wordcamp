@@ -113,8 +113,8 @@ p{
   background-size: auto 100%;
 }
 .happiness{
-  background: url("/assets/img/Happiness.gif") no-repeat;
-  background-size: contain;
+  background: url("/assets/img/Happiness.gif") no-repeat center;
+  background-size: auto 100%;
 }
 
 .draw{

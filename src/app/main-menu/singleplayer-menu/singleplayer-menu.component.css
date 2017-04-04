@@ -27,7 +27,7 @@
   margin-bottom: 30px;
 }
 .exists-name .pen-edit {
-  width: 4%;
+  width: 2.5%;
   cursor: pointer;
 }
 .exists-name span, .title {
@@ -57,7 +57,7 @@ div.new-name label {
   border-left: 5px solid #a94442; /* red */
 }
 .pen-edit {
-  margin-top: -3%;
+  margin-top: -2%;
 }
 /************Start radio lang******************/
 .buttons-lang {

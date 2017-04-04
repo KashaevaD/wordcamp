@@ -3,6 +3,7 @@ import { CreateGameService } from "./create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { Subscription } from "rxjs";
 import { DBService } from '../db.service';
+import { Router} from '@angular/router';
 
 @Injectable()
 export class JoinGameService {
@@ -26,14 +27,15 @@ export class JoinGameService {
     }
   ];
 
+
    constructor(private _dbService: DBService,
-              private _createGameService: CreateGameService,
-              private _localSrorage: LocalStorageService) {}
+               private _createGameService: CreateGameService,
+               private _localSrorage: LocalStorageService,
+               private _router: Router) {}
 
   public addUserToFireBase(idRoom: number): void {
 
-    let newUser: TUser = {name: this._getUserNameFromLocalStorage(), score: 20, id: 1, isActive: false, result: "lose"};
-
+    let newUser: TUser = {name: this._getUserNameFromLocalStorage(), score: 20, id: +this._localSrorage.getLocalStorageValue("userid"), isActive: false, result: "lose"};
     let currentUser: TUser;
 
     let roomSubscribe: Subscription = this._dbService.getObjectFromFB(`rooms/${idRoom}`).subscribe((data) => {
@@ -41,12 +43,12 @@ export class JoinGameService {
             roomSubscribe.unsubscribe();
 
            this._dbService.getObjectFromFB(`rooms/${idRoom}`).update({users: [currentUser, newUser], state: true})
-            .then(() => this._createGameService.startPlayingGame.next(idRoom));
+           .then(() =>  this._router.navigate(['playzone', idRoom]));
       });
   }
 
   private _getUserNameFromLocalStorage(): string {
-    return this._localSrorage.getLocalStorageValue("username") || "Anonimous";
+    return this._localSrorage.getLocalStorageValue("username");
   }
 
 
@@ -56,7 +58,7 @@ export class JoinGameService {
     let shareLink: Subscription = this._dbService.getObjectFromFB(`rooms/${roomId}`).subscribe(data => {
       if (data.users.length === 1) {
         shareLink.unsubscribe();
-        this._localSrorage.setLocalStorageValue("userid", "1");
+        this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
         this.addUserToFireBase(roomId);
       }
     });

@@ -10,58 +10,47 @@ import { Router} from '@angular/router';
 })
 export class MainMenuComponent {
 
-  public isOpenVideoIntro:boolean;
+  private defaultOptionsForGame = {
+    username: "",
+    difficulty: "small",
+    languages : {
+      first: "en",
+      last: "en"
+    },
+    type: ""
+  };
 
-  public userName = "";
-
-  constructor(private _creategameService: CreateGameService,
+  constructor(private _createGameService: CreateGameService,
               private _router: Router,
               private _localSrorage: LocalStorageService) {
-    this.isOpenVideoIntro = false;
-    this._isShowMainPageForUser();
+     this.defaultOptionsForGame =  this._createGameService.getValueFromStorage();
+      //console.log(this._defaultOptionsForGame);
+
+  }
+  // private _getValueFromStorage(): void {
+  //    this._defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
+  //    this._defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
+  //    this._defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
+  //    this._defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
+  // }
+
+  public startSingleGame(event): void {
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    this.defaultOptionsForGame.type = "single";
+    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
 
-  ngOnInit() {}
-
-  private _isShowMainPageForUser() {
-    if (this._localSrorage.getLocalStorageValue("username")) {
-      this._router.navigate(['mainmenu/single']);
-    }
+  public goToMultiComponent(event): void {
+    //send to multi
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    console.log("multi");
+    this._router.navigate(['mainmenu/multi']);
   }
 
-  public showVideo(event) {
-    this.isOpenVideoIntro = !this.isOpenVideoIntro;
-    event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
-    this.animate(
-      {duration: 1000,
-        timing: function(timeFraction) {
-            return timeFraction;
-        },
-        draw: function(progress) {
-            window.scrollTo(0, 0 + (progress * 350));
-        }
-    });
-  }
-
-private animate(options) {
-    var start = performance.now();
-    requestAnimationFrame(function _animate(time) {
-        var timeFraction = (time - start) / options.duration;
-        if (timeFraction > 1) timeFraction = 1;
-        var progress = options.timing(timeFraction);
-        options.draw(progress);
-        if (timeFraction < 1) {
-            requestAnimationFrame(_animate);
-        }else {
-            options.cb && options.cb();
-        }
-    });
-}
-
-  public sendUserToSingleMenu() {
-    let name = (this.userName)? this.userName: "Anonimous";
-    this._localSrorage.setLocalStorageValue("username", name);
-    this._router.navigate(['mainmenu/single']);
+  public goToOptionsOfGame(event): void {
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    console.log("options");
   }
 
 }

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { SIZE } from '../constants';
 import { Subscription, Subject } from "rxjs";
 import { DBService } from '../db.service';
+import { Router} from '@angular/router';
+import { LocalStorageService } from "../local-storage.service";
 
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
@@ -18,7 +20,17 @@ export class CreateGameService {
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
 
-  constructor(private _dbService: DBService) {
+  // public defaultOptionsForGame = {
+  //   username: "",
+  //   difficulty: "small",
+  //   languages : {
+  //     first: "en",
+  //     last: "en"
+  //   },
+  //   type: ""
+  // };
+
+  constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
     this.startPlayingGame = new Subject();
     this.waitForSecondUserMultiplayer = new Subject();
 
@@ -31,7 +43,7 @@ export class CreateGameService {
     let lang1:string = languages.first;
     let lang2:string = languages.last;
     let cards: TCard[] = [];
-    let idRoom: number = this._getGeneratedIdForRoom();
+    let idRoom: number = this.getGeneratedRandomId();
 
 
     this._dbService.getObjectFromFB(`/dictionary/${lang1}`)
@@ -46,12 +58,13 @@ export class CreateGameService {
         let newRoom: any = {};
 
         cards = this._createPlayingCards(size.w, size.h);
-        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: 0, isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
-
+        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: +this._localSrorage.getLocalStorageValue("userid"), isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
           .then(() => {
             //return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
-            return this.startPlayingGame.next(idRoom);
+
+            this._router.navigate(['playzone', idRoom]);
+            //return;
             //send roomId to single.components.ts
           });
       });
@@ -96,8 +109,17 @@ export class CreateGameService {
     return (item % 2 === 0) ? this._firstLanguageArray[wordId] : this._lastLanguageArray[wordId];
   }
 
-  private _getGeneratedIdForRoom(): number {
+  public getGeneratedRandomId(): number {
     return new Date().getTime();
+  }
+
+  public getValueFromStorage() {
+
+      return JSON.parse(this._localSrorage.getLocalStorageValue("user"));
+    //  this.defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
+    //  this.defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
+    //  this.defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
+    //  this.defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
   }
 
 }

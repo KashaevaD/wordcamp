@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
 import { SidebarService } from './sidebar/sidebar.service';
+import {log} from "util";
 
 @Injectable()
 export class GamePlayService {
@@ -20,6 +21,7 @@ export class GamePlayService {
   private _timeSubscriber: Subscription;
 
   public _roomObservable;
+  public localStorageUser;
 
   public startGame: Subject<any>;
   public updateField: Subject<any>;
@@ -45,20 +47,40 @@ export class GamePlayService {
     this.streamFromFirebase = new Subject();
     let firstDataSubscriber = this.streamFromFirebase
       .subscribe(data => {
-        if (!data.cards || data.users.length === 2 && this.checkNewUser(data.users)) {
+        if (!data.cards || (data.users.length === 2 && this.checkNewUser(data.users))) {
+          console.log('checking 3', localStorage['userid']);
+          console.log('checking 4', data.users);
+          firstDataSubscriber.unsubscribe();
           this._router.navigate(['mainmenu']);
           return;
         }
 
-        if(data.users.length < 2 && data.type === 'multi'){
-          this._initData(data);
-          if( this.checkNewUser(data.users) ){
-            this._createNewUser();
-          }else {
-            this.wait.next(true);
+        if(data.type === 'multi'){
+          if(data.users.length < 2){
+            this._initData(data);
+            if(this.checkNewUser(data.users)){
+              this._createNewUser();
+              console.log('new user');
+            }else {
+              this.wait.next(true);
+              console.log('users', data.users);
+            }
+          }
+          else {
+            this._initData(data);
+            this.startGame.next({
+              cards: data.cards,
+              user: this._currentUser,
+              difficulty: data.difficulty,
+              activeCards: data.activeCards,
+            });
+            this._initSidebar(data);
+            this.wait.next(false);
+            this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
+            firstDataSubscriber.unsubscribe();
           }
         }
-        else if(data.users.length === 2 && data.type === 'multi'){
+        else {
           this._initData(data);
           this.startGame.next({
             cards: data.cards,
@@ -67,11 +89,10 @@ export class GamePlayService {
             activeCards: data.activeCards,
           });
           this._initSidebar(data);
-          this.wait.next(false);
-          console.log('i am in last check');
-          this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
           firstDataSubscriber.unsubscribe();
+          this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
         }
+
       });
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
@@ -97,7 +118,7 @@ export class GamePlayService {
   private checkNewUser(users){
     if(!localStorage["userid"]) return true;
     let localStorageUserId: number = +localStorage["userid"];
-    let result = users.filter((user) => user.id === localStorageUserId);
+    let result = users.filter((user) => +user.id === localStorageUserId);
     return result.length === 0;
   }
 
@@ -302,7 +323,6 @@ export class GamePlayService {
 
 
   public removeSubscriptions() {
-    localStorage["userid"] = '';
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();

@@ -19,7 +19,6 @@ import { MultiplayerService } from "./main-menu/multiplayer-menu/multiplayer.ser
 import { PlayzoneComponent } from './playzone/playzone.component';
 import { GamePlayService } from "./playzone/game-play.service";
 import { SidebarComponent } from './playzone/sidebar/sidebar.component'
-
 import { ResultComponent } from './result/result.component';
 
 import { LocalStorageService } from "./local-storage.service";
@@ -29,8 +28,13 @@ import { SidebarService } from "./playzone/sidebar/sidebar.service";
 
 import { AppComponent } from './app.component';
 import { DropdownModule } from 'ng2-bootstrap';
+import { IntroductionComponent } from './introduction/introduction.component';
+import { IntroductionService } from './introduction/introduction.service';
 
 const routes = [
+  {
+    path: '', component: IntroductionComponent
+  },
   {
     path: "mainmenu", component: MainMenuComponent
   },
@@ -38,15 +42,10 @@ const routes = [
     path: "mainmenu/multi", component: MultiplayerMenuComponent
   },
   {
-    path: "mainmenu/single", component: SingleplayerMenuComponent
-  },
-  {
     path: "mainmenu/multi/:id", component: MultiplayerMenuComponent
   },
   {
-    path: '',
-    redirectTo: '/mainmenu',
-    pathMatch: 'full'
+    path: "result", component: ResultComponent
   },
   {
     path: "playzone/:id", component: PlayzoneComponent
@@ -65,6 +64,7 @@ const routes = [
     SingleplayerMenuComponent,
     SidebarComponent,
     ResultComponent,
+    IntroductionComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +76,7 @@ const routes = [
     DropdownModule.forRoot(),
     QRCodeModule
   ],
-  providers: [CreateGameService, SingleplayerService, LocalStorageService, MultiplayerService, JoinGameService, GamePlayService, DBService, SidebarService],
+  providers: [CreateGameService, SingleplayerService, LocalStorageService, MultiplayerService, JoinGameService, GamePlayService, DBService, SidebarService, IntroductionService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,6 +1,6 @@
 /******Table********/
 .table-wrap {
-  height: 600px;
+  height: 400px;
   overflow: auto;
   margin-top: 1%;
 }
@@ -19,8 +19,11 @@
 .find-user {
   margin: 2% 0 2% 0;
 }
-td.center {
+.center {
   text-align: center;
+}
+h1 {
+  font-size: 4em;
 }
 /******Difficulty********/
 .stars {
@@ -65,10 +68,15 @@ button.join {
 .lang p, .type p, .difficulty p {
   text-align: center;
 }
+/******btn*********/
+
 /******media********/
 @media screen and (max-width: 1124px)  {
   .table-wrap {
-    height: 500px;
+    height: 400px;
+  }
+  h1 {
+    font-size: 3em;
   }
   .header h1{
     display: inline-block;
@@ -80,7 +88,7 @@ button.join {
 }
 @media screen and (max-width: 768px)  {
    .table-wrap {
-    height: 500px;
+    height: 350px;
   }
    .stars img {
     width: 22px;
@@ -89,16 +97,19 @@ button.join {
   .lang img {
     width: 27px;
   }
-
+  .select-btn div {
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
 }
 @media screen and (max-width: 500px)  {
   .find{
     padding-left: 0;
     overflow: hidden;
   }
-  h1 {
-    font-size: 2em;
-  }
+  h1{
+      font-size: 2em;
+    }
   .header a.btn {
     padding: 5px;
     margin-top: -10px;
@@ -117,7 +128,7 @@ button.join {
     padding: 2px 4px;
     font-size: 1em;
   }
-  .table-wrap {
+  .table-wrap, .select-btn div {
     font-size: 12px;
   }
   .find {
@@ -130,12 +141,17 @@ button.join {
   input {
     padding: 0;
     padding-left: 10px;
-
+  }
+  .table-wrap {
+    height: 270px;
   }
 }
 @media screen and (max-width: 320px)  {
-  h1 {
+   h1{
     font-size: 1.8em;
+  }
+  .table-wrap {
+    height: 230px;
   }
   .header a.btn {
     padding: 4px;
@@ -156,7 +172,7 @@ button.join {
     padding: 2px 3px;
     font-size: .8em;
   }
-  .table-wrap {
+  .table-wrap,  .select-btn div {
     font-size: 11px;
   }
   .find, input {
