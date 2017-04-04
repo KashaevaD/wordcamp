@@ -15,8 +15,8 @@ export class SidebarComponent {
   private _roomSubscriber:Subscription;
   private _userSubscriber:Subscription;
   private _timeSubscriber:Subscription;
-  public firstUser: TUser = {name: "", score: 0, isActive: false, id: 0, result: "lose"};
-  public secondUser: TUser = {name: "", score: 0, isActive: false, id: 1, result: "lose"};
+  public firstUser: TUser = {name: "", score: 20, isActive: false, id: 0, result: "lose"};
+  public secondUser: TUser = {name: "", score: 20, isActive: false, id: 1, result: "lose"};
   public multi:boolean;
   public time:number;
 

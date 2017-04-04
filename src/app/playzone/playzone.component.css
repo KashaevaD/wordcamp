@@ -73,7 +73,79 @@
   color: #C1CDCD;
 }
 
+
+/********Wait******/
+.waiting_container {
+  font-size: 14px;
+  position: fixed;
+  background: #ffffff;
+  border: 2px solid #1d9ce5;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding: 20px 15px;
+  width: 80%;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+.overlay{
+  position: fixed;
+  top:0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.waiting_content{
+  padding: 20px 0;
+  position: relative;
+  text-align: center;
+}
+
+.share_link_box{
+  margin: 0 auto 20px;
+  width: 70%;
+}
+
+.share_link{
+  height: 38px;
+  box-sizing: border-box;
+  width: 400px;
+  border-radius: 4px;
+  border: 1px solid #d6d6d6;
+  padding: 5px 10px;
+}
+
+.btn{
+  vertical-align: top;
+}
+
+.text_waiting{
+  font-size: 1.4em;
+  padding: 20px;
+  color: #5fe589;
+}
+
+.cancel{
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+/********End Wait******/
+
+
+
 @media (min-width: 1200px)  {
+
+  .waiting_container{
+    width: 1170px;
+  }
 
   .large .row{
     width: 1040px;
@@ -116,6 +188,21 @@
     line-height: 100px;
   }
 
+}
+
+@media (max-width: 992px) {
+
+  .title_waiting{
+    font-size: 1.9em;
+  }
+
+  .share_link_box{
+    width: 100%;
+  }
+
+  .share_link{
+    width: 70%;
+  }
 }
 
 @media (min-width: 768px)  {
@@ -162,6 +249,10 @@
 
 @media (max-width: 680px)  {
 
+  .title_waiting{
+    font-size: 1.4em;
+  }
+
   .large .flipper {
     width: 90px;
     height: 90px;
@@ -202,6 +293,21 @@
 
 @media (max-width: 510px)  {
 
+  .title_waiting, .text_waiting{
+    font-size: 1.2em;
+  }
+
+  .copy{
+    color: transparent;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background-image: url("/assets/img/copy.svg");
+    background-position: center;
+    -webkit-background-size:24px;
+    background-size:24px;
+  }
+
   .flipper {
     font-size: 13px;
   }
@@ -224,6 +330,15 @@
 
   .flipper {
     font-size: 12px;
+  }
+
+  .waiting_container{
+    width: 100%;
+  }
+
+  .qrcode_box img{
+    width: 100%!important;
+    height: auto!important;
   }
 
   .large .flipper {
@@ -262,6 +377,15 @@
 }
 
 @media (max-width: 350px)  {
+
+  .waiting_container{
+    padding: 0 5px;
+  }
+
+
+  .title_waiting, .text_waiting{
+    font-size: 1em;
+  }
 
   .large .flipper {
     margin: 3px;

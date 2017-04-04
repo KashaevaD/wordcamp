@@ -50,7 +50,8 @@ export class CreateGameService {
 
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
           .then(() => {
-            return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
+            //return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
+            return this.startPlayingGame.next(idRoom);
             //send roomId to single.components.ts
           });
       });

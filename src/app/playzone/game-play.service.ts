@@ -25,6 +25,7 @@ export class GamePlayService {
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
   public pause: Subject<any>;
+  public wait: Subject<any>;
 
 
   constructor(
@@ -34,6 +35,7 @@ export class GamePlayService {
     this.startGame = new Subject();
     this.updateField = new Subject();
     this.pause = new Subject();
+    this.wait = new Subject();
   }
 
 
@@ -43,19 +45,60 @@ export class GamePlayService {
     this.streamFromFirebase = new Subject();
     let firstDataSubscriber = this.streamFromFirebase
       .subscribe(data => {
-        if (!data.cards) {
+        if (!data.cards || data.users.length === 2 && this.checkNewUser(data.users)) {
           this._router.navigate(['mainmenu']);
           return;
-        } else {
-          this._initData(data);
-          this._initSidebar(data);
-          this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
         }
-        firstDataSubscriber.unsubscribe();
+
+        if(data.users.length < 2 && data.type === 'multi'){
+          this._initData(data);
+          if( this.checkNewUser(data.users) ){
+            this._createNewUser();
+          }else {
+            this.wait.next(true);
+          }
+        }
+        else if(data.users.length === 2 && data.type === 'multi'){
+          this._initData(data);
+          this.startGame.next({
+            cards: data.cards,
+            user: this._currentUser,
+            difficulty: data.difficulty,
+            activeCards: data.activeCards,
+          });
+          this._initSidebar(data);
+          this.wait.next(false);
+          console.log('i am in last check');
+          this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
+          firstDataSubscriber.unsubscribe();
+        }
       });
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
+  }
+
+
+  private _createNewUser(){
+    let newID = Date.now();
+    localStorage["userid"] = newID;
+    this._currentUser = {
+      id: newID,
+      isActive: false,
+      name: "Orange",
+      result: "lose",
+      score: 20
+    };
+    this._users.push(this._currentUser);
+    this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
+  }
+
+
+  private checkNewUser(users){
+    if(!localStorage["userid"]) return true;
+    let localStorageUserId: number = +localStorage["userid"];
+    let result = users.filter((user) => user.id === localStorageUserId);
+    return result.length === 0;
   }
 
 
@@ -65,19 +108,15 @@ export class GamePlayService {
     this._gameType = data.type;
     this.countHiddenBlock = data.countHiddenBlock;
     this._activeCards = data.activeCards || [];
-    let localUser: number = +localStorage["userid"];
+    let localStorageUserId: number = +localStorage["userid"];
 
-    data.users.forEach(user => {
-      if (user.id === localUser) {
-        this._currentUser = Object.assign({}, user)
-      }
-    });
-    this.startGame.next({
-      cards: data.cards,
-      user: this._currentUser,
-      difficulty: data.difficulty,
-      activeCards: data.activeCards,
-    });
+    if(localStorage["userid"]){
+      data.users.forEach(user => {
+        if (user.id === localStorageUserId) {
+          this._currentUser = Object.assign({}, user)
+        }
+      });
+    }
 
   }
 
@@ -248,6 +287,12 @@ export class GamePlayService {
   }
 
 
+  public goToMainMenu(){
+    this._dbService.deleteRoom(this._roomId)
+      .then(() => this._router.navigate([`mainmenu`]))
+  }
+
+
   public endGame() {
     this.removeSubscriptions();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
@@ -257,6 +302,7 @@ export class GamePlayService {
 
 
   public removeSubscriptions() {
+    localStorage["userid"] = '';
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();

@@ -20,17 +20,25 @@ export class PlayzoneComponent implements OnDestroy {
     medium: false,
     large: false
   };
-
+  public shareAbleLink:string = '';
+  public isWait:boolean = false;
 
   private startGameSubscriber: Subscription;
   private updateFieldSubscriber: Subscription;
   private pauseSubscriber: Subscription;
+  private waitSubscriber: Subscription;
 
   constructor(private _activatedRoute: ActivatedRoute,
     private _gamePlayService: GamePlayService) {
+
+    this.waitSubscriber = this._gamePlayService.wait.subscribe((isWait) => this.isWait = isWait);
+
     this.startGameSubscriber = this._gamePlayService.startGame.subscribe((data) => this._initFirstData(data));
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));
     this.pauseSubscriber = this._gamePlayService.pause.subscribe(() => this._user.isActive = false);
+
+    this.shareAbleLink = window.location.href;
+
     this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
 
   }
@@ -40,6 +48,7 @@ export class PlayzoneComponent implements OnDestroy {
     this.startGameSubscriber.unsubscribe();
     this.updateFieldSubscriber.unsubscribe();
     this.pauseSubscriber.unsubscribe();
+    this.waitSubscriber.unsubscribe();
     if (this.field) this._gamePlayService.removeSubscriptions();
   }
 
@@ -76,6 +85,23 @@ export class PlayzoneComponent implements OnDestroy {
     card.isOpen = true;
     this._activeCards.push(card);
     this._gamePlayService.prepareNewState(this._activeCards);
+  }
+
+
+  public copyLink($event){
+    let input = $event.target.previousElementSibling;
+    let rng, sel;
+    rng = document.createRange();
+    rng.selectNode(input);
+    sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(rng);
+    let successful = document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  }
+
+  public goToMainMenu(){
+      this._gamePlayService.goToMainMenu();
   }
 
 }

@@ -10,3 +10,30 @@
     </div>
   </div>
 </div>
+
+
+<div class="waiting_container" *ngIf="isWait">
+
+  <h1 class="text-center title_waiting">Share link to your friend or use QR-code:</h1>
+
+  <div class="waiting_content">
+
+    <div class="form-group share_link_box">
+      <input type="text" class="share_link" id="share_link" [value]="shareAbleLink">
+      <button class="btn btn-primary copy" (click)="copyLink($event)">Copy text</button>
+    </div>
+
+
+    <div class="qrcode_box">
+      <qr-code href="shareAbleLink" [value]="shareAbleLink" [size]="300"></qr-code>
+    </div>
+
+    <p class="text_waiting">Waiting . . .</p>
+
+  </div>
+
+  <button class="btn btn-danger cancel" (click)="goToMainMenu()">Cancel</button>
+
+</div>
+
+<div *ngIf="isWait" class="overlay"></div>

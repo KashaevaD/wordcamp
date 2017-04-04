@@ -56,17 +56,17 @@ export class SingleplayerMenuComponent {
     });
 
     //if user created a multiplayer game
-    this._waitForUserSubscriber = this._createGameService.waitForSecondUserMultiplayer.subscribe((id) => {
-      this.isWait = true;
-      this.shareAbleLink = this._singleService.getShariableLink(id);
-
-      let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
-        if (data.$value !== null && data.users.length === 2) {
-          room.unsubscribe();
-          this._router.navigate(['playzone', id]);
-        }
-      });
-    });
+    // this._waitForUserSubscriber = this._createGameService.waitForSecondUserMultiplayer.subscribe((id) => {
+    //   this.isWait = true;
+    //   this.shareAbleLink = this._singleService.getShariableLink(id);
+    //
+    //   let room: Subscription = this._dbService.getObjectFromFB(`rooms/${id}`).subscribe(data => {
+    //     if (data.$value !== null && data.users.length === 2) {
+    //       room.unsubscribe();
+    //       this._router.navigate(['playzone', id]);
+    //     }
+    //   });
+    // });
 
   }
 
