@@ -27,9 +27,6 @@ export class MainMenuComponent {
       //console.log(this._defaultOptionsForGame);
 
   }
-
-  ngOnInit() {}
-
   // private _getValueFromStorage(): void {
   //    this._defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
   //    this._defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CreateGameService } from "../main-menu/create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 
@@ -9,7 +9,7 @@ import { IntroductionService } from './introduction.service';
   templateUrl: './introduction.component.html',
   styleUrls: ['./introduction.component.css']
 })
-export class IntroductionComponent  implements OnInit {
+export class IntroductionComponent {
 
   public isOpenVideoIntro:boolean;
   public userName:string;
@@ -39,10 +39,6 @@ export class IntroductionComponent  implements OnInit {
     // });
   }
 
-  ngOnInit() { 
-     this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame)); 
-  }
-
   public showVideo(event) {
     this.isOpenVideoIntro = !this.isOpenVideoIntro;
     event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
@@ -66,13 +62,15 @@ export class IntroductionComponent  implements OnInit {
 
   public startSingleGameDefault() {
     this.saveChangesWithUsername();
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));    
-    this.defaultOptionsForGame.type ="single";
+    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
     this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this.defaultOptionsForGame.type ="single";
+   
     this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
   
   public goToOptios() {
+    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
     //open options
   }
 

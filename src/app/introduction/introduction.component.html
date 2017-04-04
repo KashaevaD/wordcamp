@@ -13,7 +13,7 @@
         <span class="col-xs-12 text-center bold">Here you can learn new words and challenge each other!</span>
         <span class="col-xs-12 text-justify">In this game you will be presented with a set of cards, behind which words are hidden.
           You have to look for the same  and sometimes translations of these words, but please attend!
-          Your time is limited and mistakes are worst a lost. Good luck !!! </span>
+          Your time is limited and mistakes are worst a lost. Good luck! </span>
       </div>
     </div>
 
@@ -21,7 +21,7 @@
         <label for="username" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-success">Enter Your Name</label>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
           <input type="text" autocomplete="off" class="form-control center-block" id="username" required name="username"
-          [(ngModel)]="userName" (focus)="allotAllText($event)" (blur)="saveChangesWithUsername()">
+          [(ngModel)]="userName" [value]="userName" (focus)="allotAllText($event)" (blur)="saveChangesWithUsername()">
         </div>
         <div class="clearfix"></div>
     </div>
