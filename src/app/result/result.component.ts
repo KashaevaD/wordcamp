@@ -43,6 +43,9 @@ export class ResultComponent implements OnInit {
               private _router: Router,
               private _localSrorage: LocalStorageService,
              ){
+//888888888888888888888
+this.showModal = true;
+//888888888888888888888
         this._activatedRoute.params.forEach((param: Params) => {
           this._roomId = param['id'];
         });
@@ -109,15 +112,23 @@ export class ResultComponent implements OnInit {
     }
   }
 
-  public playAgain() :void {
+  public playAgainAlone() :void {
     this._room.unsubscribe();
 
-    this._createGameService.makePlayZone(this._model);
-    let mainMenuServiceSuscriber:Subscription =  this._createGameService.startPlayingGame.subscribe((id) => {
+   // this._createGameService.makePlayZone(this._model);
+   // let mainMenuServiceSuscriber:Subscription =  this._createGameService.startPlayingGame.subscribe((id) => {
       this._dbService.deleteRoom(this._roomId);
-      this._router.navigate(['playzone', id]);
-      mainMenuServiceSuscriber.unsubscribe();
-    });
+      //this._router.navigate(['playzone', id]);
+     // mainMenuServiceSuscriber.unsubscribe();
+    //});
+    this._roomObservable.remove().then( () => this._createGameService.makePlayZone(this._model));
+  }
+
+  public playAgainWithFriend() {
+    console.log(this._model);
+    this._model.type = "multi";
+    this._createGameService.makePlayZone(this._model);
+    this._dbService.deleteRoom(this._roomId);
     this._roomObservable.remove().then( () => this._createGameService.makePlayZone(this._model));
   }
 

@@ -4,9 +4,8 @@ import { LocalStorageService } from "../../local-storage.service";
 import { Subscription } from "rxjs";
 import { JoinGameService } from "../join-game.service";
 import { DBService } from '../../db.service';
-import { ActivatedRoute, Params } from '@angular/router';
 import { CreateGameService } from "../create-game.service";
-import { Router } from '@angular/router';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-multiplayer-menu',
@@ -19,32 +18,42 @@ export class MultiplayerMenuComponent implements OnInit {
   private subscribe: Subscription;
   private imageOfLanguages: any[] = [];
 
+   private defaultOptionsForGame = {
+    username: "",
+    difficulty: "small",
+    languages : {
+      first: "en",
+      last: "en"
+    },
+    type: ""
+  };
+
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
               private _localSrorage: LocalStorageService,
-              private _activatedRoute: ActivatedRoute,
-              private _router: Router,
               private _createGameService: CreateGameService,
+              private _router: Router,
               private _dbService: DBService) {
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
+   this.defaultOptionsForGame = this._createGameService.getValueFromStorage();
 
    
    this._updateRooms();
     // event on starting game
-    let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
-      startGameSubscriber.unsubscribe();
-       this._router.navigate(['playzone', id]);  // send user  on game-field
-    });
+    // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
+    //   startGameSubscriber.unsubscribe();
+    //    this._router.navigate(['playzone', id]);  // send user  on game-field
+    // });
 
   }
 
   ngOnInit() {
-    this._activatedRoute.params.forEach((param: Params) => {
-      let idRoom:number = param['id'];
-        if (idRoom) {
-          this._joingameService.doIfShareableLinkIsActivated(idRoom);
-        }
-    });
+    // this._activatedRoute.params.forEach((param: Params) => {
+    //   let idRoom:number = param['id'];
+    //     if (idRoom) {
+    //       this._joingameService.doIfShareableLinkIsActivated(idRoom);
+    //     }
+    // });
   }
 
   private _updateRooms() {
@@ -54,7 +63,7 @@ export class MultiplayerMenuComponent implements OnInit {
                 if (item.users.length < 2 && !this._multiService.isItemExistsInCurrentArray(item, this.rooms))  return item;
             })
             .map(item => {
-                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: this.setSrcForImageLanguage(item.languages)};
+                return {id: item.$key, player: item.users[0].name, difficulty: this._multiService.setDifficultyInGame(item.difficulty), language: this._multiService.setSrcForImageLanguage(this.imageOfLanguages,item.languages)};
             });
       });
   }
@@ -62,7 +71,7 @@ export class MultiplayerMenuComponent implements OnInit {
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
     this._joingameService.addUserToFireBase(idRoom);
-    this._localSrorage.setLocalStorageValue("userid", "1");
+    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
   }
 
   public findRoomByUserName(e) {
@@ -78,16 +87,19 @@ export class MultiplayerMenuComponent implements OnInit {
     }
   }
 
-  private setSrcForImageLanguage(lang): {} {
-    let first = lang.first;
-    let last = lang.last;
-    let obj = {first: {}, last: {}};
-    this.imageOfLanguages.forEach((item) => {
-      if (item.name === first) obj.first = item;
-      if (item.name === last) obj.last = item;
-    });
-    return obj;
+  public startMultiGame(event): void {
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    this.defaultOptionsForGame.type ="multi";
+    this._createGameService.makePlayZone(this.defaultOptionsForGame);
+    console.log( this.defaultOptionsForGame);
   }
 
+  public goToMainMenu(): void {
+     this._router.navigate(['mainmenu']);
+  }
+
+  public goToOptions(): void {
+     console.log("options");
+  }
 
 }
