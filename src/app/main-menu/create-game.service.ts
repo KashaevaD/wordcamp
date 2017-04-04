@@ -20,15 +20,15 @@ export class CreateGameService {
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
 
-  public defaultOptionsForGame = {
-    username: "",
-    difficulty: "",
-    languages : {
-      first: "",
-      last: ""
-    },
-    type: ""
-  };
+  // public defaultOptionsForGame = {
+  //   username: "",
+  //   difficulty: "small",
+  //   languages : {
+  //     first: "en",
+  //     last: "en"
+  //   },
+  //   type: ""
+  // };
 
   constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
     this.startPlayingGame = new Subject();
@@ -43,7 +43,7 @@ export class CreateGameService {
     let lang1:string = languages.first;
     let lang2:string = languages.last;
     let cards: TCard[] = [];
-    let idRoom: number = this._getGeneratedIdForRoom();
+    let idRoom: number = this.getGeneratedRandomId();
 
 
     this._dbService.getObjectFromFB(`/dictionary/${lang1}`)
@@ -109,15 +109,17 @@ export class CreateGameService {
     return (item % 2 === 0) ? this._firstLanguageArray[wordId] : this._lastLanguageArray[wordId];
   }
 
-  private _getGeneratedIdForRoom(): number {
+  public getGeneratedRandomId(): number {
     return new Date().getTime();
   }
 
-  public getValueFromStorage(): void {
-     this.defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
-     this.defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
-     this.defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
-     this.defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
+  public getValueFromStorage() {
+    
+      return JSON.parse(this._localSrorage.getLocalStorageValue("user"));
+    //  this.defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
+    //  this.defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
+    //  this.defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
+    //  this.defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
   }
 
 }

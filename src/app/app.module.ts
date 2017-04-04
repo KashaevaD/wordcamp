@@ -41,9 +41,6 @@ const routes = [
     path: "mainmenu/multi", component: MultiplayerMenuComponent
   },
   {
-    path: "mainmenu/single", component: SingleplayerMenuComponent
-  },
-  {
     path: "mainmenu/multi/:id", component: MultiplayerMenuComponent
   },
   // {

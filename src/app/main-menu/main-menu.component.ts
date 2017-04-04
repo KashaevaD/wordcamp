@@ -10,20 +10,20 @@ import { Router} from '@angular/router';
 })
 export class MainMenuComponent {
 
-  // private _defaultOptionsForGame = {
-  //   username: "",
-  //   difficulty: "",
-  //   languages : {
-  //     first: "",
-  //     last: ""
-  //   },
-  //   type: ""
-  // };
+  private defaultOptionsForGame = {
+    username: "",
+    difficulty: "small",
+    languages : {
+      first: "en",
+      last: "en"
+    },
+    type: ""
+  };
 
   constructor(private _createGameService: CreateGameService,
               private _router: Router,
               private _localSrorage: LocalStorageService) {
-      this._createGameService.getValueFromStorage();
+     this.defaultOptionsForGame =  this._createGameService.getValueFromStorage();
       //console.log(this._defaultOptionsForGame);
 
   }
@@ -39,8 +39,9 @@ export class MainMenuComponent {
 
   public startSingleGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
-    this._createGameService.defaultOptionsForGame.type = "single";
-    this._createGameService.makePlayZone(this._createGameService.defaultOptionsForGame);
+    this.defaultOptionsForGame.type = "single";
+    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
 
   public goToMultiComponent(event): void {

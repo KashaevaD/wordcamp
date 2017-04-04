@@ -5,7 +5,7 @@ import { Subscription } from "rxjs";
 import { JoinGameService } from "../join-game.service";
 import { DBService } from '../../db.service';
 import { CreateGameService } from "../create-game.service";
-
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-multiplayer-menu',
@@ -18,13 +18,24 @@ export class MultiplayerMenuComponent implements OnInit {
   private subscribe: Subscription;
   private imageOfLanguages: any[] = [];
 
+   private defaultOptionsForGame = {
+    username: "",
+    difficulty: "small",
+    languages : {
+      first: "en",
+      last: "en"
+    },
+    type: ""
+  };
+
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
               private _localSrorage: LocalStorageService,
               private _createGameService: CreateGameService,
+              private _router: Router,
               private _dbService: DBService) {
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
-   this._createGameService.getValueFromStorage();
+   this.defaultOptionsForGame = this._createGameService.getValueFromStorage();
 
    
    this._updateRooms();
@@ -60,7 +71,7 @@ export class MultiplayerMenuComponent implements OnInit {
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
     this._joingameService.addUserToFireBase(idRoom);
-    this._localSrorage.setLocalStorageValue("userid", "1");
+    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
   }
 
   public findRoomByUserName(e) {
@@ -77,10 +88,18 @@ export class MultiplayerMenuComponent implements OnInit {
   }
 
   public startMultiGame(event): void {
-    this._createGameService.defaultOptionsForGame.type ="multi";
-    console.log( this._createGameService.defaultOptionsForGame);
-    this._createGameService.makePlayZone(this._createGameService.defaultOptionsForGame);
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    this.defaultOptionsForGame.type ="multi";
+    this._createGameService.makePlayZone(this.defaultOptionsForGame);
+    console.log( this.defaultOptionsForGame);
   }
 
+  public goToMainMenu(): void {
+     this._router.navigate(['mainmenu']);
+  }
+
+  public goToOptions(): void {
+     console.log("options");
+  }
 
 }

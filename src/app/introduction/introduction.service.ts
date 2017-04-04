@@ -39,8 +39,8 @@ export class IntroductionService {
   }
 
   public isShowMainPageForUser():void {
-    if (this._localSrorage.getLocalStorageValue("username")) {
-      this._router.navigate(['mainmenu/single']);
+    if (this._localSrorage.getLocalStorageValue("user")) {
+      this._router.navigate(['mainmenu']);
     }
   }
 

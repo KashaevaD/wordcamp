@@ -73,7 +73,7 @@ button.join {
 /******media********/
 @media screen and (max-width: 1124px)  {
   .table-wrap {
-    height: 350px;
+    height: 400px;
   }
   h1 {
     font-size: 3em;
@@ -88,7 +88,7 @@ button.join {
 }
 @media screen and (max-width: 768px)  {
    .table-wrap {
-    height: 300px;
+    height: 350px;
   }
    .stars img {
     width: 22px;
@@ -143,7 +143,7 @@ button.join {
     padding-left: 10px;
   }
   .table-wrap {
-    height: 350px;
+    height: 270px;
   }
 }
 @media screen and (max-width: 320px)  {
@@ -151,7 +151,7 @@ button.join {
     font-size: 1.8em;
   }
   .table-wrap {
-    height: 280px;
+    height: 230px;
   }
   .header a.btn {
     padding: 4px;
