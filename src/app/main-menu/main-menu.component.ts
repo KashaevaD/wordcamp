@@ -50,7 +50,7 @@ export class MainMenuComponent {
 
   public goToOptionsOfGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
-    console.log("options");
+     this._router.navigate(['options']);
   }
 
 }
