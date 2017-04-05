@@ -34,7 +34,7 @@
 
         <div dropdown class="box lang first">
           <button type="button" dropdownToggle>
-            <!--(clickOutside)="closeDropDowm($event)"-->
+
             <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  (click)="setNewLanguageImage($event)">
           </button>
           <ul dropdownMenu role="menu">
@@ -119,10 +119,6 @@
 
       <div class="clearfix"></div>
     </div>
-
-    <!--<div class="submit">
-      <button type="submit" class="btn btn-info pull-right" (click)="setDisabledBtnStart($event)">Apply</button>
-    </div>-->
 
     <div class="select-step">
       <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">

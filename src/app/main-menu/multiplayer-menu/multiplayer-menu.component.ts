@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MultiplayerService } from "./multiplayer.service";
 import { LocalStorageService } from "../../local-storage.service";
 import { Subscription } from "rxjs";
@@ -12,7 +12,7 @@ import { Router} from '@angular/router';
   templateUrl: './multiplayer-menu.component.html',
   styleUrls: ['./multiplayer-menu.component.css']
 })
-export class MultiplayerMenuComponent implements OnInit {
+export class MultiplayerMenuComponent  {
 
   public rooms: TOutputData[] =[];
   private subscribe: Subscription;
@@ -28,15 +28,6 @@ export class MultiplayerMenuComponent implements OnInit {
    this._updateRooms();
   }
 
-  ngOnInit() {
-    // this._activatedRoute.params.forEach((param: Params) => {
-    //   let idRoom:number = param['id'];
-    //     if (idRoom) {
-    //       this._joingameService.doIfShareableLinkIsActivated(idRoom);
-    //     }
-    // });
-  }
-
   private _updateRooms() {
     this.subscribe = this._dbService.getAllMultiPlayerRoom().subscribe(data => {
       this.rooms  =
@@ -49,7 +40,7 @@ export class MultiplayerMenuComponent implements OnInit {
       });
   }
 
-  public startGame(idRoom: number):void {
+  public joinGame(idRoom: number):void {
     this.subscribe.unsubscribe();
     sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this._joingameService.addUserToFireBase(idRoom);

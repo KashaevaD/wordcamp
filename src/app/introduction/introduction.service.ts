@@ -29,13 +29,9 @@ export class IntroductionService {
   }
 
   public setDefaultName():string {
-    // let name:string = this._localSrorage.getLocalStorageValue("username");
-    // if (!name) {
       let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length - 0 + 1);
       rand = Math.round(rand);
       return this._defaltNickNames[rand];
-    // }
-    // return name;
   }
 
   public isShowMainPageForUser():void {
