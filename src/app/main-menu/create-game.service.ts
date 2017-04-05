@@ -113,14 +113,5 @@ export class CreateGameService {
     return new Date().getTime();
   }
 
-  public getValueFromStorage() {
-    
-      return JSON.parse(this._localSrorage.getLocalStorageValue("user"));
-    //  this.defaultOptionsForGame.username = this._localSrorage.getLocalStorageValue("username");
-    //  this.defaultOptionsForGame.languages.first = this._localSrorage.getLocalStorageValue("firstlangauge");
-    //  this.defaultOptionsForGame.languages.last = this._localSrorage.getLocalStorageValue("lastlangauge");
-    //  this.defaultOptionsForGame.difficulty = this._localSrorage.getLocalStorageValue("difficulty");
-  }
-
 }
 

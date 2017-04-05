@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { SingleplayerService } from "../main-menu/singleplayer-menu/singleplayer.service";
-import { CreateGameService } from "../main-menu/create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
-import { DBService } from '../db.service';
-import { OptionsService } from './options.service';
 
 @Component({
   selector: 'app-options-menu',
@@ -33,18 +29,16 @@ export class OptionsComponent {
       name: ""
     }
   };
-  public isWait: boolean = false;
-  public shareAbleLink: string = "";
+  public imageOfLanguages: any[];
+ 
+
 
   constructor(private _build: FormBuilder,
-              private _singleService: SingleplayerService,
-              private _joingameService: JoinGameService,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _createGameService: CreateGameService,
-              private _dbService: DBService,
-              private _optionsService: OptionsService) {
-    this.defaultOptions = this._optionsService.getOptionsFromLocalStorage();
+              private _joinService: JoinGameService) {
+    this.imageOfLanguages = this._joinService.imageOfLanguages;
+    this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
     this._updateFormGroup();
     this._setLanguagePicture();
 
@@ -75,11 +69,11 @@ export class OptionsComponent {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
     this._router.navigate(['mainmenu']);
     event.preventDefault();
-    this._optionsService.setOptionsToLocalStorage(this.menuGame.value);
+    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
   }
 
   public resetChanges(event): void {
-    this.defaultOptions = this._optionsService.getOptionsFromLocalStorage();
+    this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
     this._updateFormGroup();
     this._setLanguagePicture();
     event.preventDefault();
@@ -91,14 +85,12 @@ export class OptionsComponent {
     event.preventDefault();
   }
 
-
-  public setStateIsEditing(): void {
-    this.isEditing = true;
+  public setStateOfEditing(): void {
+    this.isEditing = !this.isEditing;
+    
   }
   public changeUserName(event): void {
     this.isEditing = false;
-    // let name:string = event.target.value;
-    // this.userName = name;
   }
 
   public allotAllText(e): void {
@@ -118,7 +110,7 @@ export class OptionsComponent {
   }
 
   private _setLanguagePicture() {
-  this._joingameService.imageOfLanguages.forEach(image => {
+  this.imageOfLanguages.forEach(image => {
      if (this.menuGame.value.languages.first === image.name)
        this.currentLanguages.first = image;
      if (this.menuGame.value.languages.last === image.name)
@@ -128,15 +120,6 @@ export class OptionsComponent {
 
   public setNewLanguageImage(e): void {
     this.currentImageLanguage = e.target;
-  }
-
-  public goToMainMenu(): void {
-    let array: string[] = this.shareAbleLink.split("/");
-    this._dbService.getObjectFromFB(`rooms/${array[array.length - 1]}`).remove()
-      .then(() => {
-        this.isWait = false;
-        this._router.navigate(['mainmenu']);
-      })
   }
 
 }

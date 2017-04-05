@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CreateGameService } from "../main-menu/create-game.service";
 import { LocalStorageService } from "../local-storage.service";
+import { OptionsService } from '../options/options.service';
+import { Router} from '@angular/router';
 
 import { IntroductionService } from './introduction.service';
 
@@ -14,29 +16,14 @@ export class IntroductionComponent {
   public isOpenVideoIntro:boolean;
   public userName:string;
 
-  private defaultOptionsForGame = {
-    username: this.userName,
-    difficulty: "small",
-    languages : {
-      first: "en",
-      last: "en"
-    },
-    type: ""
-  };
-
   constructor(private _createGameService: CreateGameService,
               private _localSrorage: LocalStorageService,
-              private _introService: IntroductionService) {
+              private _introService: IntroductionService,
+              private _router: Router,
+              private _optionService: OptionsService) {
     this.isOpenVideoIntro = false;
     this.userName = this._introService.setDefaultName();
-    this.saveChangesWithUsername();
-    
     this._introService.isShowMainPageForUser();
-
-    // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
-    //   startGameSubscriber.unsubscribe();
-    //   this._router.navigate(['playzone', id]);  // send user  on game-field
-    // });
   }
 
   public showVideo(event) {
@@ -56,22 +43,24 @@ export class IntroductionComponent {
   public allotAllText(e) {
     e.target.select();
   } 
-  public saveChangesWithUsername() {
-    this.defaultOptionsForGame.username = this.userName; 
-  }
 
   public startSingleGameDefault() {
-    this.saveChangesWithUsername();
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
-    this.defaultOptionsForGame.type ="single";
+    this._optionService.setDefaultOptions(this.userName);
+    let sub = this._optionService.getLangEmit.subscribe(data => {
+       this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
+       this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+       data.type ="single";    
+       this._createGameService.makePlayZone(data);
+    });
    
-    this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
-  
+
   public goToOptios() {
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
-    //open options
+    this._optionService.setDefaultOptions(this.userName);
+    let sub = this._optionService.getLangEmit.subscribe(data => {
+      this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
+      this._router.navigate(['options']);
+    });
   }
 
 }

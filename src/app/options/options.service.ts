@@ -1,48 +1,61 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { LocalStorageService } from "../local-storage.service";
+import { DBService } from '../db.service';
 
 @Injectable()
 export class OptionsService {
+  public getLangEmit:EventEmitter<any>;
 
-  constructor(private _localSrorage: LocalStorageService) { }
-
-  public setOptionsToLocalStorage(options): void {
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(options));
+  constructor(private _localSrorage: LocalStorageService,
+              private _dbService: DBService) { 
+    this.getLangEmit = new EventEmitter();
   }
 
-  public getOptionsFromLocalStorage(): any{
-    return JSON.parse(this._localSrorage.getLocalStorageValue("user"));
+  public setDefaultOptions(username: string) {
+    let options = {
+      username: username,
+      difficulty: "small",
+      languages : {
+        first: "",
+        last: ""
+      },
+      type: ""
+    };
+
+    let dictionaryListObservable = this._dbService.getObjectFromFB(`dictionary/languagaesList`).subscribe(lang => {
+
+      options.languages.first = this._getLanguage("first",lang);
+      options.languages.last = this._getLanguage("last",lang);
+      this.getLangEmit.emit(options);
+      dictionaryListObservable.unsubscribe();
+    });
+
   }
 
+  private _getLanguage(type: string, languagesList: string[]): string {
+    let firstLang = navigator.language.slice(0, 2)
+    let browserLanguage = (type === "first") ?  firstLang : this._getDifferentLangFromFirst(firstLang);
+    let selectedLang = "";
 
-  // public setDefaultOptions() {
+    languagesList.forEach(languageName => {
+        if (browserLanguage === languageName) {
+          selectedLang = languageName;
+          return;
+        }
+        selectedLang = "en";
+    });
+    return selectedLang;
+  }
 
-  //   this._gameOptions.difficulty = "small";
+  private _getDifferentLangFromFirst(first) {
+    let secondLanguage = "en";
+    let diffLang = (navigator as any).languages.filter(item => {
+      //if (item.slice(0, 2) !== first) return item.slice(0, 2);
+      return item.slice(0, 2) !== first;
+    });
+    if (diffLang.length) secondLanguage = diffLang[0].slice(0, 2);
+    return secondLanguage;
+  }
 
-  //     this._dictionaryListObservable = this._dbService.getObjectFromFB(`dictionary/languagaesList`);
-  //     this._dictionaryList = this._dictionaryListObservable.subscribe(languagesList => {
-  //       this._setLanguages(languagesList);
-  //       this.gameOptionsSend.emit(this._gameOptions);
-  //       this._dictionaryList.unsubscribe();
-  //     });
-  //   }
-
-
-  // private _setLanguages(languagesList) {
-  //   this._setLanguageFromBrowser("first", languagesList);
-  //   this._setLanguageFromBrowser("last", languagesList);
-  // }
-
-  // private _setLanguageFromBrowser(languageNumber, languagesList) {
-  //   let browserLanguage = (languageNumber === "first") ? navigator.language.slice(0, 2) : (navigator as any).languages[0].slice(0, 2);
-
-  //   languagesList.forEach(languageName => {
-  //       if (browserLanguage === languageName) {
-  //         this._gameOptions.languages[languageNumber] = languageName;
-  //         return;
-  //       }
-  //       this._gameOptions.languages[languageNumber] = "en";
-  //     });
-  //}
 }
 
