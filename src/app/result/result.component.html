@@ -1,5 +1,4 @@
 
-
 <div class="md-modal md-effect-6" [class.md-show]="showModal" id="modal-6">
   <div class="md-content">
     <h2 *ngIf="isWin" class="text-center"><img src="assets/img/win.png" class="win" height="150"/><span
@@ -18,9 +17,9 @@
       <p><strong>Your score:</strong> <span>  {{score}}</span></p>
     </div>
     <div class="col-xs-12 btn_bar">
-      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgainAlone()">Try again alone</button>
-      <button class="btn btn-lg btn-info" *ngIf="!multi" (click)="playAgainWithFriend()">Try again with friend</button>
-      <button class="btn btn-lg btn-info" (click)="goToMainMenu()">Main menu</button>
+      <button class="btn btn-lg btn-primary" *ngIf="!multi" (click)="playAgainAlone()">Try again alone</button>
+      <button class="btn btn-lg btn-primary" *ngIf="!multi" (click)="playAgainWithFriend()">Try again with friend</button>
+      <button class="btn btn-lg btn-primary" (click)="goToMainMenu()">Main menu</button>
 
     </div>
     <div class="clearfix"></div>
