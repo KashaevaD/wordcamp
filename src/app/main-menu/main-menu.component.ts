@@ -37,7 +37,7 @@ export class MainMenuComponent {
   public startSingleGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
     this.defaultOptionsForGame.type = "single";
-    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
 

@@ -63,7 +63,7 @@ export class IntroductionComponent {
   public startSingleGameDefault() {
     this.saveChangesWithUsername();
     this._localSrorage.setSessionStorageValue("user", JSON.stringify(this.defaultOptionsForGame));
-    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this.defaultOptionsForGame.type ="single";
 
     this._createGameService.makePlayZone(this.defaultOptionsForGame);

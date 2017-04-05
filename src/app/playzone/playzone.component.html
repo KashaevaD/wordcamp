@@ -20,12 +20,12 @@
 
     <div class="form-group share_link_box">
       <input type="text" class="share_link" id="share_link" [value]="shareAbleLink">
-      <button class="btn btn-primary copy" (click)="copyLink($event)">Copy text</button>
+      <button class="btn btn-primary copy" (click)="copyLink($event)"><span>Copy text</span></button>
     </div>
 
 
     <div class="qrcode_box">
-      <qr-code href="shareAbleLink" [value]="shareAbleLink" [size]="300"></qr-code>
+      <img [src]="qrCodeLink" />
     </div>
 
     <p class="text_waiting">Waiting . . .</p>

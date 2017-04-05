@@ -70,7 +70,7 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
-    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this._joingameService.addUserToFireBase(idRoom);
   }
 

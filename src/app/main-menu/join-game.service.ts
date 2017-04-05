@@ -58,7 +58,7 @@ export class JoinGameService {
     let shareLink: Subscription = this._dbService.getObjectFromFB(`rooms/${roomId}`).subscribe(data => {
       if (data.users.length === 1) {
         shareLink.unsubscribe();
-        this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+        sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
         this.addUserToFireBase(roomId);
       }
     });
