@@ -18,16 +18,6 @@ export class MultiplayerMenuComponent implements OnInit {
   private subscribe: Subscription;
   private imageOfLanguages: any[] = [];
 
-   private defaultOptionsForGame = {
-    username: "",
-    difficulty: "small",
-    languages : {
-      first: "en",
-      last: "en"
-    },
-    type: ""
-  };
-
   constructor(private _multiService: MultiplayerService,
               private _joingameService: JoinGameService,
               private _localSrorage: LocalStorageService,
@@ -35,16 +25,7 @@ export class MultiplayerMenuComponent implements OnInit {
               private _router: Router,
               private _dbService: DBService) {
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
-   this.defaultOptionsForGame = this._createGameService.getValueFromStorage();
-
-
    this._updateRooms();
-    // event on starting game
-    // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
-    //   startGameSubscriber.unsubscribe();
-    //    this._router.navigate(['playzone', id]);  // send user  on game-field
-    // });
-
   }
 
   ngOnInit() {
@@ -89,9 +70,9 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public startMultiGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
-    this.defaultOptionsForGame.type ="multi";
-    this._createGameService.makePlayZone(this.defaultOptionsForGame);
-    //console.log( this.defaultOptionsForGame);
+    let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
+    options.type ="multi";
+    this._createGameService.makePlayZone(options);
   }
 
   public goToMainMenu(): void {
@@ -99,7 +80,7 @@ export class MultiplayerMenuComponent implements OnInit {
   }
 
   public goToOptions(): void {
-     console.log("options");
+     this._router.navigate(['options']);
   }
 
 }

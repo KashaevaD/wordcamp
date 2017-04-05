@@ -30,6 +30,8 @@ import { AppComponent } from './app.component';
 import { DropdownModule } from 'ng2-bootstrap';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { IntroductionService } from './introduction/introduction.service';
+import { OptionsComponent } from './options/options.component';
+import { OptionsService } from './options/options.service';
 
 const routes = [
   {
@@ -52,6 +54,9 @@ const routes = [
   },
   {
     path: "playzone/:id/result", component: ResultComponent
+  },
+  {
+    path: "options", component: OptionsComponent
   }
 ];
 
@@ -65,6 +70,7 @@ const routes = [
     SidebarComponent,
     ResultComponent,
     IntroductionComponent,
+    OptionsComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +82,18 @@ const routes = [
     DropdownModule.forRoot(),
     QRCodeModule
   ],
-  providers: [CreateGameService, SingleplayerService, LocalStorageService, MultiplayerService, JoinGameService, GamePlayService, DBService, SidebarService, IntroductionService],
+  providers: [
+    CreateGameService,
+    SingleplayerService,
+    LocalStorageService,
+    MultiplayerService,
+    JoinGameService,
+    GamePlayService,
+    DBService,
+    SidebarService,
+    IntroductionService,
+    OptionsService
+],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
