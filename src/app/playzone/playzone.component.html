@@ -12,7 +12,7 @@
 </div>
 
 
-<div class="waiting_container" *ngIf="isWait">
+<div *ngIf="isPopup === 'popup'" class="waiting_container">
 
   <h1 class="text-center title_waiting">Share link to your friend or use QR-code:</h1>
 
@@ -20,7 +20,7 @@
 
     <div class="form-group share_link_box">
       <input type="text" class="share_link" id="share_link" [value]="shareAbleLink">
-      <button class="btn btn-primary copy" (click)="copyLink($event)"><span>Copy text</span></button>
+      <button class="btn btn-primary copy" (click)="copyLink()"><span>Copy text</span></button>
     </div>
 
 
@@ -36,4 +36,11 @@
 
 </div>
 
-<div *ngIf="isWait" class="overlay"></div>
+<div *ngIf="isPopup === 'endGame'" class="information_window">
+
+  <h4 class="text-center text-success title_waiting">Your opponent left the game. Congratulations, you are the winner!</h4>
+
+  <div class="col-xs-12 text-center">
+    <button class="btn btn-primary" (click)="goToMainMenu()">main menu</button></div>
+</div>
+<div *ngIf="isPopup" class="overlay"></div>

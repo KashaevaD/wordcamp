@@ -2,7 +2,8 @@ import { Component, ElementRef } from '@angular/core';
 import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
-import { ActivatedRoute, Params } from '@angular/router';
+import { LocalStorageService } from '../../local-storage.service'
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,8 +25,13 @@ export class SidebarComponent {
   constructor(
     private _dbService: DBService,
     private _sidebarService: SidebarService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _localStorageService: LocalStorageService,
+    private _router: Router
   ) {
+
+    this.firstUser.name = JSON.parse(this._localStorageService.getLocalStorageValue("user")).username;
+    this.time = 0;
 
     this._activatedRoute.params.forEach((param: Params) => {
       this._roomId = param['id'];
@@ -56,7 +62,7 @@ export class SidebarComponent {
   private _setSidebar(options:TStoreData): void {
     (options.type !== "single") ? this.multi = true : this.multi = false;
     this.firstUser = options.users[0];
-    this.secondUser = options.users[1];
+    if (options.users.length > 1) this.secondUser = options.users[1];
   }
 
 
@@ -73,6 +79,7 @@ export class SidebarComponent {
     this._sidebarService.stopTimer();
     this._timeSubscriber.unsubscribe();
     this._dbService.deleteRoom(this._roomId);
+    this._router.navigate([`mainmenu`]);
   }
 
 }
