@@ -21,18 +21,23 @@
         <label for="username" class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-success">Enter Your Name</label>
         <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
           <input type="text" autocomplete="off" class="form-control center-block" id="username" required name="username"
-          [(ngModel)]="userName" [value]="userName" (focus)="allotAllText($event)" (blur)="saveChangesWithUsername()">
+          [(ngModel)]="userName" [value]="userName" (focus)="allotAllText($event)">
         </div>
         <div class="clearfix"></div>
     </div>
 
     <div class="select-step">
-      <div class=" col-lg-offset-4 col-lg-2 col-md-offset-4 col-md-2 col-sm-offset-2 col-sm-4  col-xs-6">
-          <a class="btn btn-primary center-block next-step" (click)="goToOptios()">Options</a>
+      <div class="col-lg-offset-2 col-lg-2 col-md-offset-2 col-md-2 col-sm-4  col-xs-12">
+        <a class="btn btn-primary center-block next-step" (click)="startSingleGameDefault()">Quick start</a>
       </div>
 
-      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6">
-          <a class="btn btn-primary center-block next-step" (click)="startSingleGameDefault()">Quick start</a>
+      <div class=" col-lg-offset-1 col-lg-2 col-md-offset-1 col-md-2 col-sm-4 col-xs-12">
+        <a class="btn btn-primary center-block next-step" (click)="goToOptions()">Options</a>          
+      </div>
+
+
+      <div class=" col-lg-offset-1 col-lg-2 col-md-offset-1 col-md-2 col-sm-4 col-xs-12">
+          <a class="btn btn-primary center-block next-step" (click)="goToMainMenu()">Main menu</a>
       </div>
       <div class="clearfix"></div>
     </div>

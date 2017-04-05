@@ -7,7 +7,8 @@ h1 {
 /*******name*******/
 div.name {
   margin: 0 auto;
-  padding: 1% 0 1% 0;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 div.name label {
    font-size: 1.7em;
@@ -18,7 +19,7 @@ div.name label {
    margin-left: -15px;
 }
 input {
-    margin-left: 15px;
+    /*margin-left: 15px;*/
 }
 /*****intro******/
 .intro span, .intro h2 {
@@ -59,6 +60,9 @@ div.select-step {
   .intro span, .intro h2, .link {
     font-size: 1.5em;
   }
+  div.name, .next-step {
+     margin-top: 2%;
+  }
 }
 @media screen and (max-width: 500px)  {
   h1{
@@ -70,14 +74,14 @@ div.select-step {
   div.name label {
      font-size: 1em;
      line-height: 38px;
-   
+     padding-right: 5px;
+     padding-left: 15px;
+     text-align: left;
   }
   .intro-gif {
     width: 100%;
   }
-  div.name .next-step {
-     margin-top: 2%;
-  }
+  
   .intro h2 {
     margin: 10px 0 10px 0;
   }

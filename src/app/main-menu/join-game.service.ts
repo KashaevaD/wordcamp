@@ -34,7 +34,6 @@ export class JoinGameService {
                private _router: Router) {}
 
   public addUserToFireBase(idRoom: number): void {
-
     let newUser: TUser = {name: this._getUserNameFromLocalStorage(), score: 20, id: +sessionStorage['userid'], isActive: false, result: "lose"};
     let currentUser: TUser;
 
