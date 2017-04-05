@@ -44,7 +44,7 @@ export class ResultComponent implements OnInit {
               private _localSrorage: LocalStorageService,
              ){
 //888888888888888888888
-this.showModal = true;
+//this.showModal = true;
 //888888888888888888888
         this._activatedRoute.params.forEach((param: Params) => {
           this._roomId = param['id'];
@@ -82,7 +82,7 @@ this.showModal = true;
   }
 
   private _getUserResult(users: TUser[]): void {
-    let userid:number = +this._localSrorage.getLocalStorageValue("userid");
+    let userid:number = + sessionStorage['userid'];
     users.forEach((user) => {
       if (user.id === userid){
         this.score = user.score;
@@ -114,20 +114,17 @@ this.showModal = true;
 
   public playAgainAlone() :void {
     this._room.unsubscribe();
-
-   // this._createGameService.makePlayZone(this._model);
-   // let mainMenuServiceSuscriber:Subscription =  this._createGameService.startPlayingGame.subscribe((id) => {
-      this._dbService.deleteRoom(this._roomId);
-      //this._router.navigate(['playzone', id]);
-     // mainMenuServiceSuscriber.unsubscribe();
-    //});
-    this._roomObservable.remove().then( () => this._createGameService.makePlayZone(this._model));
+    this._deleteRoomAndStartNewGame();
   }
 
   public playAgainWithFriend() {
     console.log(this._model);
+    this._room.unsubscribe();
     this._model.type = "multi";
-    this._createGameService.makePlayZone(this._model);
+    this._deleteRoomAndStartNewGame();
+  }
+
+  private _deleteRoomAndStartNewGame() :void {
     this._dbService.deleteRoom(this._roomId);
     this._roomObservable.remove().then( () => this._createGameService.makePlayZone(this._model));
   }
