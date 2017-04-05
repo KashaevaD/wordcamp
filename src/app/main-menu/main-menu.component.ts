@@ -15,7 +15,15 @@ export class MainMenuComponent {
   constructor(private _createGameService: CreateGameService,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _introService: IntroductionService) {}
+              private _introService: IntroductionService) {
+    if (!this._redirectToIntro()) {
+      this._router.navigate(['/']);
+    }
+  }
+
+  private _redirectToIntro(): boolean {
+    return !!this._localSrorage.getLocalStorageValue("user");
+  }
 
   public startSingleGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");

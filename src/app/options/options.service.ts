@@ -33,28 +33,32 @@ export class OptionsService {
   }
 
   private _getLanguage(type: string, languagesList: string[]): string {
-    let firstLang = navigator.language.slice(0, 2)
-    let browserLanguage = (type === "first") ?  firstLang : this._getDifferentLangFromFirst(firstLang);
-    let selectedLang = "";
+    let firstLang = navigator.language.slice(0, 2);
+    let browserLanguages = (type === "first") ?  [firstLang] : this._getDifferentLangFromFirst(firstLang);
 
-    languagesList.forEach(languageName => {
-        if (browserLanguage === languageName) {
-          selectedLang = languageName;
-          return;
-        }
-        selectedLang = "en";
-    });
-    return selectedLang;
+    return this._findExistLanguages(languagesList,browserLanguages );
   }
 
-  private _getDifferentLangFromFirst(first) {
-    let secondLanguage = "en";
-    let diffLang = (navigator as any).languages.filter(item => {
-      //if (item.slice(0, 2) !== first) return item.slice(0, 2);
-      return item.slice(0, 2) !== first;
+  private _findExistLanguages(languagesList, currentLanguages) {
+    let name = "en";
+    currentLanguages.forEach (currentLanguages => {
+      languagesList.forEach(languageName => {
+        if (currentLanguages === languageName) name = languageName;
+      });
     });
-    if (diffLang.length) secondLanguage = diffLang[0].slice(0, 2);
-    return secondLanguage;
+    return name;
+  }
+
+  private _getDifferentLangFromFirst(first): string[] {
+    let secondLanguage = "en";
+    let diffLang = (navigator as any).languages
+    .map(item => {
+      return item.slice(0, 2);
+    }).filter(item => {
+      return item !== first;
+    });
+    if (!diffLang.length) diffLang = ["en"];
+    return diffLang;
   }
 
 }
