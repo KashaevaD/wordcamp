@@ -60,16 +60,5 @@ export class OptionsService {
     return diffLang;
   }
 
-  private _getDifferentLangFromFirst(first): string[] {
-    let secondLanguage = "en";
-    let diffLang = (navigator as any).languages
-      .map(item => {
-        return item.slice(0, 2);
-      }).filter(item => {
-        return item !== first;
-      });
-    if (!diffLang.length) diffLang = ["en"];
-    return diffLang;
-  }
 }
 
