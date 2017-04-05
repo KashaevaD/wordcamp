@@ -139,6 +139,22 @@
 
 /********End Wait******/
 
+.information_window{
+  font-size: 14px;
+  position: fixed;
+  background: #ffffff;
+  border: 2px solid #1d9ce5;
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  padding: 20px 15px;
+  width: 80%;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
 
 
 @media (min-width: 1200px)  {

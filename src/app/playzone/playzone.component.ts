@@ -22,17 +22,17 @@ export class PlayzoneComponent implements OnDestroy {
   };
   public shareAbleLink:string = '';
   public qrCodeLink: string = '';
-  public isWait:boolean = false;
+  public isPopup:string = '';
 
   private startGameSubscriber: Subscription;
   private updateFieldSubscriber: Subscription;
   private pauseSubscriber: Subscription;
-  private waitSubscriber: Subscription;
+  private popupSubscriber: Subscription;
 
   constructor(private _activatedRoute: ActivatedRoute,
     private _gamePlayService: GamePlayService) {
 
-    this.waitSubscriber = this._gamePlayService.wait.subscribe((isWait) => this.isWait = isWait);
+    this.popupSubscriber = this._gamePlayService.popup.subscribe((state) => this.isPopup = state);
 
     this.startGameSubscriber = this._gamePlayService.startGame.subscribe((data) => this._initFirstData(data));
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));
@@ -50,13 +50,12 @@ export class PlayzoneComponent implements OnDestroy {
     this.startGameSubscriber.unsubscribe();
     this.updateFieldSubscriber.unsubscribe();
     this.pauseSubscriber.unsubscribe();
-    this.waitSubscriber.unsubscribe();
+    this.popupSubscriber.unsubscribe();
     if (this.field) this._gamePlayService.removeSubscriptions();
   }
 
 
   private _initFirstData(data): void {
-    //console.log(data);
     this.field = data.cards;
     this.gameDifficulty = data.difficulty;
     this.difficulty[data.difficulty] = true;
@@ -90,16 +89,11 @@ export class PlayzoneComponent implements OnDestroy {
   }
 
 
-  public copyLink($event){
-    let input = $event.target.previousElementSibling;
-    let rng, sel;
-    rng = document.createRange();
-    rng.selectNode(input);
-    sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(rng);
-    let successful = document.execCommand('copy');
-    window.getSelection().removeAllRanges();
+  public copyLink(){
+    let input:HTMLInputElement = <HTMLInputElement>document.getElementById("share_link");
+    input.select();
+    document.execCommand('copy');
+    input.blur();
   }
 
   public goToMainMenu(){
