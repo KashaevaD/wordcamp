@@ -70,7 +70,7 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
     this._joingameService.addUserToFireBase(idRoom);
   }
 
@@ -91,7 +91,7 @@ export class MultiplayerMenuComponent implements OnInit {
     (event.target as HTMLElement).setAttribute("disabled", "true");
     this.defaultOptionsForGame.type ="multi";
     this._createGameService.makePlayZone(this.defaultOptionsForGame);
-    console.log( this.defaultOptionsForGame);
+    //console.log( this.defaultOptionsForGame);
   }
 
   public goToMainMenu(): void {

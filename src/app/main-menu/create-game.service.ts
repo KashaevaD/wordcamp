@@ -58,7 +58,7 @@ export class CreateGameService {
         let newRoom: any = {};
 
         cards = this._createPlayingCards(size.w, size.h);
-        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: +this._localSrorage.getLocalStorageValue("userid"), isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
+        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: +sessionStorage['userid'], isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
           .then(() => {
             //return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);

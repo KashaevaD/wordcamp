@@ -37,14 +37,14 @@ export class MainMenuComponent {
   public startSingleGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
     this.defaultOptionsForGame.type = "single";
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
     this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
 
   public goToMultiComponent(event): void {
     //send to multi
     (event.target as HTMLElement).setAttribute("disabled", "true");
-    console.log("multi");
+    //console.log("multi");
     this._router.navigate(['mainmenu/multi']);
   }
 

@@ -35,7 +35,7 @@ export class JoinGameService {
 
   public addUserToFireBase(idRoom: number): void {
 
-    let newUser: TUser = {name: this._getUserNameFromLocalStorage(), score: 20, id: +this._localSrorage.getLocalStorageValue("userid"), isActive: false, result: "lose"};
+    let newUser: TUser = {name: this._getUserNameFromLocalStorage(), score: 20, id: +sessionStorage['userid'], isActive: false, result: "lose"};
     let currentUser: TUser;
 
     let roomSubscribe: Subscription = this._dbService.getObjectFromFB(`rooms/${idRoom}`).subscribe((data) => {
@@ -58,7 +58,7 @@ export class JoinGameService {
     let shareLink: Subscription = this._dbService.getObjectFromFB(`rooms/${roomId}`).subscribe(data => {
       if (data.users.length === 1) {
         shareLink.unsubscribe();
-        this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+        this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
         this.addUserToFireBase(roomId);
       }
     });

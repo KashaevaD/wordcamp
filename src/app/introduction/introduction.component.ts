@@ -30,7 +30,7 @@ export class IntroductionComponent {
     this.isOpenVideoIntro = false;
     this.userName = this._introService.setDefaultName();
     this.saveChangesWithUsername();
-    
+
     this._introService.isShowMainPageForUser();
 
     // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
@@ -55,22 +55,22 @@ export class IntroductionComponent {
 
   public allotAllText(e) {
     e.target.select();
-  } 
+  }
   public saveChangesWithUsername() {
-    this.defaultOptionsForGame.username = this.userName; 
+    this.defaultOptionsForGame.username = this.userName;
   }
 
   public startSingleGameDefault() {
     this.saveChangesWithUsername();
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._localSrorage.setSessionStorageValue("user", JSON.stringify(this.defaultOptionsForGame));
+    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
     this.defaultOptionsForGame.type ="single";
-   
+
     this._createGameService.makePlayZone(this.defaultOptionsForGame);
   }
-  
+
   public goToOptios() {
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.defaultOptionsForGame));  
+    this._localSrorage.setSessionStorageValue("user", JSON.stringify(this.defaultOptionsForGame));
     //open options
   }
 
