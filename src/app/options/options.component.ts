@@ -4,7 +4,6 @@ import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
-import {el} from "@angular/platform-browser/typings/testing/browser_util";
 
 @Component({
   selector: 'app-options-menu',

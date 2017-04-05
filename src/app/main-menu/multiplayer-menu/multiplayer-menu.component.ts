@@ -70,6 +70,7 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public startMultiGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
+    sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
     options.type ="multi";
     this._createGameService.makePlayZone(options);
