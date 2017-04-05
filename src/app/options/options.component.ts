@@ -4,6 +4,7 @@ import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
+import {el} from "@angular/platform-browser/typings/testing/browser_util";
 
 @Component({
   selector: 'app-options-menu',
@@ -30,7 +31,7 @@ export class OptionsComponent implements OnDestroy {
     }
   };
   public imageOfLanguages: any[];
- 
+
 
   constructor(private _build: FormBuilder,
               private _router: Router,
@@ -68,7 +69,7 @@ export class OptionsComponent implements OnDestroy {
     if (event.keyCode === 27){
       this.cancelChangesMainMenu(event);
       return;
-    } 
+    }
   }
 
   public applyChanges(event): void {
@@ -93,7 +94,7 @@ export class OptionsComponent implements OnDestroy {
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-    
+
   }
   public changeUserName(event): void {
     this.isEditing = false;
@@ -114,7 +115,7 @@ export class OptionsComponent implements OnDestroy {
        this.currentLanguages.last = {src: src, name: name};
     }
   }
-  
+
   private _setLanguagePicture() {
   this.imageOfLanguages.forEach(image => {
      if (this.menuGame.value.languages.first === image.name)

@@ -7,7 +7,7 @@ export class OptionsService {
   public getLangEmit:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
-              private _dbService: DBService) { 
+              private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
   }
 
