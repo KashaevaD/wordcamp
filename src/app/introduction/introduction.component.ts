@@ -17,7 +17,7 @@ export class IntroductionComponent {
   public userName:string;
 
   constructor(private _createGameService: CreateGameService,
-              private _localSrorage: LocalStorageService,
+              private _localStorage: LocalStorageService,
               private _introService: IntroductionService,
               private _router: Router,
               private _optionService: OptionsService) {
@@ -42,17 +42,17 @@ export class IntroductionComponent {
 
   public allotAllText(e) {
     e.target.select();
-  } 
+  }
 
   public startSingleGameDefault() {
     this._optionService.setDefaultOptions(this.userName);
     let sub = this._optionService.getLangEmit.subscribe(data => {
-       this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
-       this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
-       data.type ="single";    
+       this._localStorage.setLocalStorageValue("user", JSON.stringify(data));
+      sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
+       data.type ="single";
        this._createGameService.makePlayZone(data);
     });
-   
+
   }
 
   public goToOptions() {
@@ -62,7 +62,7 @@ export class IntroductionComponent {
   private _sendUserTo(router: string) {
      this._optionService.setDefaultOptions(this.userName);
     let sub = this._optionService.getLangEmit.subscribe(data => {
-      this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
+      this._localStorage.setLocalStorageValue("user", JSON.stringify(data));
       this._router.navigate([router]);
     });
   }

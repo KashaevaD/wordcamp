@@ -21,6 +21,7 @@ export class PlayzoneComponent implements OnDestroy {
     large: false
   };
   public shareAbleLink:string = '';
+  public qrCodeLink: string = '';
   public isWait:boolean = false;
 
   private startGameSubscriber: Subscription;
@@ -38,6 +39,7 @@ export class PlayzoneComponent implements OnDestroy {
     this.pauseSubscriber = this._gamePlayService.pause.subscribe(() => this._user.isActive = false);
 
     this.shareAbleLink = window.location.href;
+    this.qrCodeLink = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + this.shareAbleLink;
 
     this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
 

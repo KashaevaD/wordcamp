@@ -21,7 +21,7 @@ export class MainMenuComponent {
     (event.target as HTMLElement).setAttribute("disabled", "true");
     let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
     options.type = "single";
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this._createGameService.makePlayZone(options);
   }
 

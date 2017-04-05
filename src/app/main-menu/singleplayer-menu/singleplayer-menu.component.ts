@@ -71,7 +71,7 @@ export class SingleplayerMenuComponent {
   }
 
   public onSubmit(event: Event): void {
-    this._localSrorage.setSessionStorageValue("userid", "0");
+    this._localSrorage.setLocalStorageValue("userid", "0");
     (this.buttonStart as HTMLElement).setAttribute("disabled", "true");
     this._createGameService.makePlayZone(this.menuGame.value);
     event.preventDefault();

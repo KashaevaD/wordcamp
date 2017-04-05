@@ -298,7 +298,6 @@
   }
 
   .copy{
-    color: transparent;
     width: 38px;
     height: 38px;
     padding: 0;
@@ -306,6 +305,10 @@
     background-position: center;
     -webkit-background-size:24px;
     background-size:24px;
+  }
+
+  .copy span{
+    display: none;
   }
 
   .flipper {
