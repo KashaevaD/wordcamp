@@ -4,6 +4,7 @@ import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
+import {el} from "@angular/platform-browser/typings/testing/browser_util";
 
 @Component({
   selector: 'app-options-menu',
@@ -30,7 +31,7 @@ export class OptionsComponent {
     }
   };
   public imageOfLanguages: any[];
- 
+
 
 
   constructor(private _build: FormBuilder,
@@ -59,7 +60,7 @@ export class OptionsComponent {
 
   public _changeOptionsByKeyEvent(event) {
     if (event.keyCode === 13 && event.target.tagName === "BODY") {
-      this.applyChanges(event); 
+      this.applyChanges(event);
     } else if (event.keyCode === 27 && event.target.tagName === "BODY"){
       this.cancelChangesMainMenu(event);
     }
@@ -87,7 +88,7 @@ export class OptionsComponent {
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-    
+
   }
   public changeUserName(event): void {
     this.isEditing = false;
