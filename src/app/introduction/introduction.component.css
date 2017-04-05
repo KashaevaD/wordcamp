@@ -38,7 +38,7 @@ input {
   font-weight: bold;
 }
  /*****btn next operation******/
- div.name .next-step, input{
+ div.name, .next-step, input{
    font-size: 1.2em;
  }
 
