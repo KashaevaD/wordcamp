@@ -48,7 +48,7 @@ export class IntroductionComponent {
     this._optionService.setDefaultOptions(this.userName);
     let sub = this._optionService.getLangEmit.subscribe(data => {
        this._localStorage.setLocalStorageValue("user", JSON.stringify(data));
-      sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
+       sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
        data.type ="single";
        this._createGameService.makePlayZone(data);
     });

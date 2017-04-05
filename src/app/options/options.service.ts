@@ -35,8 +35,6 @@ export class OptionsService {
   private _getLanguage(type: string, languagesList: string[]): string {
     let firstLang = navigator.language.slice(0, 2);
     let browserLanguages = (type === "first") ?  [firstLang] : this._getDifferentLangFromFirst(firstLang);
-    console.log(browserLanguages);
-
     return this._findExistLanguages(languagesList,browserLanguages );
   }
 
@@ -48,6 +46,18 @@ export class OptionsService {
       });
     });
     return name;
+  }
+
+  private _getDifferentLangFromFirst(first): string[] {
+    let secondLanguage = "en";
+    let diffLang = (navigator as any).languages
+    .map(item => {
+      return item.slice(0, 2);
+    }).filter(item => {
+      return item !== first;
+    });
+    if (!diffLang.length) diffLang = ["en"];
+    return diffLang;
   }
 
   private _getDifferentLangFromFirst(first): string[] {
