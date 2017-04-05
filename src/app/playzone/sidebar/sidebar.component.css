@@ -72,6 +72,10 @@
     height: 60px;
   }
 
+  .time-container {
+    padding: 0;
+  }
+
   .sidebar-single .score-container, .sidebar-single .time-container {
     padding-right: 0;
   }
@@ -187,6 +191,7 @@
   }
 
   .player-active {
+    width: 38%;
     background-color: greenyellow;
   }
 }
@@ -203,6 +208,7 @@
   }
 
   .sidebar-single .time-container {
+    width: 32%;
     padding-right: 0;
     margin-right: 3%;
   }
@@ -226,7 +232,7 @@
   }
 
   .sidebar-single .player-container{
-    width: 72%;
+    width: 65%;
   }
 
   .sidebar-single .player-name{
