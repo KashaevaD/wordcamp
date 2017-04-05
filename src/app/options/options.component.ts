@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
@@ -8,9 +8,9 @@ import { Subscription } from "rxjs";
 @Component({
   selector: 'app-options-menu',
   templateUrl: './options.component.html',
-  styleUrls: ['./options.component.css']
+  styleUrls: ['./options.component.css'],
 })
-export class OptionsComponent {
+export class OptionsComponent implements OnDestroy {
 
   private menuGame: FormGroup;
   private defaultOptions: any;
@@ -32,7 +32,6 @@ export class OptionsComponent {
   public imageOfLanguages: any[];
  
 
-
   constructor(private _build: FormBuilder,
               private _router: Router,
               private _localSrorage: LocalStorageService,
@@ -42,7 +41,11 @@ export class OptionsComponent {
     this._updateFormGroup();
     this._setLanguagePicture();
 
-    document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
+    document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
   }
 
   private _updateFormGroup(): void {
@@ -59,10 +62,13 @@ export class OptionsComponent {
 
   public _changeOptionsByKeyEvent(event) {
     if (event.keyCode === 13 && event.target.tagName === "BODY") {
-      this.applyChanges(event); 
-    } else if (event.keyCode === 27 && event.target.tagName === "BODY"){
-      this.cancelChangesMainMenu(event);
+      this.applyChanges(event);
+      return;
     }
+    if (event.keyCode === 27){
+      this.cancelChangesMainMenu(event);
+      return;
+    } 
   }
 
   public applyChanges(event): void {
@@ -108,7 +114,7 @@ export class OptionsComponent {
        this.currentLanguages.last = {src: src, name: name};
     }
   }
-
+  
   private _setLanguagePicture() {
   this.imageOfLanguages.forEach(image => {
      if (this.menuGame.value.languages.first === image.name)

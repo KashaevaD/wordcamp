@@ -69,7 +69,7 @@ const routes = [
     SidebarComponent,
     ResultComponent,
     IntroductionComponent,
-    OptionsComponent
+    OptionsComponent,
   ],
   imports: [
     BrowserModule,

@@ -38,7 +38,7 @@ export class SidebarComponent {
     });
 
     this._timeSubscriber = this._sidebarService.timeSend.subscribe( (number) => {
-      this.time = number/1000;
+      this.time = number;
     });
 
     this._userSubscriber = this._sidebarService.users.subscribe((users) => {

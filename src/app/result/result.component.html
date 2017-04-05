@@ -16,12 +16,30 @@
     <div class="col-xs-12">
       <p><strong>Your score:</strong> <span>  {{score}}</span></p>
     </div>
-    <div class="col-xs-12 btn_bar">
+    <!--<div class="col-xs-12 btn_bar">
       <button class="btn btn-lg btn-primary" *ngIf="!multi" (click)="playAgainAlone()">Try again alone</button>
       <button class="btn btn-lg btn-primary" *ngIf="!multi" (click)="playAgainWithFriend()">Try again with friend</button>
       <button class="btn btn-lg btn-primary" (click)="goToMainMenu()">Main menu</button>
 
+    </div>-->
+
+    <div class="row select-btn">
+
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 start">
+      <a class="btn btn-primary center-block" *ngIf="!multi" (click)="playAgainAlone()">Again alone</a>
+     
     </div>
+
+     <div class="col-lg-4 col-md-4  col-sm-12 col-xs-12 options">
+      <a class="btn btn-primary center-block" *ngIf="!multi" (click)="playAgainWithFriend()">Again with friend</a>
+    </div>
+
+     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 back">
+      <a class="btn btn-primary center-block" (click)="goToMainMenu()">Main menu</a>
+    </div>
+  </div>
+
+
     <div class="clearfix"></div>
   </div>
 </div>
