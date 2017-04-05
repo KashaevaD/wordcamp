@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CreateGameService } from "./create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { Router} from '@angular/router';
+import { IntroductionService } from '../introduction/introduction.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -9,10 +10,12 @@ import { Router} from '@angular/router';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent {
+  public isOpenVideoIntro:boolean;
 
   constructor(private _createGameService: CreateGameService,
               private _router: Router,
-              private _localSrorage: LocalStorageService) {}
+              private _localSrorage: LocalStorageService,
+              private _introService: IntroductionService) {}
 
   public startSingleGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
@@ -31,6 +34,20 @@ export class MainMenuComponent {
   public goToOptionsOfGame(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
      this._router.navigate(['options']);
+  }
+
+  public showVideo(event) {
+    this.isOpenVideoIntro = !this.isOpenVideoIntro;
+    event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
+    this._introService.animate(
+      {duration: 1000,
+        timing: function(timeFraction) {
+            return timeFraction;
+        },
+        draw: function(progress) {
+            window.scrollTo(0, 0 + (progress * 600));
+        }
+    });
   }
 
 }

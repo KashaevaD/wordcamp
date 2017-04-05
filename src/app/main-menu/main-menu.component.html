@@ -33,4 +33,19 @@
     <div class="clearfix"></div>
   </div>
 
+
+  <div class="col-xs-12 intro-link">
+      <a class="link" (click)="showVideo($event)">Show intro video↓</a>
+    </div>
+       
+    <div>
+      <div class="col-xs-12 block-gif" *ngIf="isOpenVideoIntro">
+        <video class="center-block intro-gif" autoplay loop muted="muted">
+          <source src="assets/video/intro.mp4">
+        </video>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    
+
 </div>

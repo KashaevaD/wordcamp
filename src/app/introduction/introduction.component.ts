@@ -55,12 +55,26 @@ export class IntroductionComponent {
    
   }
 
-  public goToOptios() {
-    this._optionService.setDefaultOptions(this.userName);
+  public goToOptions() {
+    // this._optionService.setDefaultOptions(this.userName);
+    // let sub = this._optionService.getLangEmit.subscribe(data => {
+    //   this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
+    //   this._router.navigate(['options']);
+    // });
+    this._sendUserTo('options');
+  }
+
+  private _sendUserTo(router: string) {
+     this._optionService.setDefaultOptions(this.userName);
     let sub = this._optionService.getLangEmit.subscribe(data => {
       this._localSrorage.setLocalStorageValue("user", JSON.stringify(data));  
-      this._router.navigate(['options']);
+      this._router.navigate([router]);
     });
+  }
+
+  public goToMainMenu() {
+    this._sendUserTo('mainmenu');
+    //this._router.navigate(['options']);
   }
 
 }
