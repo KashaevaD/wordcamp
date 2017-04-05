@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
 import { SidebarService } from './sidebar/sidebar.service';
+import {el} from "@angular/platform-browser/typings/testing/browser_util";
 
 @Injectable()
 export class GamePlayService {
 
   private _roomId: number;
-  private _users: TUser[];
+  private _users: TUser[] = [];
   private _cards: TCard[];
   private _gameType: string;
   private _activeCards: TCard[];
@@ -27,7 +28,7 @@ export class GamePlayService {
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
   public pause: Subject<any>;
-  public wait: Subject<any>;
+  public popup: Subject<any>;
 
 
   constructor(
@@ -37,7 +38,7 @@ export class GamePlayService {
     this.startGame = new Subject();
     this.updateField = new Subject();
     this.pause = new Subject();
-    this.wait = new Subject();
+    this.popup = new Subject();
   }
 
 
@@ -67,7 +68,7 @@ export class GamePlayService {
 
   private _initMultiPlayerGame(data){
     if(data.users.length < 2){
-      this.checkNewUser(data.users) ? this._createNewUser() : this.wait.next(true);
+      this.checkNewUser(data.users) ? this._createNewUser() : this.popup.next('popup');
     }
     else {
       this._initData(data);
@@ -79,7 +80,7 @@ export class GamePlayService {
         difficulty: data.difficulty,
         activeCards: data.activeCards,
       });
-      this.wait.next(false);
+      this.popup.next('');
       this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
       this._firstDataSubscriber.unsubscribe();
     }
@@ -168,8 +169,11 @@ export class GamePlayService {
   private _updateLocalState(data): void {
 
     if (!data.cards) {
-      this.removeSubscriptions();
-      this._router.navigate([`mainmenu/`]);
+      if(this._users.length === 2) {
+        this.popup.next('endGame');
+        this._sidebarService.stopTimer();
+      }
+      else {this._router.navigate([`mainmenu`])}
       return;
     }
 
@@ -304,7 +308,6 @@ export class GamePlayService {
       else this._users[0].result = 'win';
       this.endGame();
     }
-
   }
 
 
