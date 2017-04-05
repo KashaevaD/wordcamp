@@ -3,6 +3,7 @@ import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
 import { ActivatedRoute, Params } from '@angular/router';
+import { LocalStorageService } from '../../local-storage.service'
 
 @Component({
   selector: 'app-sidebar',
@@ -24,8 +25,12 @@ export class SidebarComponent {
   constructor(
     private _dbService: DBService,
     private _sidebarService: SidebarService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _localStorageService: LocalStorageService
   ) {
+
+    this.firstUser.name = JSON.parse(this._localStorageService.getLocalStorageValue("user")).username;
+    this.time = 0;
 
     this._activatedRoute.params.forEach((param: Params) => {
       this._roomId = param['id'];
@@ -38,7 +43,7 @@ export class SidebarComponent {
     });
 
     this._timeSubscriber = this._sidebarService.timeSend.subscribe( (number) => {
-      this.time = number/1000;
+      this.time = number;
     });
 
     this._userSubscriber = this._sidebarService.users.subscribe((users) => {
@@ -56,7 +61,7 @@ export class SidebarComponent {
   private _setSidebar(options:TStoreData): void {
     (options.type !== "single") ? this.multi = true : this.multi = false;
     this.firstUser = options.users[0];
-    this.secondUser = options.users[1];
+    if (options.users.length > 1) this.secondUser = options.users[1];
   }
 
 

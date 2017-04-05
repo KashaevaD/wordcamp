@@ -47,7 +47,7 @@ export class JoinGameService {
   }
 
   private _getUserNameFromLocalStorage(): string {
-    return this._localSrorage.getLocalStorageValue("username");
+    return JSON.parse(this._localSrorage.getLocalStorageValue("user")).username;
   }
 
 
