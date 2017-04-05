@@ -18,13 +18,16 @@ export class GamePlayService {
   private _timerId: any;
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
+  private _firstDataSubscriber: Subscription;
 
   public _roomObservable;
+  private sessionStorageUser: string;
 
   public startGame: Subject<any>;
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
   public pause: Subject<any>;
+  public wait: Subject<any>;
 
 
   constructor(
@@ -34,28 +37,89 @@ export class GamePlayService {
     this.startGame = new Subject();
     this.updateField = new Subject();
     this.pause = new Subject();
+    this.wait = new Subject();
   }
 
 
   public initNewGame(roomId: number) {
     this._roomId = roomId;
+    this.sessionStorageUser = sessionStorage['userid'];
 
     this.streamFromFirebase = new Subject();
-    let firstDataSubscriber = this.streamFromFirebase
+    this._firstDataSubscriber = this.streamFromFirebase
       .subscribe(data => {
-        if (!data.cards) {
+        if (!data.cards ||
+          (data.users.length === 2 && this.checkNewUser(data.users)) ||
+          (data.type === 'single' && this.checkNewUser(data.users))) {
+          this._firstDataSubscriber.unsubscribe();
           this._router.navigate(['mainmenu']);
           return;
-        } else {
-          this._initData(data);
-          this._initSidebar(data);
-          this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
         }
-        firstDataSubscriber.unsubscribe();
+        this._initData(data);
+        data.type === 'multi' ? this._initMultiPlayerGame(data) : this._initSinglePlayerGame(data);
+
       });
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
       .subscribe(this.streamFromFirebase);
+  }
+
+
+  private _initMultiPlayerGame(data){
+    if(data.users.length < 2){
+      this.checkNewUser(data.users) ? this._createNewUser() : this.wait.next(true);
+    }
+    else {
+      this._initData(data);
+      this._initSidebar(data);
+
+      this.startGame.next({
+        cards: data.cards,
+        user: this._currentUser,
+        difficulty: data.difficulty,
+        activeCards: data.activeCards,
+      });
+      this.wait.next(false);
+      this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
+      this._firstDataSubscriber.unsubscribe();
+    }
+  }
+
+
+  private _initSinglePlayerGame(data){
+    this.startGame.next({
+      cards: data.cards,
+      user: this._currentUser,
+      difficulty: data.difficulty,
+      activeCards: data.activeCards,
+    });
+    this._initSidebar(data);
+    this._firstDataSubscriber.unsubscribe();
+    this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
+  }
+
+
+  private _createNewUser(){
+    let newID = Date.now().toString();
+    sessionStorage['userid'] = newID;
+    this.sessionStorageUser = newID;
+    this._currentUser = {
+      id: +newID,
+      isActive: false,
+      name: "Orange",
+      result: "lose",
+      score: 20
+    };
+    this._users.push(this._currentUser);
+    this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
+  }
+
+
+  private checkNewUser(users){
+    if(!this.sessionStorageUser) return true;
+    let localStorageUserId: number = +this.sessionStorageUser ;
+    let result = users.filter((user) => +user.id === localStorageUserId);
+    return result.length === 0;
   }
 
 
@@ -65,19 +129,15 @@ export class GamePlayService {
     this._gameType = data.type;
     this.countHiddenBlock = data.countHiddenBlock;
     this._activeCards = data.activeCards || [];
-    let localUser: number = +localStorage["userid"];
+    let sessionStorageUserId: number = +this.sessionStorageUser;
 
-    data.users.forEach(user => {
-      if (user.id === localUser) {
-        this._currentUser = Object.assign({}, user)
-      }
-    });
-    this.startGame.next({
-      cards: data.cards,
-      user: this._currentUser,
-      difficulty: data.difficulty,
-      activeCards: data.activeCards,
-    });
+    if(this.sessionStorageUser){
+      data.users.forEach(user => {
+        if (user.id === sessionStorageUserId) {
+          this._currentUser = Object.assign({}, user)
+        }
+      });
+    }
 
   }
 
@@ -245,6 +305,12 @@ export class GamePlayService {
       this.endGame();
     }
 
+  }
+
+
+  public goToMainMenu(){
+    this._dbService.deleteRoom(this._roomId)
+      .then(() => this._router.navigate([`mainmenu`]))
   }
 
 

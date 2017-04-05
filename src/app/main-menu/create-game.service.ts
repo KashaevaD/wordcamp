@@ -19,17 +19,7 @@ export class CreateGameService {
 
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
-
-  // public defaultOptionsForGame = {
-  //   username: "",
-  //   difficulty: "small",
-  //   languages : {
-  //     first: "en",
-  //     last: "en"
-  //   },
-  //   type: ""
-  // };
-
+  
   constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
     this.startPlayingGame = new Subject();
     this.waitForSecondUserMultiplayer = new Subject();
@@ -58,14 +48,10 @@ export class CreateGameService {
         let newRoom: any = {};
 
         cards = this._createPlayingCards(size.w, size.h);
-        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: this._localSrorage.getLocalStorageValue("userid"), isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
-
+        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: +sessionStorage['userid'], isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
           .then(() => {
-            //return (type === "single") ? this.startPlayingGame.next(idRoom) : this.waitForSecondUserMultiplayer.next(idRoom);
             this._router.navigate(['playzone', idRoom]);
-            //return;
-            //send roomId to single.components.ts
           });
       });
   }
@@ -112,6 +98,5 @@ export class CreateGameService {
   public getGeneratedRandomId(): number {
     return new Date().getTime();
   }
-
 }
 

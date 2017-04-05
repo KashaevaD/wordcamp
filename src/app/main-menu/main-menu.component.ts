@@ -27,7 +27,7 @@ export class MainMenuComponent {
 
   public goToMultiComponent(event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
-    console.log("multi");
+    //console.log("multi");
     this._router.navigate(['mainmenu/multi']);
   }
 

@@ -5,6 +5,7 @@ import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './firebase.config';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { QRCodeModule } from 'angular2-qrcode';
 
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CreateGameService } from "./main-menu/create-game.service";
@@ -78,7 +79,8 @@ const routes = [
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule.forRoot(routes),
-    DropdownModule.forRoot()
+    DropdownModule.forRoot(),
+    QRCodeModule
   ],
   providers: [
     CreateGameService,

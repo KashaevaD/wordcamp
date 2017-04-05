@@ -25,14 +25,7 @@ export class MultiplayerMenuComponent implements OnInit {
               private _router: Router,
               private _dbService: DBService) {
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
-   
    this._updateRooms();
-    // event on starting game
-    // let startGameSubscriber: Subscription = this._createGameService.startPlayingGame.subscribe((id) => {
-    //   startGameSubscriber.unsubscribe();
-    //    this._router.navigate(['playzone', id]);  // send user  on game-field
-    // });
-
   }
 
   ngOnInit() {
@@ -58,8 +51,8 @@ export class MultiplayerMenuComponent implements OnInit {
 
   public startGame(idRoom: number):void {
     this.subscribe.unsubscribe();
-    this._localSrorage.setLocalStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
-    this._joingameService.addUserToFireBase(idRoom);  
+    this._localSrorage.setSessionStorageValue("userid", this._createGameService.getGeneratedRandomId().toString());
+    this._joingameService.addUserToFireBase(idRoom);
   }
 
   public findRoomByUserName(e) {
@@ -67,7 +60,7 @@ export class MultiplayerMenuComponent implements OnInit {
     if (inputValue !== "") {
       let arr = this.rooms.filter((item)=> {
         let regex = new RegExp(`${inputValue}`, 'ig');
-        if(regex.test(item.player)) return item; 
+        if(regex.test(item.player)) return item;
       });
       this.rooms = arr;
     } else {

@@ -12,7 +12,7 @@ export class SingleplayerService {
      if (name === "") {
        setValueUsername = "Anonimous";
      }
-    this._localStorage.setLocalStorageValue("username", setValueUsername);
+    this._localStorage.setSessionStorageValue("username", setValueUsername);
   }
 
   public getShariableLink(roomId: number): string {

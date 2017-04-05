@@ -34,7 +34,7 @@ export class SidebarService {
 
   public initSidebar(options:TStoreData):void {
     this.room.emit(options);
-    this._currentUserId = +this._localSrorage.getLocalStorageValue("userid");
+    this._currentUserId = +sessionStorage['userid'];
     this._getActiveUser(options.users);
   }
 
