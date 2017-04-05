@@ -30,7 +30,7 @@ export class OptionsComponent {
     }
   };
   public imageOfLanguages: any[];
- 
+
 
 
   constructor(private _build: FormBuilder,
@@ -59,7 +59,7 @@ export class OptionsComponent {
 
   public _changeOptionsByKeyEvent(event) {
     if (event.keyCode === 13 && event.target.tagName === "BODY") {
-      this.applyChanges(event); 
+      this.applyChanges(event);
     } else if (event.keyCode === 27 && event.target.tagName === "BODY"){
       this.cancelChangesMainMenu(event);
     }
@@ -87,7 +87,7 @@ export class OptionsComponent {
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-    
+
   }
   public changeUserName(event): void {
     this.isEditing = false;
@@ -98,6 +98,7 @@ export class OptionsComponent {
   }
 
   public sendImageForDropDownBtn(e) : void {
+    console.log(e);
     let src: string = e.target.src;
     let name: string = e.target.name;
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
