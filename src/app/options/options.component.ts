@@ -30,7 +30,6 @@ export class OptionsComponent implements OnDestroy {
     }
   };
   public imageOfLanguages: any[];
- 
 
   constructor(private _build: FormBuilder,
               private _router: Router,
@@ -68,7 +67,7 @@ export class OptionsComponent implements OnDestroy {
     if (event.keyCode === 27){
       this.cancelChangesMainMenu(event);
       return;
-    } 
+    }
   }
 
   public applyChanges(event): void {
@@ -93,7 +92,7 @@ export class OptionsComponent implements OnDestroy {
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-    
+
   }
   public changeUserName(event): void {
     this.isEditing = false;
@@ -104,6 +103,7 @@ export class OptionsComponent implements OnDestroy {
   }
 
   public sendImageForDropDownBtn(e) : void {
+    console.log(e);
     let src: string = e.target.src;
     let name: string = e.target.name;
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
@@ -114,7 +114,7 @@ export class OptionsComponent implements OnDestroy {
        this.currentLanguages.last = {src: src, name: name};
     }
   }
-  
+
   private _setLanguagePicture() {
   this.imageOfLanguages.forEach(image => {
      if (this.menuGame.value.languages.first === image.name)

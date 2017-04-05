@@ -7,7 +7,7 @@ export class OptionsService {
   public getLangEmit:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
-              private _dbService: DBService) { 
+              private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
   }
 
@@ -35,7 +35,6 @@ export class OptionsService {
   private _getLanguage(type: string, languagesList: string[]): string {
     let firstLang = navigator.language.slice(0, 2);
     let browserLanguages = (type === "first") ?  [firstLang] : this._getDifferentLangFromFirst(firstLang);
-
     return this._findExistLanguages(languagesList,browserLanguages );
   }
 

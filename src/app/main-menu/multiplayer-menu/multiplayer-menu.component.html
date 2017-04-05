@@ -39,18 +39,18 @@
               <img [src]="img.src">
             </div>
           </td >
-          <td class="center"><button class="btn btn-primary join" (click)="joinGame(item.id)">Join</button></td>
+          <td class="center"><button class="btn btn-success join" (click)="startGame(item.id)">Join</button></td>
         </tr>
 
       </tbody>
-    </table>    
+    </table>
   </div>
   <div class="clearfix"></div>
 
   <div class="row select-btn">
 
     <div class="col-lg-offset-1 col-lg-2 col-md-offset-1 col-md-3  col-sm-offset-1 col-sm-3 col-xs-12 start">
-      <a class="btn btn-primary center-block" (click)="startMultiGame($event)">Start new</a>
+      <a class="btn btn-success center-block" (click)="startMultiGame($event)">Start new</a>
     </div>
 
      <div class="col-lg-offset-2 col-lg-2 col-md-offset-1 col-md-3  col-sm-offset-1 col-sm-3 col-xs-12 options">
