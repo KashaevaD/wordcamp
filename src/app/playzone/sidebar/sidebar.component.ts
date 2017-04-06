@@ -17,7 +17,7 @@ export class SidebarComponent {
   private _userSubscriber:Subscription;
   private _timeSubscriber:Subscription;
   public firstUser: TUser = {name: "", score: 20, isActive: false, id: 0, result: "lose"};
-  public secondUser: TUser = {name: "", score: 20, isActive: false, id: 1, result: "lose"};
+  public secondUser: TUser = {name: "Unknow", score: 20, isActive: false, id: 1, result: "lose"};
   public multi:boolean;
   public time:number;
 
@@ -30,7 +30,9 @@ export class SidebarComponent {
     private _router: Router
   ) {
 
-    this.firstUser.name = JSON.parse(this._localStorageService.getLocalStorageValue("user")).username;
+    let localStorage = this._localStorageService.getLocalStorageValue("user");
+    if(localStorage) this.firstUser.name = JSON.parse(localStorage).username;
+
     this.time = 0;
 
     this._activatedRoute.params.forEach((param: Params) => {

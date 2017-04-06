@@ -67,7 +67,7 @@
 
 @media (max-width: 991px) {
   .sidebar{
-    font-size: 20px;
+    font-size: 18px;
     line-height: 60px;
     height: 60px;
   }
@@ -240,6 +240,9 @@
   }
 
   .sidebar-multi .player1 .player-name {
+    max-width: 65%;
+  }
+  .sidebar-multi .player2 .player-name {
     max-width: 65%;
   }
 

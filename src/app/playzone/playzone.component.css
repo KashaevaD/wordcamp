@@ -39,7 +39,8 @@
 }
 
 .card {
-  cursor: pointer;
+  opacity: .7;
+  cursor: default;
   z-index: 2;
   background: url("/assets/img/sky.jpg") no-repeat;
   background-size: cover;
@@ -48,8 +49,16 @@
 
 .active .flipper{
   border: 2px solid #6de5b6;
+  -webkit-box-shadow: 0px 1px 10px 0px #130c0c;
   box-shadow: 0px 1px 10px 0px #130c0c;
+  opacity: 1;
 }
+
+.active .card{
+  cursor: pointer;
+  opacity: 1;
+}
+
 
 .card img {
   width: inherit;

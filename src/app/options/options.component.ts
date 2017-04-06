@@ -103,7 +103,6 @@ export class OptionsComponent implements OnDestroy {
   }
 
   public sendImageForDropDownBtn(e) : void {
-    console.log(e);
     let src: string = e.target.src;
     let name: string = e.target.name;
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;

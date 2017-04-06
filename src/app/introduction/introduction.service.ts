@@ -29,8 +29,8 @@ export class IntroductionService {
   }
 
   public setDefaultName():string {
-      let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length - 0 + 1);
-      rand = Math.round(rand);
+      let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length - 1);
+      rand = Math.floor(rand);
       return this._defaltNickNames[rand];
   }
 

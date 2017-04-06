@@ -14,13 +14,14 @@ import { IntroductionService } from './introduction.service';
 export class IntroductionComponent {
 
   public isOpenVideoIntro:boolean;
-  public userName:string;
+  public userName :string= "Anonim";
 
   constructor(private _createGameService: CreateGameService,
               private _localStorage: LocalStorageService,
               private _introService: IntroductionService,
               private _router: Router,
               private _optionService: OptionsService) {
+               
     this.isOpenVideoIntro = false;
     this.userName = this._introService.setDefaultName();
     this._introService.isShowMainPageForUser();
@@ -42,6 +43,7 @@ export class IntroductionComponent {
 
   public allotAllText(e) {
     e.target.select();
+    //console.log();
   }
 
   public startSingleGameDefault() {

@@ -23,6 +23,7 @@ export class GamePlayService {
 
   public _roomObservable;
   private sessionStorageUser: string;
+  private localStorageUser: any;
 
   public startGame: Subject<any>;
   public updateField: Subject<any>;
@@ -45,6 +46,7 @@ export class GamePlayService {
   public initNewGame(roomId: number) {
     this._roomId = roomId;
     this.sessionStorageUser = sessionStorage['userid'];
+    this.localStorageUser = localStorage['user'] ? JSON.parse(localStorage['user']) : null;
 
     this.streamFromFirebase = new Subject();
     this._firstDataSubscriber = this.streamFromFirebase
@@ -58,7 +60,6 @@ export class GamePlayService {
         }
         this._initData(data);
         data.type === 'multi' ? this._initMultiPlayerGame(data) : this._initSinglePlayerGame(data);
-
       });
 
     this._roomObservable = this._dbService.getObjectFromFB(`rooms/${roomId}`)
@@ -71,7 +72,6 @@ export class GamePlayService {
       this.checkNewUser(data.users) ? this._createNewUser() : this.popup.next('popup');
     }
     else {
-      this._initData(data);
       this._initSidebar(data);
 
       this.startGame.next({
@@ -88,13 +88,13 @@ export class GamePlayService {
 
 
   private _initSinglePlayerGame(data){
+    this._initSidebar(data);
     this.startGame.next({
       cards: data.cards,
       user: this._currentUser,
       difficulty: data.difficulty,
       activeCards: data.activeCards,
     });
-    this._initSidebar(data);
     this._firstDataSubscriber.unsubscribe();
     this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
   }
@@ -104,10 +104,11 @@ export class GamePlayService {
     let newID = Date.now().toString();
     sessionStorage['userid'] = newID;
     this.sessionStorageUser = newID;
+    let name = this.localStorageUser ? this.localStorageUser.username : 'Unknown';
     this._currentUser = {
       id: +newID,
       isActive: false,
-      name: "Orange",
+      name: name,
       result: "lose",
       score: 20
     };
@@ -162,7 +163,6 @@ export class GamePlayService {
         this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
       }
     });
-
   }
 
 
@@ -170,8 +170,8 @@ export class GamePlayService {
 
     if (!data.cards) {
       if(this._users.length === 2) {
-        this.popup.next('endGame');
         this._sidebarService.stopTimer();
+        this.popup.next('endGame');
       }
       else {this._router.navigate([`mainmenu`])}
       return;
@@ -329,6 +329,7 @@ export class GamePlayService {
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();
+    this._timeSubscriber.unsubscribe();
     this._sidebarService.stopTimer();
   }
 
