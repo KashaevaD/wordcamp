@@ -5,7 +5,6 @@ import { DBService } from '../db.service';
 import { CreateGameService } from '../main-menu/create-game.service';
 import { FirebaseObjectObservable } from 'angularfire2';
 import { Subscription } from "rxjs";
-import { LocalStorageService } from "../local-storage.service";
 
 
 @Component({
@@ -41,11 +40,8 @@ export class ResultComponent implements OnInit {
               private _createGameService: CreateGameService,
               private _activatedRoute: ActivatedRoute,
               private _router: Router,
-              private _localSrorage: LocalStorageService,
              ){
-//888888888888888888888
-//this.showModal = true;
-//888888888888888888888
+
         this._activatedRoute.params.forEach((param: Params) => {
           this._roomId = param['id'];
         });

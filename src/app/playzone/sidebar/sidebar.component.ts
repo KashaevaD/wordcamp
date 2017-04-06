@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DBService } from '../../db.service';
 import { SidebarService } from "./sidebar.service"
 import { Subscription } from "rxjs";
@@ -10,7 +10,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnDestroy{
 
   private _roomId:number;
   private _roomSubscriber:Subscription;
@@ -39,10 +39,11 @@ export class SidebarComponent {
       this._roomId = param['id'];
     });
 
+    console.log("Sidebar");
+
     this._roomSubscriber = this._sidebarService.room.subscribe((options) => {
       this._setSidebar(options);
       this._sidebarService.initTimer(options);
-      this._roomSubscriber.unsubscribe();
     });
 
     this._timeSubscriber = this._sidebarService.timeSend.subscribe( (number) => {
@@ -52,12 +53,12 @@ export class SidebarComponent {
     this._userSubscriber = this._sidebarService.users.subscribe((users) => {
       this._changeUsersState(users);
     });
+  }
 
-    this._sidebarService.timeIsUp.subscribe( () => {
-      if (!this.multi) {
-        this._roomSubscriber.unsubscribe()
-      }
-    });
+  ngOnDestroy() {
+    this._userSubscriber.unsubscribe();
+    this._roomSubscriber.unsubscribe();
+    this._timeSubscriber.unsubscribe();
   }
 
 
@@ -77,11 +78,11 @@ export class SidebarComponent {
   }
 
   public goToMainMenu(): void{
-    this._userSubscriber.unsubscribe();
     this._sidebarService.stopTimer();
-    this._timeSubscriber.unsubscribe();
     this._dbService.deleteRoom(this._roomId);
     this._router.navigate([`mainmenu`]);
   }
+
+
 
 }

@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { LocalStorageService } from "../../local-storage.service";
+import {log} from "util";
 
 @Injectable()
 export class SidebarService {
@@ -22,9 +22,7 @@ export class SidebarService {
   };
 
 
-  constructor(
-    private _localSrorage: LocalStorageService,
-  ) {
+  constructor() {
     this.timeSend = new EventEmitter();
     this.timeIsUp = new EventEmitter();
     this.users = new EventEmitter();
@@ -33,7 +31,8 @@ export class SidebarService {
 
 
   public initSidebar(options:TStoreData):void {
-    this.room.emit(options);
+    console.log(options);
+    setTimeout(this.room.emit(options), 4);
     this._currentUserId = +sessionStorage['userid'];
     this._getActiveUser(options.users);
   }
@@ -42,7 +41,6 @@ export class SidebarService {
   public changeUserState(users:TUser[]):void {
     this.users.emit(users);
     this._getActiveUser(users);
-
   }
 
 
@@ -65,6 +63,7 @@ export class SidebarService {
     } else {
       this._startTime = this.setDurationOfTime(options.difficulty)
     }
+    console.log(this._startTime);
     this.startTimer();
   }
 
