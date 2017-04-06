@@ -47,13 +47,12 @@ export class JoinGameService {
   }
 
   private _getUserNameFromLocalStorage(): string {
-    return JSON.parse(this._localSrorage.getLocalStorageValue("user")).username;
+     let localData = this._localSrorage.getLocalStorageValue("user");
+    return localData ?  JSON.parse(localData).username : 'Unknown';
   }
 
 
  public doIfShareableLinkIsActivated(roomId: number): void {
-   console.log("share", roomId);
-
     let shareLink: Subscription = this._dbService.getObjectFromFB(`rooms/${roomId}`).subscribe(data => {
       if (data.users.length === 1) {
         shareLink.unsubscribe();

@@ -40,7 +40,7 @@
 
 .card {
   opacity: .7;
-  cursor: pointer;
+  cursor: default;
   z-index: 2;
   background: url("/assets/img/sky.jpg") no-repeat;
   background-size: cover;
@@ -55,6 +55,7 @@
 }
 
 .active .card{
+  cursor: pointer;
   opacity: 1;
 }
 

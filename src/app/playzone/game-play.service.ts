@@ -23,6 +23,7 @@ export class GamePlayService {
 
   public _roomObservable;
   private sessionStorageUser: string;
+  private localStorageUser: any;
 
   public startGame: Subject<any>;
   public updateField: Subject<any>;
@@ -45,6 +46,7 @@ export class GamePlayService {
   public initNewGame(roomId: number) {
     this._roomId = roomId;
     this.sessionStorageUser = sessionStorage['userid'];
+    this.localStorageUser = localStorage['user'] ? JSON.parse(localStorage['user']) : null;
 
     this.streamFromFirebase = new Subject();
     this._firstDataSubscriber = this.streamFromFirebase
@@ -104,10 +106,11 @@ export class GamePlayService {
     let newID = Date.now().toString();
     sessionStorage['userid'] = newID;
     this.sessionStorageUser = newID;
+    let name = this.localStorageUser ? this.localStorageUser.username : 'Unknown';
     this._currentUser = {
       id: +newID,
       isActive: false,
-      name: "Orange",
+      name: name,
       result: "lose",
       score: 20
     };
