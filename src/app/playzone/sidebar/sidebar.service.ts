@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import {log} from "util";
 
 @Injectable()
 export class SidebarService {
@@ -31,7 +30,6 @@ export class SidebarService {
 
 
   public initSidebar(options:TStoreData):void {
-    console.log(options);
     setTimeout(this.room.emit(options), 4);
     this._currentUserId = +sessionStorage['userid'];
     this._getActiveUser(options.users);
@@ -63,7 +61,6 @@ export class SidebarService {
     } else {
       this._startTime = this.setDurationOfTime(options.difficulty)
     }
-    console.log(this._startTime);
     this.startTimer();
   }
 
