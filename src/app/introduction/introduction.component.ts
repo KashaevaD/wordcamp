@@ -43,7 +43,6 @@ export class IntroductionComponent {
 
   public allotAllText(e) {
     e.target.select();
-    //console.log();
   }
 
   public startSingleGameDefault() {
