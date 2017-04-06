@@ -124,6 +124,11 @@ export class OptionsComponent implements OnDestroy {
  }
 
   public setNewLanguageImage(e): void {
+    //spacially for FireFox
+    if (e.target.tagName === "BUTTON") {
+      this.currentImageLanguage = e.target.firstElementChild;
+      return;
+    }
     this.currentImageLanguage = e.target;
   }
 
