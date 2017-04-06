@@ -43,7 +43,7 @@ input {
  }
 
 div.select-step {
-  padding: 1% 0 1% 0;   
+  padding: 1% 0 1% 0;
 }
 /*****video*****/
 .intro-gif {
@@ -77,11 +77,12 @@ div.select-step {
      padding-right: 5px;
      padding-left: 15px;
      text-align: left;
+     margin-left: 0px;
   }
   .intro-gif {
     width: 100%;
   }
-  
+
   .intro h2 {
     margin: 10px 0 10px 0;
   }
@@ -99,7 +100,7 @@ div.select-step {
   .intro h2 {
     margin: 5px 0 5px 0;
   }
-  input {
-      font-size: 1em;
+  input, div.name label {
+      font-size: .8em;
   }
 }
