@@ -14,7 +14,7 @@ import { IntroductionService } from './introduction.service';
 export class IntroductionComponent {
 
   public isOpenVideoIntro:boolean;
-  public userName :string= "Anonim";
+  public userName :string= "Unknown";
 
   constructor(private _createGameService: CreateGameService,
               private _localStorage: LocalStorageService,
