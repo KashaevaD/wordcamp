@@ -30,7 +30,7 @@ export class SidebarService {
 
 
   public initSidebar(options:TStoreData):void {
-    setTimeout(this.room.emit(options), 4);
+    this.room.emit(options),
     this._currentUserId = +sessionStorage['userid'];
     this._getActiveUser(options.users);
   }
