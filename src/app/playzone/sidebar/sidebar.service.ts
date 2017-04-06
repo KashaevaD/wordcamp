@@ -1,5 +1,4 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { LocalStorageService } from "../../local-storage.service";
 
 @Injectable()
 export class SidebarService {
@@ -22,9 +21,7 @@ export class SidebarService {
   };
 
 
-  constructor(
-    private _localSrorage: LocalStorageService,
-  ) {
+  constructor() {
     this.timeSend = new EventEmitter();
     this.timeIsUp = new EventEmitter();
     this.users = new EventEmitter();
@@ -42,7 +39,6 @@ export class SidebarService {
   public changeUserState(users:TUser[]):void {
     this.users.emit(users);
     this._getActiveUser(users);
-
   }
 
 

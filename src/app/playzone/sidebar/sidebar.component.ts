@@ -51,11 +51,10 @@ export class SidebarComponent implements OnDestroy{
     this._userSubscriber = this._sidebarService.users.subscribe((users) => {
       this._changeUsersState(users);
     });
-
   }
 
 
-  ngOnDestroy(){
+   ngOnDestroy(){
     this._roomSubscriber.unsubscribe();
     this._userSubscriber.unsubscribe();
     this._sidebarService.stopTimer();
