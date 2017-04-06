@@ -39,10 +39,12 @@ export class JoinGameService {
 
     let roomSubscribe: Subscription = this._dbService.getObjectFromFB(`rooms/${idRoom}`).subscribe((data) => {
             currentUser = data.users[0];
-            roomSubscribe.unsubscribe();
-
+            
            this._dbService.getObjectFromFB(`rooms/${idRoom}`).update({users: [currentUser, newUser], state: true})
-           .then(() =>  this._router.navigate(['playzone', idRoom]));
+           .then(() =>  {
+              roomSubscribe.unsubscribe();
+              this._router.navigate(['playzone', idRoom])
+        });
       });
   }
 
