@@ -39,8 +39,6 @@ export class SidebarComponent implements OnDestroy{
       this._roomId = param['id'];
     });
 
-    console.log("Sidebar");
-
     this._roomSubscriber = this._sidebarService.room.subscribe((options) => {
       this._setSidebar(options);
       this._sidebarService.initTimer(options);
@@ -55,10 +53,13 @@ export class SidebarComponent implements OnDestroy{
     });
   }
 
-  ngOnDestroy() {
-    this._userSubscriber.unsubscribe();
+
+   ngOnDestroy(){
     this._roomSubscriber.unsubscribe();
+    this._userSubscriber.unsubscribe();
+    this._sidebarService.stopTimer();
     this._timeSubscriber.unsubscribe();
+    this._dbService.deleteRoom(this._roomId);
   }
 
 
@@ -78,11 +79,7 @@ export class SidebarComponent implements OnDestroy{
   }
 
   public goToMainMenu(): void{
-    this._sidebarService.stopTimer();
-    this._dbService.deleteRoom(this._roomId);
-    this._router.navigate([`mainmenu`]);
+    this._dbService.deleteRoom(this._roomId).then(() => this._router.navigate([`mainmenu`]))
   }
-
-
 
 }
