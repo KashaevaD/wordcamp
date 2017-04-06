@@ -17,6 +17,7 @@ export class DBService {
   }
 
 
+
   public getAllMultiPlayerRoom(): FirebaseListObservable<any> {
     const queryObservable = this._af.database.list(`rooms`, {
         query: {

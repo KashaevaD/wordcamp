@@ -19,7 +19,7 @@ export class CreateGameService {
 
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
-  
+
   constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
     this.startPlayingGame = new Subject();
     this.waitForSecondUserMultiplayer = new Subject();
@@ -34,7 +34,7 @@ export class CreateGameService {
     let lang2:string = languages.last;
     let cards: TCard[] = [];
     let idRoom: number = this.getGeneratedRandomId();
-
+    let name = username || 'Unknown';
 
     this._dbService.getObjectFromFB(`/dictionary/${lang1}`)
       .map(res => {
@@ -45,14 +45,16 @@ export class CreateGameService {
         this._lastLanguageArray = res;
       })
       .subscribe(() => {
+
         let newRoom: any = {};
 
         cards = this._createPlayingCards(size.w, size.h);
-        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: username, score: score, id: +sessionStorage['userid'], isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
+        newRoom[idRoom] = { cards: cards, type: type, state: true, difficulty: difficulty, languages: languages, users: [{ name: name, score: score, id: +sessionStorage['userid'], isActive: true, activity: true, result: 'lose' }], countHiddenBlock: 0 };
         this._createRoomOnFirebase.update(newRoom)          //send data to FireBase
-          .then(() => {
+          .then(
+            () => {
             this._router.navigate(['playzone', idRoom]);
-          });
+          },(err) => alert('oib,rf'));
       });
   }
 

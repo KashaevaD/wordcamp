@@ -118,7 +118,6 @@ export class ResultComponent implements OnInit {
   }
 
   public playAgainWithFriend() {
-    console.log(this._model);
     this._room.unsubscribe();
     this._model.type = "multi";
     this._deleteRoomAndStartNewGame();
