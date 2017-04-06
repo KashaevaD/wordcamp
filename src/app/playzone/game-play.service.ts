@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { DBService } from '../db.service';
 import { Router } from '@angular/router';
 import { SidebarService } from './sidebar/sidebar.service';
-import {el} from "@angular/platform-browser/typings/testing/browser_util";
 
 @Injectable()
 export class GamePlayService {
@@ -55,6 +54,7 @@ export class GamePlayService {
           (data.users.length === 2 && this.checkNewUser(data.users)) ||
           (data.type === 'single' && this.checkNewUser(data.users))) {
           this._firstDataSubscriber.unsubscribe();
+          this.removeSubscriptions();
           this._router.navigate(['mainmenu']);
           return;
         }
@@ -173,7 +173,10 @@ export class GamePlayService {
         this._sidebarService.stopTimer();
         this.popup.next('endGame');
       }
-      else {this._router.navigate([`mainmenu`])}
+      else {
+        this.removeSubscriptions();
+        this._router.navigate([`mainmenu`]);
+      }
       return;
     }
 
@@ -312,6 +315,7 @@ export class GamePlayService {
 
 
   public goToMainMenu(){
+    this.removeSubscriptions();
     this._dbService.deleteRoom(this._roomId)
       .then(() => this._router.navigate([`mainmenu`]))
   }
