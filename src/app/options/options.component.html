@@ -33,9 +33,8 @@
 
 
         <div dropdown class="box lang first">
-          <button type="button" dropdownToggle>
-
-            <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  (click)="setNewLanguageImage($event)">
+          <button type="button" dropdownToggle (click)="setNewLanguageImage($event)">
+            <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
           </button>
           <ul dropdownMenu role="menu">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">
@@ -51,8 +50,8 @@
 
 
         <div dropdown class="box lang last">
-          <button type="button" dropdownToggle>
-            <img [src]="currentLanguages.last.src" [name]="currentLanguages.last.name" data-order="last" class="img-responsive" (click)="setNewLanguageImage($event)">
+          <button type="button" dropdownToggle (click)="setNewLanguageImage($event)">
+            <img [src]="currentLanguages.last.src" [name]="currentLanguages.last.name" data-order="last" class="img-responsive" >
           </button>
           <ul dropdownMenu role="menu" aria-labelledby="single-button">
             <li role="menuitem" *ngFor="let lang of imageOfLanguages">

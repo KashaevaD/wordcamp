@@ -14,11 +14,11 @@ export class IntroductionService {
               private _localSrorage: LocalStorageService) { }
 
   public animate(options) {
-    var start = performance.now();
+    let start = performance.now();
     requestAnimationFrame(function _animate(time) {
-        var timeFraction = (time - start) / options.duration;
+        let timeFraction = (time - start) / options.duration;
         if (timeFraction > 1) timeFraction = 1;
-        var progress = options.timing(timeFraction);
+        let progress = options.timing(timeFraction);
         options.draw(progress);
         if (timeFraction < 1) {
             requestAnimationFrame(_animate);
@@ -29,8 +29,8 @@ export class IntroductionService {
   }
 
   public setDefaultName():string {
-      let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length - 0 + 1);
-      rand = Math.round(rand);
+      let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length -  1);
+      rand = Math.floor(rand);
       return this._defaltNickNames[rand];
   }
 

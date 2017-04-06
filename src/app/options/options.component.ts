@@ -103,7 +103,6 @@ export class OptionsComponent implements OnDestroy {
   }
 
   public sendImageForDropDownBtn(e) : void {
-    console.log(e);
     let src: string = e.target.src;
     let name: string = e.target.name;
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
@@ -125,6 +124,11 @@ export class OptionsComponent implements OnDestroy {
  }
 
   public setNewLanguageImage(e): void {
+    //spacially for FireFox
+    if (e.target.tagName === "BUTTON") {
+      this.currentImageLanguage = e.target.firstElementChild;
+      return;
+    }
     this.currentImageLanguage = e.target;
   }
 
