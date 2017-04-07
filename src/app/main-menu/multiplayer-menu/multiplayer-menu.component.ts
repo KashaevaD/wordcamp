@@ -42,7 +42,6 @@ export class MultiplayerMenuComponent  {
 
   public joinGame(idRoom: number):void {
     this.subscribe.unsubscribe();
-    console.log(this.subscribe);
     sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     this._joingameService.addUserToFireBase(idRoom);
   }

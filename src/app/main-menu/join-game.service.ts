@@ -38,14 +38,14 @@ export class JoinGameService {
     let currentUser: TUser;
 
     let roomSubscribe: Subscription = this._dbService.getObjectFromFB(`rooms/${idRoom}`).subscribe((data) => {
-            currentUser = data.users[0];
-            
-           this._dbService.getObjectFromFB(`rooms/${idRoom}`).update({users: [currentUser, newUser], state: true})
-           .then(() =>  {
-              roomSubscribe.unsubscribe();
-              this._router.navigate(['playzone', idRoom])
+      currentUser = data.users[0];
+
+      this._dbService.getObjectFromFB(`rooms/${idRoom}`).update({users: [currentUser, newUser], state: true})
+        .then(() =>  {
+          roomSubscribe.unsubscribe();
+          this._router.navigate(['playzone', idRoom])
         });
-      });
+    });
   }
 
   private _getUserNameFromLocalStorage(): string {

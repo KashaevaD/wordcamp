@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { GamePlayService } from './game-play.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   templateUrl: './playzone.component.html',
   styleUrls: ['./playzone.component.css']
 })
-export class PlayzoneComponent implements OnDestroy {
+export class PlayzoneComponent implements OnInit, OnDestroy {
 
   private _user: TUser;
   public activeField: boolean = false;
@@ -41,9 +41,12 @@ export class PlayzoneComponent implements OnDestroy {
     this.shareAbleLink = window.location.href;
     this.qrCodeLink = 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + this.shareAbleLink;
 
-    this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
-
   }
+
+  ngOnInit(){
+    this._activatedRoute.params.forEach((param: Params) => this._gamePlayService.initNewGame(param['id']));
+  }
+
 
 
   ngOnDestroy(): void {
