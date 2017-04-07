@@ -19,6 +19,9 @@ export class GamePlayService {
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
   private _firstDataSubscriber: Subscription;
+  private _goToMainMenuSubscriber: Subscription;
+
+  private _userIsLeft: boolean = false;
 
   public _roomObservable;
   private sessionStorageUser: string;
@@ -44,6 +47,7 @@ export class GamePlayService {
 
   public initNewGame(roomId: number) {
     this._roomId = roomId;
+    this._userIsLeft = false;
     this.sessionStorageUser = sessionStorage['userid'];
     this.localStorageUser = localStorage['user'] ? JSON.parse(localStorage['user']) : null;
 
@@ -147,6 +151,8 @@ export class GamePlayService {
 
     this._sidebarService.initSidebar(data);
 
+    this._goToMainMenuSubscriber = this._sidebarService.goToMainMenu.subscribe(() => this.goToMainMenu());
+
     this._timeSubscriber = this._sidebarService.timeIsUp.subscribe(() => {
       if (this._gameType === 'single') {
         this.endGame();
@@ -170,7 +176,7 @@ export class GamePlayService {
     if (!data.cards) {
       if(this._users.length === 2) {
         this._sidebarService.stopTimer();
-        this.popup.next('endGame');
+        if(!this._userIsLeft)this.popup.next('endGame');
       }
       else {
         this._router.navigate([`mainmenu`]);
@@ -290,7 +296,6 @@ export class GamePlayService {
 
   private _isWin(cells: TCard[]): void {
     if (this.countHiddenBlock === (cells.length / 2) ) {
-
       if (this._gameType === 'multi') {
         let diff: number = this._users[0].score - this._users[1].score;
         switch (diff) {
@@ -313,13 +318,14 @@ export class GamePlayService {
 
 
   public goToMainMenu(){
+    this._userIsLeft = true;
     this._dbService.deleteRoom(this._roomId)
       .then(() => this._router.navigate([`mainmenu`]))
   }
 
 
   public endGame() {
-    this.removeSubscriptions();
+    this._sidebarService.stopTimer();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
       .then(() => this._router.navigate([`playzone/${this._roomId}/result`]));
 
@@ -327,11 +333,12 @@ export class GamePlayService {
 
 
   public removeSubscriptions() {
+    this._sidebarService.stopTimer();
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();
     this._timeSubscriber.unsubscribe();
-    this._sidebarService.stopTimer();
+    this._goToMainMenuSubscriber.unsubscribe();
   }
 
 }
