@@ -54,7 +54,6 @@ export class GamePlayService {
           (data.users.length === 2 && this.checkNewUser(data.users)) ||
           (data.type === 'single' && this.checkNewUser(data.users))) {
           this._firstDataSubscriber.unsubscribe();
-          this.removeSubscriptions();
           this._router.navigate(['mainmenu']);
           return;
         }
@@ -174,7 +173,6 @@ export class GamePlayService {
         this.popup.next('endGame');
       }
       else {
-        this.removeSubscriptions();
         this._router.navigate([`mainmenu`]);
       }
       return;
@@ -315,7 +313,6 @@ export class GamePlayService {
 
 
   public goToMainMenu(){
-    this.removeSubscriptions();
     this._dbService.deleteRoom(this._roomId)
       .then(() => this._router.navigate([`mainmenu`]))
   }

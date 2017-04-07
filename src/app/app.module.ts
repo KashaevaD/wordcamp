@@ -9,9 +9,6 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CreateGameService } from "./main-menu/create-game.service";
 
-import { SingleplayerMenuComponent } from './main-menu/singleplayer-menu/singleplayer-menu.component';
-import { SingleplayerService } from "./main-menu/singleplayer-menu/singleplayer.service";
-
 import { MultiplayerMenuComponent } from  './main-menu/multiplayer-menu/multiplayer-menu.component';
 import { MultiplayerService } from "./main-menu/multiplayer-menu/multiplayer.service";
 
@@ -65,7 +62,6 @@ const routes = [
     MainMenuComponent,
     PlayzoneComponent,
     MultiplayerMenuComponent,
-    SingleplayerMenuComponent,
     SidebarComponent,
     ResultComponent,
     IntroductionComponent,
@@ -82,7 +78,6 @@ const routes = [
   ],
   providers: [
     CreateGameService,
-    SingleplayerService,
     LocalStorageService,
     MultiplayerService,
     JoinGameService,
