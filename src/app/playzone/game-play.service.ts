@@ -21,6 +21,8 @@ export class GamePlayService {
   private _firstDataSubscriber: Subscription;
   private _goToMainMenuSubscriber: Subscription;
 
+  private _userIsLeft: boolean = false;
+
   public _roomObservable;
   private sessionStorageUser: string;
   private localStorageUser: any;
@@ -45,6 +47,7 @@ export class GamePlayService {
 
   public initNewGame(roomId: number) {
     this._roomId = roomId;
+    this._userIsLeft = false;
     this.sessionStorageUser = sessionStorage['userid'];
     this.localStorageUser = localStorage['user'] ? JSON.parse(localStorage['user']) : null;
 
@@ -173,7 +176,7 @@ export class GamePlayService {
     if (!data.cards) {
       if(this._users.length === 2) {
         this._sidebarService.stopTimer();
-        this.popup.next('endGame');
+        if(!this._userIsLeft)this.popup.next('endGame');
       }
       else {
         this._router.navigate([`mainmenu`]);
@@ -315,6 +318,7 @@ export class GamePlayService {
 
 
   public goToMainMenu(){
+    this._userIsLeft = true;
     this._dbService.deleteRoom(this._roomId)
       .then(() => this._router.navigate([`mainmenu`]))
   }
