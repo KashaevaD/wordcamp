@@ -19,6 +19,7 @@ export class GamePlayService {
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
   private _firstDataSubscriber: Subscription;
+  private _goToMainMenuSubscriber: Subscription;
 
   public _roomObservable;
   private sessionStorageUser: string;
@@ -146,6 +147,8 @@ export class GamePlayService {
   private _initSidebar(data) {
 
     this._sidebarService.initSidebar(data);
+
+    this._goToMainMenuSubscriber = this._sidebarService.goToMainMenu.subscribe(() => this.goToMainMenu());
 
     this._timeSubscriber = this._sidebarService.timeIsUp.subscribe(() => {
       if (this._gameType === 'single') {
@@ -290,7 +293,6 @@ export class GamePlayService {
 
   private _isWin(cells: TCard[]): void {
     if (this.countHiddenBlock === (cells.length / 2) ) {
-
       if (this._gameType === 'multi') {
         let diff: number = this._users[0].score - this._users[1].score;
         switch (diff) {
@@ -319,7 +321,7 @@ export class GamePlayService {
 
 
   public endGame() {
-    this.removeSubscriptions();
+    this._sidebarService.stopTimer();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
       .then(() => this._router.navigate([`playzone/${this._roomId}/result`]));
 
@@ -327,11 +329,12 @@ export class GamePlayService {
 
 
   public removeSubscriptions() {
+    this._sidebarService.stopTimer();
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();
     this._timeSubscriber.unsubscribe();
-    this._sidebarService.stopTimer();
+    this._goToMainMenuSubscriber.unsubscribe();
   }
 
 }

@@ -7,6 +7,8 @@ export class SidebarService {
   public timeIsUp: EventEmitter<any>;
   public users: EventEmitter<any>;
   public room: EventEmitter<any>;
+  public goToMainMenu: EventEmitter<any>;
+
   private _timerId:any;
   private _time:number;
   private _startTime:number;
@@ -26,6 +28,7 @@ export class SidebarService {
     this.timeIsUp = new EventEmitter();
     this.users = new EventEmitter();
     this.room = new EventEmitter();
+    this.goToMainMenu = new EventEmitter();
   }
 
 
