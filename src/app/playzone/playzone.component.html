@@ -20,7 +20,7 @@
 
     <div class="form-group share_link_box">
       <input type="text" class="share_link" id="share_link" [value]="shareAbleLink">
-      <button class="btn btn-primary copy" (click)="copyLink()"><span>Copy text</span></button>
+      <button appTooltip [textForOver]="'Copy to clipboard'" [textForClick]="'Copied!'" class="btn btn-primary copy" (click)="copyLink()"><span class="copy_text">Copy text</span><span class="wc_tooltip"></span></button>
     </div>
 
 
@@ -30,9 +30,9 @@
 
     <p class="text_waiting">Waiting . . .</p>
 
-  </div>
+    <button class="btn btn-danger cancel" (click)="goToMainMenu()">Cancel</button>
 
-  <button class="btn btn-danger cancel" (click)="goToMainMenu()">Cancel</button>
+  </div>
 
 </div>
 

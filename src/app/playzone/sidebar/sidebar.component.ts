@@ -57,10 +57,9 @@ export class SidebarComponent implements OnDestroy{
    ngOnDestroy(){
     this._roomSubscriber.unsubscribe();
     this._userSubscriber.unsubscribe();
-    this._sidebarService.stopTimer();
     this._timeSubscriber.unsubscribe();
-   // this._dbService.deleteRoom(this._roomId);
-  }
+    this._sidebarService.stopTimer();
+   }
 
 
   private _setSidebar(options:TStoreData): void {
@@ -79,7 +78,7 @@ export class SidebarComponent implements OnDestroy{
   }
 
   public goToMainMenu(): void{
-    this._dbService.deleteRoom(this._roomId).then(() => this._router.navigate([`mainmenu`]))
+    this._sidebarService.goToMainMenu.emit();
   }
 
 }

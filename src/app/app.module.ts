@@ -5,6 +5,7 @@ import { AngularFireModule } from 'angularfire2';
 import { firebaseConfig } from './firebase.config';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AppComponent } from './app.component';
 
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CreateGameService } from "./main-menu/create-game.service";
@@ -22,12 +23,14 @@ import { DBService } from './db.service';
 import { JoinGameService } from "./main-menu/join-game.service"
 import { SidebarService } from "./playzone/sidebar/sidebar.service";
 
-import { AppComponent } from './app.component';
-import { DropdownModule } from 'ng2-bootstrap';
 import { IntroductionComponent } from './introduction/introduction.component';
 import { IntroductionService } from './introduction/introduction.service';
 import { OptionsComponent } from './options/options.component';
 import { OptionsService } from './options/options.service';
+
+import { DropdownModule } from 'ng2-bootstrap';
+import { TooltipDirective } from './playzone/tooltip.directive';
+import { DropdownDirective } from './options/dropdown.directive';
 
 const routes = [
   {
@@ -66,6 +69,8 @@ const routes = [
     ResultComponent,
     IntroductionComponent,
     OptionsComponent,
+    TooltipDirective,
+    DropdownDirective,
   ],
   imports: [
     BrowserModule,

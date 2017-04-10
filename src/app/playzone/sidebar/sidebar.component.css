@@ -150,6 +150,7 @@
 
   .sidebar-multi .player1 {
     padding-left: 1%;
+    width: 38%;
   }
 
   .sidebar-multi .player1 .player-name {
@@ -165,12 +166,11 @@
 
   .sidebar-multi .player2 .player-name {
     padding: 0;
-    width: auto;
-    max-width: 70%;
     text-align: right;
   }
 
   .sidebar-multi .player2 {
+    width: 38%;
     float: right;
     text-align: right;
     padding-right: 1%;
@@ -201,6 +201,7 @@
   .sidebar {
     line-height: 40px;
     height: 40px;
+    text-size-adjust: 100%;
   }
 
   .sidebar-multi .player-row {
@@ -240,9 +241,6 @@
   }
 
   .sidebar-multi .player1 .player-name {
-    max-width: 65%;
-  }
-  .sidebar-multi .player2 .player-name {
     max-width: 65%;
   }
 

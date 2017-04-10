@@ -64,10 +64,6 @@ export class OptionsComponent implements OnDestroy {
       this.applyChanges(event);
       return;
     }
-    if (event.keyCode === 27){
-      this.cancelChangesMainMenu(event);
-      return;
-    }
   }
 
   public applyChanges(event): void {
@@ -77,18 +73,18 @@ export class OptionsComponent implements OnDestroy {
     this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
   }
 
-  public resetChanges(event): void {
-    this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
-    this._updateFormGroup();
-    this._setLanguagePicture();
-    event.preventDefault();
-  }
+  // public resetChanges(event): void {
+  //   this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
+  //   this._updateFormGroup();
+  //   this._setLanguagePicture();
+  //   event.preventDefault();
+  // }
 
-  public cancelChangesMainMenu(event): void {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
-    this._router.navigate(['mainmenu']);
-    event.preventDefault();
-  }
+  // public cancelChangesMainMenu(event): void {
+  //   document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
+  //   this._router.navigate(['mainmenu']);
+  //   event.preventDefault();
+  // }
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
@@ -103,15 +99,15 @@ export class OptionsComponent implements OnDestroy {
   }
 
   public sendImageForDropDownBtn(e) : void {
-    let src: string = e.target.src;
+    // let src: string = e.target.src;
     let name: string = e.target.name;
     (e.target.dataset.order === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
-    //Set the same picture on the main dropdown button img
-    if ((this.currentImageLanguage as HTMLElement).getAttribute("data-order") === "first") {
-      this.currentLanguages.first = {src: src, name: name};
-    } else {
-       this.currentLanguages.last = {src: src, name: name};
-    }
+    // //Set the same picture on the main dropdown button img
+    // if ((this.currentImageLanguage as HTMLElement).getAttribute("data-order") === "first") {
+    //   this.currentLanguages.first = {src: src, name: name};
+    // } else {
+    //    this.currentLanguages.last = {src: src, name: name};
+    // }
   }
 
   private _setLanguagePicture() {
