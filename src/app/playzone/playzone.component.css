@@ -86,6 +86,8 @@
 /********Wait******/
 .waiting_container {
   font-size: 14px;
+  overflow: auto;
+  max-height: 100%;
   position: fixed;
   background: #ffffff;
   border: 2px solid #1d9ce5;
@@ -130,8 +132,46 @@
   padding: 5px 10px;
 }
 
-.btn{
+.copy{
   vertical-align: top;
+  position: relative;
+}
+
+.wc_tooltip{
+  display: none;
+  position: absolute;
+  top: -55px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  z-index: 100;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+  background: #fff;
+  background: rgba(3, 60, 115, 0.95);
+}
+
+.wc_tooltip:before{
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 100%;
+  left: 50%;
+  line-height: 40px;
+  transform: translateX(-10px);
+  border-color: transparent;
+  border-style: solid;
+  content: "";
+  border-width: 10px 10px 0;
+  border-top-color: rgba(3, 60, 115, 0.95);
+}
+
+.copy.wc_tooltip_open .wc_tooltip{
+  display: block;
 }
 
 .text_waiting{
@@ -142,7 +182,7 @@
 
 .cancel{
   position: absolute;
-  bottom: 20px;
+  bottom: 0;
   right: 20px;
 }
 
@@ -164,8 +204,6 @@
   z-index: 100;
 }
 
-
-
 @media (min-width: 1200px)  {
 
   .waiting_container{
@@ -186,7 +224,6 @@
     width: 520px;
   }
 }
-
 
 @media (min-width: 992px)  {
 
@@ -216,6 +253,11 @@
 }
 
 @media (max-width: 992px) {
+
+
+  .wc_tooltip{
+    font-size: 14px;
+  }
 
   .title_waiting{
     font-size: 1.9em;
@@ -250,6 +292,11 @@
 
 @media (max-width: 767px)  {
 
+  .wc_tooltip{
+    padding: 5px 7px;
+    top:-45px;
+  }
+
   .flipper {
     font-size: 16px;
   }
@@ -270,8 +317,6 @@
 
 }
 
-
-
 @media (max-width: 680px)  {
 
   .title_waiting{
@@ -285,7 +330,6 @@
   }
 
 }
-
 
 @media (max-width: 590px)  {
 
@@ -332,7 +376,13 @@
     background-size:24px;
   }
 
-  .copy span{
+
+  .cancel{
+    padding: 5px 8px;
+    font-size: 0.9em;
+  }
+
+  .copy .copy_text{
     display: none;
   }
 
@@ -408,6 +458,10 @@
 
   .waiting_container{
     padding: 0 5px;
+  }
+
+  .cancel{
+    bottom: 15px;
   }
 
 
