@@ -3,6 +3,7 @@ import {Directive, ElementRef, HostListener, Input} from '@angular/core';
 @Directive({
   selector: '[appTooltip]'
 })
+
 export class TooltipDirective {
 
   private _delay: number;

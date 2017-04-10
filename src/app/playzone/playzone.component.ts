@@ -32,7 +32,7 @@ export class PlayzoneComponent implements OnInit, OnDestroy {
   constructor(private _activatedRoute: ActivatedRoute,
     private _gamePlayService: GamePlayService) {
 
-    this.popupSubscriber = this._gamePlayService.popup.subscribe((state) => this.isPopup = state);
+    this.popupSubscriber = this._gamePlayService.showPopup.subscribe((state) => this.isPopup = state);
 
     this.startGameSubscriber = this._gamePlayService.startGame.subscribe((data) => this._initFirstData(data));
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));

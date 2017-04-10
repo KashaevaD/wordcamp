@@ -20,6 +20,8 @@ export class SidebarComponent implements OnDestroy{
   public secondUser: TUser = {name: "Unknow", score: 20, isActive: false, id: 1, result: "lose"};
   public multi:boolean;
   public time:number;
+  private onBeforeUnloadHandler;
+  private onUnloadHandler;
 
 
   constructor(
@@ -51,15 +53,38 @@ export class SidebarComponent implements OnDestroy{
     this._userSubscriber = this._sidebarService.users.subscribe((users) => {
       this._changeUsersState(users);
     });
+
+    this.onBeforeUnloadHandler = this._onBeforeUnload;
+    this.onUnloadHandler = this._onUnload.bind(this);
+
+
+    addEventListener("beforeunload",  this.onBeforeUnloadHandler);
+    addEventListener("unload",  this.onUnloadHandler);
   }
 
 
-   ngOnDestroy(){
+  ngOnDestroy(){
     this._roomSubscriber.unsubscribe();
     this._userSubscriber.unsubscribe();
     this._timeSubscriber.unsubscribe();
     this._sidebarService.stopTimer();
-   }
+    removeEventListener("beforeunload",  this.onBeforeUnloadHandler);
+    removeEventListener("unload",  this.onUnloadHandler);
+  }
+
+  private _onBeforeUnload (e) {
+    setTimeout(()=>confirm('You are sure?'));
+    let confirmationMessage = "Game will over if you refresh page. Are you sure?";
+
+    e.returnValue = confirmationMessage;
+    return confirmationMessage;
+  }
+
+  private _onUnload () {
+    removeEventListener("beforeunload",  this.onBeforeUnloadHandler);
+    removeEventListener("unload",  this.onUnloadHandler);
+    this.goToMainMenu();
+  }
 
 
   private _setSidebar(options:TStoreData): void {
