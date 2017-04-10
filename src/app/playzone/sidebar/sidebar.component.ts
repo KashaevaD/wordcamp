@@ -59,7 +59,7 @@ export class SidebarComponent implements OnDestroy{
     this._userSubscriber.unsubscribe();
     this._sidebarService.stopTimer();
     this._timeSubscriber.unsubscribe();
-    this._dbService.deleteRoom(this._roomId);
+   // this._dbService.deleteRoom(this._roomId);
   }
 
 
