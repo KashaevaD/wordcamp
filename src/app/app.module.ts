@@ -28,6 +28,7 @@ import { IntroductionComponent } from './introduction/introduction.component';
 import { IntroductionService } from './introduction/introduction.service';
 import { OptionsComponent } from './options/options.component';
 import { OptionsService } from './options/options.service';
+import { TooltipDirective } from './playzone/tooltip.directive';
 
 const routes = [
   {
@@ -66,6 +67,7 @@ const routes = [
     ResultComponent,
     IntroductionComponent,
     OptionsComponent,
+    TooltipDirective,
   ],
   imports: [
     BrowserModule,
