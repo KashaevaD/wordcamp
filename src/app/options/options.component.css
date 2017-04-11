@@ -162,6 +162,7 @@ div.lang.last  {
 /**************btn start************/
 .submit .btn {
  margin: 2% 15px 2% 15px;
+ width: 30%;
 }
 .submit .btn-center {
  margin-left: 50%;

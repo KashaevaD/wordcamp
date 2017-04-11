@@ -36,11 +36,6 @@ export class MainMenuComponent {
     this._router.navigate(['mainmenu/multi']);
   }
 
-  // public goToOptionsOfGame(event: Event): void {
-  //   (event.target as HTMLElement).setAttribute("disabled", "true");
-  //    this._router.navigate(['options']);
-  // }
-
 }
 
 

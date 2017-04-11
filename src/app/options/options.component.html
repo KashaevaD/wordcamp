@@ -8,7 +8,7 @@
 
     <div class="form-group exists-name" *ngIf="!isEditing">
       <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 text-center">
-        <span>You NickName: <strong class="editname" (click)="setStateOfEditing()">{{menuGame.value.username}}</strong></span>
+        <span>You Name: <strong class="editname" (click)="setStateOfEditing()">{{menuGame.value.username}}</strong></span>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -17,7 +17,7 @@
       <label for="username" class="username col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter New Name</label>
       <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
         <input type="text" placeholder="username" autocomplete="off" class="form-control center-block" id="username" required name="username"
-          autofocus formControlName="username" (blur)="setStateOfEditing()" (keydown.enter)="changeUserName()" (focus)="allotAllText($event)">
+          autofocus formControlName="username" (blur)="changeUserName()" (keydown.enter)="changeUserName()" (focus)="allotAllText($event)">
       </div>
       <div class="clearfix"></div>
     </div>
@@ -46,7 +46,7 @@
 
         <div class="box lang last" appDropdown>
           <button class="header-menu" type="button"  (click)="setNewLanguageImage($event)">
-            <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
+            <img [src]="currentLanguages.last.src" [name]="currentLanguages.last.name" data-order="first" class="img-responsive"  >
           </button>
           <ul class="menu close dropdown-menu">
             <li class="menu-item" *ngFor="let lang of imageOfLanguages">
@@ -114,16 +114,12 @@
     </div>
 
     <div class="select-step">
-      <!--<div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
-        <button type="submit" class="btn btn-success">Apply</button>
+       <div class="col-sm-6 col-xs-12 submit">
+         <button type="submit" class="btn btn-success btn-center">Start</button>
       </div>
 
-      <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
-        <button (click)="resetChanges($event)" class="btn btn-warning btn-center">Reset</button>
-      </div>-->
-
-      <div class="col-xs-12 submit">
-        <button type="submit" class="btn btn-primary pull-right">Main menu</button>
+      <div class="col-sm-6 col-xs-12  submit">
+         <button (click)="closeOptions($event)" class="btn btn-primary btn-center">Cancel</button>
       </div>
 
       <div class="clearfix"></div>

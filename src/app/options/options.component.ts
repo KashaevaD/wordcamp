@@ -37,10 +37,15 @@ export class OptionsComponent implements OnDestroy {
               private _joinService: JoinGameService) {
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
+   
     this._updateFormGroup();
     this._setLanguagePicture();
 
     document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+
+    this.menuGame.valueChanges.subscribe((value) => {
+      this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
+    });
   }
 
   ngOnDestroy() {
@@ -59,25 +64,32 @@ export class OptionsComponent implements OnDestroy {
     });
   }
 
-  public _changeOptionsByKeyEvent(event: Event): void {
+  public _changeOptionsByKeyEvent(event: Event): void { 
     if ((event as KeyboardEvent).keyCode === 13 && (event.target as HTMLElement).tagName === "BODY") {
       this.applyChanges(event);
+       event.preventDefault();
       return;
     }
   }
 
   public applyChanges(event: Event): void {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
-    console.log(this.menuGame.value);
     //this._router.navigate(['mainmenu']);
+   
+    //this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
+     console.log("start");
+     event.preventDefault();
+  }
+
+  public closeOptions(event: Event) {
+    console.log("close");
     event.preventDefault();
-    this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
   }
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-
   }
+
   public changeUserName(): void {
     this.isEditing = false;
   }
@@ -89,7 +101,8 @@ export class OptionsComponent implements OnDestroy {
   public saveNameOfLang(e :Event) : void {
     let name: string = (e.target as HTMLElement).getAttribute("name");
     ((e.target as HTMLElement).getAttribute("data-order") === "first")? this.menuGame.value.languages.first = name: this.menuGame.value.languages.last = name;
-  }
+     this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
+}
 
   private _setLanguagePicture(): void {
   this.imageOfLanguages.forEach(image => {
