@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
@@ -11,7 +11,7 @@ import {OptionsService} from "./options.service";
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css'],
 })
-export class OptionsComponent implements OnDestroy {
+export class OptionsComponent implements OnInit, OnDestroy {
 
   private menuGame: FormGroup;
   private defaultOptions: any;
@@ -34,9 +34,9 @@ export class OptionsComponent implements OnDestroy {
     }
   };
   public imageOfLanguages: TItemLang[];
+  public getChangesFromForm: Subscription;
 
   constructor(private _build: FormBuilder,
-              private _router: Router,
               private _localSrorage: LocalStorageService,
               private _joinService: JoinGameService,
               private _optionsService: OptionsService) {
@@ -47,16 +47,19 @@ export class OptionsComponent implements OnDestroy {
       .subscribe(gameType =>  {
         this.isShow = true;
         this._gameType = gameType;
+        document.addEventListener("keydown", this.keyDownHandler);
+
       });
-    document.addEventListener("keydown", this.keyDownHandler);
+  }
+
+  ngOnInit(){
 
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
-
     this._updateFormGroup();
     this._setLanguagePicture();
 
-    this.menuGame.valueChanges.subscribe((value) => {
+    this.getChangesFromForm = this.menuGame.valueChanges.subscribe((value) => {
       this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
     });
   }
@@ -64,7 +67,9 @@ export class OptionsComponent implements OnDestroy {
   ngOnDestroy() {
     document.removeEventListener("keydown", this.keyDownHandler);
     this._showSubscriber.unsubscribe();
+    this.getChangesFromForm.unsubscribe();
   }
+
 
   private _updateFormGroup(): void {
     //reactive form for user
@@ -92,27 +97,23 @@ export class OptionsComponent implements OnDestroy {
   public startGame(event){
     event.preventDefault();
     (event.target as HTMLElement).setAttribute("disabled", "true");
+    document.removeEventListener("keydown", this.keyDownHandler);
+    this.getChangesFromForm.unsubscribe();
     this.isShow = false;
     this._gameType === 'multi' ? this._optionsService.createMultiGame.emit(this.menuGame.value) : this._optionsService.createSingleGame.emit(this.menuGame.value);
   }
 
 
   public closePopup(){
+    document.removeEventListener("keydown", this.keyDownHandler);
     this.isShow = false;
+    this.getChangesFromForm.unsubscribe();
   }
 
-
-  public closeOptions(event: Event) {
-    console.log("close");
-    event.preventDefault();
-  }
-
-  public setStateOfEditing(): void {
+  public toogleStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-
   }
-
-  public changeUserName(): void {
+  public resetStateOfEditing(): void {
     this.isEditing = false;
   }
 

@@ -10,7 +10,7 @@
 
     <div class="form-group exists-name" *ngIf="!isEditing">
       <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 text-center">
-        <span>You Name: <strong class="editname" (click)="setStateOfEditing()">{{menuGame.value.username}}</strong></span>
+        <span>You Name: <strong class="editname" (click)="toogleStateOfEditing()">{{menuGame.value.username}}</strong></span>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -19,7 +19,7 @@
       <label for="username" class="username col-xs-6 col-sm-6 col-md-3 col-md-offset-3 col-lg-3 col-lg-offset-3 text-success text-center">Enter New Name</label>
       <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
         <input type="text" placeholder="username" autocomplete="off" class="form-control center-block" id="username" required name="username"
-          autofocus formControlName="username" (blur)="changeUserName()" (keydown.enter)="changeUserName()" (focus)="allotAllText($event)">
+          autofocus formControlName="username" (blur)="resetStateOfEditing()" (keydown.enter)="resetStateOfEditing()" (focus)="allotAllText($event)">
       </div>
       <div class="clearfix"></div>
     </div>
@@ -130,6 +130,5 @@
   </form>
 
 </div>
-  <div class="overlay"></div>
 
 </div>
