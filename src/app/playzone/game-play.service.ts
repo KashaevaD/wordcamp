@@ -46,7 +46,7 @@ export class GamePlayService {
   }
 
 
-  public initNewGame(roomId: number) {
+  public initNewGame(roomId: number): void{
     this._roomId = roomId;
     this._userIsLeft = false;
     this.sessionStorageUser = sessionStorage['userid'];
@@ -71,7 +71,7 @@ export class GamePlayService {
   }
 
 
-  private _initMultiPlayerGame(data){
+  private _initMultiPlayerGame(data: TStoreData): void{
     if(data.users.length < 2){
       this.checkNewUser(data.users) ? this._createNewUser() : this.showPopup.next('showPopup');
     }
@@ -91,7 +91,7 @@ export class GamePlayService {
   }
 
 
-  private _initSinglePlayerGame(data){
+  private _initSinglePlayerGame(data: TStoreData): void{
     this._initSidebar(data);
     this.startGame.next({
       cards: data.cards,
@@ -104,7 +104,7 @@ export class GamePlayService {
   }
 
 
-  private _createNewUser(){
+  private _createNewUser(): void{
     let newID = Date.now().toString();
     sessionStorage['userid'] = newID;
     this.sessionStorageUser = newID;
@@ -121,7 +121,7 @@ export class GamePlayService {
   }
 
 
-  private checkNewUser(users){
+  private checkNewUser(users: TUser[]): boolean{
     if(!this.sessionStorageUser) return true;
     let localStorageUserId: number = +this.sessionStorageUser ;
     let result = users.filter((user) => +user.id === localStorageUserId);
@@ -129,7 +129,7 @@ export class GamePlayService {
   }
 
 
-  private _initData(data) {
+  private _initData(data: TStoreData): void {
     this._cards = data.cards;
     this._users = data.users;
     this._gameType = data.type;
@@ -148,7 +148,7 @@ export class GamePlayService {
   }
 
 
-  private _initSidebar(data) {
+  private _initSidebar(data: TStoreData): void{
 
     this._sidebarService.initSidebar(data);
 
@@ -178,7 +178,7 @@ export class GamePlayService {
   }
 
 
-  private _updateLocalState(data): void {
+  private _updateLocalState(data: TStoreData): void {
 
     clearTimeout(this._timerDisconnect);
 
@@ -211,7 +211,7 @@ export class GamePlayService {
   }
 
 
-  private _changeStateByOpendCards(activeCards: TCard[]) {
+  private _changeStateByOpendCards(activeCards: TCard[]): void {
     switch (activeCards.length) {
       case 0:
         if (!this._currentUser.isActive) {
@@ -242,14 +242,14 @@ export class GamePlayService {
   }
 
 
-  private updateActivityForCurrentUser(users: TUser[]) {
+  private updateActivityForCurrentUser(users: TUser[]): void {
     users.forEach(user => {
       if (user.id === this._currentUser.id) this._currentUser.isActive = user.isActive;
     });
   }
 
 
-  public prepareNewState(activeCards: TCard[]) {
+  public prepareNewState(activeCards: TCard[]): void {
     if (activeCards.length === 2) {
       this._checkActiveCards(activeCards);
     }
@@ -258,7 +258,7 @@ export class GamePlayService {
   }
 
 
-  private _checkActiveCards(activeCards: TCard[]) {
+  private _checkActiveCards(activeCards: TCard[]): void {
     if (activeCards[0].wordId === activeCards[1].wordId) {
       activeCards[0].isHide = true;
       activeCards[1].isHide = true;
@@ -290,7 +290,7 @@ export class GamePlayService {
   }
 
 
-  private _updateCards(activeCards: TCard[]) {
+  private _updateCards(activeCards: TCard[]): void {
     this._activeCards = activeCards;
     this._cards.forEach(card => {
       activeCards.forEach(activeCard => {
@@ -326,14 +326,14 @@ export class GamePlayService {
   }
 
 
-  public goToMainMenu(){
+  public goToMainMenu(): void{
     this._userIsLeft = true;
     this._dbService.deleteRoom(this._roomId)
       .then(() => this._router.navigate([`mainmenu`]))
   }
 
 
-  public endGame() {
+  public endGame(): void {
     this._sidebarService.stopTimer();
     this._dbService.updateStateOnFireBase(this._roomId, this._cards, [], this._users, this.countHiddenBlock)
       .then(() => this._router.navigate([`playzone/${this._roomId}/result`]));
@@ -341,7 +341,7 @@ export class GamePlayService {
   }
 
 
-  public removeSubscriptions() {
+  public removeSubscriptions(): void {
     this._sidebarService.stopTimer();
     clearTimeout(this._timerId);
     clearTimeout(this._timerDisconnect);

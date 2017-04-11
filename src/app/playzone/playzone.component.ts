@@ -33,7 +33,6 @@ export class PlayzoneComponent implements OnInit, OnDestroy {
     private _gamePlayService: GamePlayService) {
 
     this.popupSubscriber = this._gamePlayService.showPopup.subscribe((state) => this.isPopup = state);
-
     this.startGameSubscriber = this._gamePlayService.startGame.subscribe((data) => this._initFirstData(data));
     this.updateFieldSubscriber = this._gamePlayService.updateField.subscribe((data) => this._updateField(data));
     this.pauseSubscriber = this._gamePlayService.pause.subscribe(() => this._user.isActive = false);
@@ -58,7 +57,7 @@ export class PlayzoneComponent implements OnInit, OnDestroy {
   }
 
 
-  private _initFirstData(data): void {
+  private _initFirstData(data: TFirstFieldData): void {
     this.field = data.cards;
     this.gameDifficulty = data.difficulty;
     this.difficulty[data.difficulty] = true;
@@ -68,7 +67,7 @@ export class PlayzoneComponent implements OnInit, OnDestroy {
   }
 
 
-  private _updateField(data): void {
+  private _updateField(data: TUpdatesFieldData): void {
     this._user = data.user;
     this.activeField = data.user.isActive;
     this._activeCards = data.activeCards;
@@ -92,14 +91,14 @@ export class PlayzoneComponent implements OnInit, OnDestroy {
   }
 
 
-  public copyLink(){
+  public copyLink(): void{
     let input:HTMLInputElement = <HTMLInputElement>document.getElementById("share_link");
     input.select();
     document.execCommand('copy');
     input.blur();
   }
 
-  public goToMainMenu(){
+  public goToMainMenu(): void{
       this._gamePlayService.goToMainMenu();
   }
 
