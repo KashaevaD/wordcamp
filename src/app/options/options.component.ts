@@ -77,8 +77,8 @@ export class OptionsComponent implements OnDestroy {
   }
 
   public _changeOptionsByKeyEvent(event: Event): void {
-    if ((event as KeyboardEvent).keyCode === 13 && (event.target as HTMLElement).tagName === "BODY") {
-      this.applyChanges(event);
+    if ((event as KeyboardEvent).keyCode === 13) {
+      this.startGame(event);
        event.preventDefault();
       return;
     }
