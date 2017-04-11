@@ -32,7 +32,7 @@ type TOutputData = {
 };
 
 type TStoreData =  {
-  cards: TCard,
+  cards: TCard[],
   type: string,
   state: boolean,
   difficulty: string,
@@ -41,8 +41,10 @@ type TStoreData =  {
         last: string
   },
   users: TUser[],
+  activeCards: TCard[],
   countHiddenBlock: number
 };
+
 
 type TItemLang = {
     name: string,
@@ -53,3 +55,17 @@ type TLanguages = {
     first: TItemLang,
     last: TItemLang
 };
+
+
+type TFirstFieldData = {
+  cards: TCard[],
+  user: TUser,
+  difficulty: string,
+  activeCards: TCard[],
+}
+
+
+type TUpdatesFieldData = {
+  user: TUser,
+  activeCards: TCard[],
+}
