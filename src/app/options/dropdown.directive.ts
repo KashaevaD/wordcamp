@@ -8,10 +8,12 @@ export class DropdownDirective {
   public targetElement: any;
   public isOpen: boolean;
   public current: Element;
+  public handler;
 
   constructor(private el: ElementRef) {
     this.targetElement = this.el.nativeElement;
     this.isOpen = false;
+    this.handler = this.onDocumentClick;
   }
 
   private setToogle(event: Element) {
@@ -41,13 +43,13 @@ export class DropdownDirective {
 
   private open(): void {
     this.getMenuUl().classList.remove('close');
-    document.addEventListener('click', this.onDocumentClick.bind(this));
+    document.addEventListener('click', this.handler.bind(this));
     this.isOpen = true;
   }
 
   private close(): void {
     this.getMenuUl().classList.add('close');
-    document.removeEventListener('click', this.onDocumentClick.bind(this));
+    document.removeEventListener('click', this.handler.bind(this));
     this.isOpen = false;
   }
   private getMenuUl(): Element {
