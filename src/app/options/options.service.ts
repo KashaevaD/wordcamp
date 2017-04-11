@@ -7,13 +7,14 @@ import { Subscription } from "rxjs";
 export class OptionsService {
 
   public getLangEmit:EventEmitter<any>;
-  public startGame:EventEmitter<any>;
+  public creteSingleGame:EventEmitter<any>;
+  public creteMultiGame:EventEmitter<any>;
   public showOptions:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
               private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
-    this.startGame = new EventEmitter();
+    this.creteSingleGame = new EventEmitter();
     this.showOptions = new EventEmitter();
   }
 

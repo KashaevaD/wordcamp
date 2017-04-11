@@ -15,12 +15,11 @@ export class OptionsComponent implements OnDestroy {
 
   private menuGame: FormGroup;
   private defaultOptions: any;
-  private _waitForUserSubscriber: Subscription;
   private _showSubscriber: Subscription;
+  private _gameType: string;
 
   public isEditing:boolean = false;
   public isShow:boolean = false;
-  public isPrepareStartGame:boolean = false;
 
   public currentImageLanguage: EventTarget;
   public currentLanguages: TLanguages = {
@@ -42,9 +41,9 @@ export class OptionsComponent implements OnDestroy {
               private _optionsService: OptionsService) {
 
     this._showSubscriber = this._optionsService.showOptions
-      .subscribe(status => {
+      .subscribe(gameType =>  {
         this.isShow = true;
-        this.isPrepareStartGame = status;
+        this._gameType = gameType;
       });
 
     this.imageOfLanguages = this._joinService.imageOfLanguages;
@@ -89,13 +88,11 @@ export class OptionsComponent implements OnDestroy {
   public startGame(event){
     event.preventDefault();
     this.isShow = false;
-    this.isPrepareStartGame = false;
-    this._optionsService.startGame.emit(this.menuGame.value);
+    this._gameType === 'multi' ? this._optionsService.creteMultiGame.emit(this.menuGame.value) : this._optionsService.creteSingleGame.emit(this.menuGame.value);
   }
 
 
   public closePopup(){
-    this.isPrepareStartGame = false;
     this.isShow = false;
   }
 
