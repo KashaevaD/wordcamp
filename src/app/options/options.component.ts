@@ -33,6 +33,7 @@ export class OptionsComponent implements OnDestroy {
     }
   };
   public imageOfLanguages: TItemLang[];
+  public getChangesFromForm: Subscription;
 
   constructor(private _build: FormBuilder,
               private _router: Router,
@@ -40,28 +41,34 @@ export class OptionsComponent implements OnDestroy {
               private _joinService: JoinGameService,
               private _optionsService: OptionsService) {
 
+
     this._showSubscriber = this._optionsService.showOptions
       .subscribe(gameType =>  {
         this.isShow = true;
         this._gameType = gameType;
+
+        this.imageOfLanguages = this._joinService.imageOfLanguages;
+        this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
+        this._updateFormGroup();
+        this._setLanguagePicture();
+
+        this.getChangesFromForm = this.menuGame.valueChanges.subscribe((value) => {
+          this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
+        });
+        
+
+        document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+   
       });
 
-    this.imageOfLanguages = this._joinService.imageOfLanguages;
-    this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
-
-    this._updateFormGroup();
-    this._setLanguagePicture();
-
-    document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
-
-    this.menuGame.valueChanges.subscribe((value) => {
-      this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
-    });
+      
+    
   }
 
   ngOnDestroy() {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
     this._showSubscriber.unsubscribe();
+    this.getChangesFromForm.unsubscribe();
   }
 
   private _updateFormGroup(): void {
@@ -87,6 +94,7 @@ export class OptionsComponent implements OnDestroy {
 
   public startGame(event){
     event.preventDefault();
+    this.getChangesFromForm.unsubscribe();    
     this.isShow = false;
     this._gameType === 'multi' ? this._optionsService.creteMultiGame.emit(this.menuGame.value) : this._optionsService.creteSingleGame.emit(this.menuGame.value);
   }
@@ -94,28 +102,13 @@ export class OptionsComponent implements OnDestroy {
 
   public closePopup(){
     this.isShow = false;
+    this.getChangesFromForm.unsubscribe();    
   }
 
-  public applyChanges(event: Event): void {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
-    //this._router.navigate(['mainmenu']);
-
-    //this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
-     console.log("start");
-     event.preventDefault();
-  }
-
-  public closeOptions(event: Event) {
-    console.log("close");
-    event.preventDefault();
-  }
-
-  public setStateOfEditing(): void {
+  public toogleStateOfEditing(): void {
     this.isEditing = !this.isEditing;
-
   }
-
-  public changeUserName(): void {
+  public resetStateOfEditing(): void {
     this.isEditing = false;
   }
 
@@ -130,6 +123,7 @@ export class OptionsComponent implements OnDestroy {
 }
 
   private _setLanguagePicture(): void {
+  debugger;
   this.imageOfLanguages.forEach(image => {
      if (this.menuGame.value.languages.first === image.name)
        this.currentLanguages.first = image;

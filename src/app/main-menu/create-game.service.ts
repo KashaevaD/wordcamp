@@ -3,7 +3,6 @@ import { SIZE } from '../constants';
 import { Subscription, Subject } from "rxjs";
 import { DBService } from '../db.service';
 import { Router} from '@angular/router';
-import { LocalStorageService } from "../local-storage.service";
 
 import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 
@@ -20,8 +19,7 @@ export class CreateGameService {
   public startPlayingGame: Subject<number>;
   public waitForSecondUserMultiplayer: Subject<number>;
 
-  constructor(private _dbService: DBService,  private _router: Router, private _localSrorage: LocalStorageService) {
-    this.startPlayingGame = new Subject();
+  constructor(private _dbService: DBService,  private _router: Router) {
     this.waitForSecondUserMultiplayer = new Subject();
 
     this._createRoomOnFirebase = this._dbService.getObjectFromFB("rooms");
@@ -54,7 +52,7 @@ export class CreateGameService {
           .then(
             () => {
             this._router.navigate(['playzone', idRoom]);
-          },(err) => alert('oib,rf'));
+          });
       });
   }
 
