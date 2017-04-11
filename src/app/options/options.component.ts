@@ -4,6 +4,7 @@ import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
+import {OptionsService} from "./options.service";
 
 @Component({
   selector: 'app-options-menu',
@@ -14,9 +15,11 @@ export class OptionsComponent implements OnDestroy {
 
   private menuGame: FormGroup;
   private defaultOptions: any;
-  private _waitForUserSubscriber: Subscription;
+  private _showSubscriber: Subscription;
+  private _gameType: string;
 
   public isEditing:boolean = false;
+  public isShow:boolean = false;
 
   public currentImageLanguage: EventTarget;
   public currentLanguages: TLanguages = {
@@ -34,10 +37,18 @@ export class OptionsComponent implements OnDestroy {
   constructor(private _build: FormBuilder,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _joinService: JoinGameService) {
+              private _joinService: JoinGameService,
+              private _optionsService: OptionsService) {
+
+    this._showSubscriber = this._optionsService.showOptions
+      .subscribe(gameType =>  {
+        this.isShow = true;
+        this._gameType = gameType;
+      });
+
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
-   
+
     this._updateFormGroup();
     this._setLanguagePicture();
 
@@ -50,6 +61,7 @@ export class OptionsComponent implements OnDestroy {
 
   ngOnDestroy() {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+    this._showSubscriber.unsubscribe();
   }
 
   private _updateFormGroup(): void {
@@ -64,18 +76,30 @@ export class OptionsComponent implements OnDestroy {
     });
   }
 
-  public _changeOptionsByKeyEvent(event: Event): void { 
-    if ((event as KeyboardEvent).keyCode === 13 && (event.target as HTMLElement).tagName === "BODY") {
-      this.applyChanges(event);
+  public _changeOptionsByKeyEvent(event: Event): void {
+    if ((event as KeyboardEvent).keyCode === 13) {
+      this.startGame(event);
        event.preventDefault();
       return;
     }
   }
 
+
+  public startGame(event){
+    event.preventDefault();
+    this.isShow = false;
+    this._gameType === 'multi' ? this._optionsService.creteMultiGame.emit(this.menuGame.value) : this._optionsService.creteSingleGame.emit(this.menuGame.value);
+  }
+
+
+  public closePopup(){
+    this.isShow = false;
+  }
+
   public applyChanges(event: Event): void {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
     //this._router.navigate(['mainmenu']);
-   
+
     //this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
      console.log("start");
      event.preventDefault();
@@ -88,6 +112,7 @@ export class OptionsComponent implements OnDestroy {
 
   public setStateOfEditing(): void {
     this.isEditing = !this.isEditing;
+
   }
 
   public changeUserName(): void {

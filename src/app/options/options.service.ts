@@ -5,11 +5,17 @@ import { Subscription } from "rxjs";
 
 @Injectable()
 export class OptionsService {
+
   public getLangEmit:EventEmitter<any>;
+  public creteSingleGame:EventEmitter<any>;
+  public creteMultiGame:EventEmitter<any>;
+  public showOptions:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
               private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
+    this.creteSingleGame = new EventEmitter();
+    this.showOptions = new EventEmitter();
   }
 
   public setDefaultOptions(username: string): void {

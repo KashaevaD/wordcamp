@@ -16,6 +16,7 @@ export class GamePlayService {
   public countHiddenBlock: number;
   private _currentUser: TUser;
   private _timerId: any;
+  private _timerDisconnect: any;
   private _roomSubscriber: Subscription;
   private _timeSubscriber: Subscription;
   private _firstDataSubscriber: Subscription;
@@ -31,7 +32,7 @@ export class GamePlayService {
   public updateField: Subject<any>;
   public streamFromFirebase: Subject<any>;
   public pause: Subject<any>;
-  public popup: Subject<any>;
+  public showPopup: Subject<any>;
 
 
   constructor(
@@ -41,7 +42,7 @@ export class GamePlayService {
     this.startGame = new Subject();
     this.updateField = new Subject();
     this.pause = new Subject();
-    this.popup = new Subject();
+    this.showPopup = new Subject();
   }
 
 
@@ -72,7 +73,7 @@ export class GamePlayService {
 
   private _initMultiPlayerGame(data){
     if(data.users.length < 2){
-      this.checkNewUser(data.users) ? this._createNewUser() : this.popup.next('popup');
+      this.checkNewUser(data.users) ? this._createNewUser() : this.showPopup.next('showPopup');
     }
     else {
       this._initSidebar(data);
@@ -83,7 +84,7 @@ export class GamePlayService {
         difficulty: data.difficulty,
         activeCards: data.activeCards,
       });
-      this.popup.next('');
+      this.showPopup.next('');
       this._roomSubscriber = this.streamFromFirebase.subscribe((res) => this._updateLocalState(res));
       this._firstDataSubscriber.unsubscribe();
     }
@@ -153,19 +154,25 @@ export class GamePlayService {
 
     this._goToMainMenuSubscriber = this._sidebarService.goToMainMenu.subscribe(() => this.goToMainMenu());
 
-    this._timeSubscriber = this._sidebarService.timeIsUp.subscribe(() => {
+    this._timeSubscriber = this._sidebarService.timeIsUp.subscribe((activeUser) => {
       if (this._gameType === 'single') {
         this.endGame();
       }
       else if (this._gameType === 'multi') {
-        if(this._timerId)clearTimeout(this._timerId);
-        this._currentUser.score -= 5;
-        this._changeUserScore();
 
-        this.pause.next();
-        this._users.forEach(user => user.isActive = !user.isActive);
-        this._activeCards.forEach( card => card.isOpen = false );
-        this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
+        if(activeUser){
+          if(this._timerId)clearTimeout(this._timerId);
+          this._currentUser.score -= 5;
+          this._changeUserScore();
+
+          this.pause.next();
+          this._users.forEach(user => user.isActive = !user.isActive);
+          this._activeCards.forEach( card => card.isOpen = false );
+          this._dbService.updateStateOnFireBase(this._roomId, this._cards, this._activeCards, this._users, this.countHiddenBlock);
+        }
+        else {
+          this._timerDisconnect = setTimeout(() => this.showPopup.next('endGame'), 5000);
+        }
       }
     });
   }
@@ -173,10 +180,12 @@ export class GamePlayService {
 
   private _updateLocalState(data): void {
 
+    clearTimeout(this._timerDisconnect);
+
     if (!data.cards) {
       if(this._users.length === 2) {
         this._sidebarService.stopTimer();
-        if(!this._userIsLeft)this.popup.next('endGame');
+        if(!this._userIsLeft)this.showPopup.next('endGame');
       }
       else {
         this._router.navigate([`mainmenu`]);
@@ -334,10 +343,12 @@ export class GamePlayService {
 
   public removeSubscriptions() {
     this._sidebarService.stopTimer();
+    clearTimeout(this._timerId);
+    clearTimeout(this._timerDisconnect);
+    this._timeSubscriber.unsubscribe();
     this._roomSubscriber.unsubscribe();
     this.streamFromFirebase.unsubscribe();
     this._roomObservable.unsubscribe();
-    this._timeSubscriber.unsubscribe();
     this._goToMainMenuSubscriber.unsubscribe();
   }
 
