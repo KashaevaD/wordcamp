@@ -20,7 +20,7 @@ export class MainMenuComponent implements OnDestroy{
               private _optionsService: OptionsService) {
 
     if (!this._redirectToIntro()) this._router.navigate(['/']);
-    this._createGameSubscriber = this._optionsService.creteSingleGame.subscribe(() => this._startSingleGame());
+    this._createGameSubscriber = this._optionsService.createSingleGame.subscribe(() => this._startSingleGame());
 
   }
 

@@ -4,7 +4,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
   selector: '[appDropdown]'
 })
 export class DropdownDirective {
-  
+
   public targetElement: any;
   public isOpen: boolean;
   public current: Element;
@@ -29,7 +29,7 @@ export class DropdownDirective {
 
   private setValue(value: Element): void {
     let btn: Element = this.targetElement.querySelector('.header-menu img')
-    let img: Element = value.querySelector("img"); 
+    let img: Element = value.querySelector("img");
     btn.setAttribute("src", img.getAttribute("src"));
     btn.setAttribute("name", img.getAttribute("name"));
   }
@@ -61,7 +61,7 @@ export class DropdownDirective {
       } else if ((e as HTMLElement).closest("li")) {
         this.current = (e as HTMLElement).closest("li");
       }
-      this.setToogle(this.current);          
+      this.setToogle(this.current);
    }
 
 }

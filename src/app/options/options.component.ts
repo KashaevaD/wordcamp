@@ -17,6 +17,7 @@ export class OptionsComponent implements OnDestroy {
   private defaultOptions: any;
   private _showSubscriber: Subscription;
   private _gameType: string;
+  public keyDownHandler: any;
 
   public isEditing:boolean = false;
   public isShow:boolean = false;
@@ -40,11 +41,14 @@ export class OptionsComponent implements OnDestroy {
               private _joinService: JoinGameService,
               private _optionsService: OptionsService) {
 
+    this.keyDownHandler = this._changeOptionsByKeyEvent.bind(this);
+
     this._showSubscriber = this._optionsService.showOptions
       .subscribe(gameType =>  {
         this.isShow = true;
         this._gameType = gameType;
       });
+    document.addEventListener("keydown", this.keyDownHandler);
 
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
@@ -52,15 +56,13 @@ export class OptionsComponent implements OnDestroy {
     this._updateFormGroup();
     this._setLanguagePicture();
 
-    document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
-
     this.menuGame.valueChanges.subscribe((value) => {
       this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
     });
   }
 
   ngOnDestroy() {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+    document.removeEventListener("keydown", this.keyDownHandler);
     this._showSubscriber.unsubscribe();
   }
 
@@ -76,19 +78,22 @@ export class OptionsComponent implements OnDestroy {
     });
   }
 
+
   public _changeOptionsByKeyEvent(event: Event): void {
-    if ((event as KeyboardEvent).keyCode === 13) {
-      this.startGame(event);
-       event.preventDefault();
-      return;
+    let code = (event as KeyboardEvent).keyCode;
+    if (code === 13 || code === 27) {
+      event.preventDefault();
+      document.removeEventListener("keydown", this.keyDownHandler);
+      code === 13 ? this.startGame(event) : this.closePopup();
     }
   }
 
 
   public startGame(event){
     event.preventDefault();
+    (event.target as HTMLElement).setAttribute("disabled", "true");
     this.isShow = false;
-    this._gameType === 'multi' ? this._optionsService.creteMultiGame.emit(this.menuGame.value) : this._optionsService.creteSingleGame.emit(this.menuGame.value);
+    this._gameType === 'multi' ? this._optionsService.createMultiGame.emit(this.menuGame.value) : this._optionsService.createSingleGame.emit(this.menuGame.value);
   }
 
 
@@ -96,14 +101,6 @@ export class OptionsComponent implements OnDestroy {
     this.isShow = false;
   }
 
-  public applyChanges(event: Event): void {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
-    //this._router.navigate(['mainmenu']);
-
-    //this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
-     console.log("start");
-     event.preventDefault();
-  }
 
   public closeOptions(event: Event) {
     console.log("close");

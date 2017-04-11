@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import { MultiplayerService } from "./multiplayer.service";
 import { LocalStorageService } from "../../local-storage.service";
 import { Subscription } from "rxjs";
@@ -13,10 +13,11 @@ import {OptionsService} from "../../options/options.service";
   templateUrl: './multiplayer-menu.component.html',
   styleUrls: ['./multiplayer-menu.component.css']
 })
-export class MultiplayerMenuComponent  {
+export class MultiplayerMenuComponent implements OnDestroy {
 
   public rooms: TOutputData[] =[];
   private subscribe: Subscription;
+  private _createGameSubscriber: Subscription;
   private imageOfLanguages: any[] = [];
 
   constructor(private _multiService: MultiplayerService,
@@ -27,15 +28,22 @@ export class MultiplayerMenuComponent  {
               private _dbService: DBService,
               private _optionsService: OptionsService) {
 
-
-
+    this._createGameSubscriber = this._optionsService.createMultiGame.
+    subscribe(() => this.startMultiGame());
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
    this._updateRooms();
   }
 
-  public showOptions(status){
-    this._optionsService.showOptions.emit(status);
+
+  ngOnDestroy(){
+    this._createGameSubscriber.unsubscribe();
   }
+
+
+  public showOptions(){
+    this._optionsService.showOptions.emit('multi');
+  }
+
 
   private _updateRooms() {
     this.subscribe = this._dbService.getAllMultiPlayerRoom().subscribe(data => {
@@ -68,17 +76,18 @@ export class MultiplayerMenuComponent  {
     }
   }
 
-  public startMultiGame(event): void {
-    (event.target as HTMLElement).setAttribute("disabled", "true");
+  public startMultiGame(): void {
     sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
     let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
     options.type ="multi";
     this._createGameService.makePlayZone(options);
   }
 
+
   public goToMainMenu(): void {
      this._router.navigate(['mainmenu']);
   }
+
 
   public goToOptions(): void {
      this._router.navigate(['options']);
