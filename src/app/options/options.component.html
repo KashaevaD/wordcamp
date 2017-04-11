@@ -1,6 +1,6 @@
 <div class="create_game center">
   <div>
-    <h1 class="text-center text-primary">Word-Camp</h1>
+    <h1 class="text-center text-primary">Wordamp</h1>
     <div class="clearfix"></div>
   </div>
 
@@ -8,8 +8,7 @@
 
     <div class="form-group exists-name" *ngIf="!isEditing">
       <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 text-center">
-        <span>Hello, <strong>{{menuGame.value.username}}</strong>!</span>
-        <img src="assets/img/pen.png" title="Edit name" (click)="setStateOfEditing()" class="pen-edit">
+        <span>You NickName: <strong class="editname" (click)="setStateOfEditing()">{{menuGame.value.username}}</strong></span>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -30,39 +29,34 @@
       </div>
 
       <div class="col-lg-12 col-lg-offset-0 col-md-offset-3 col-md-5 col-sm-offset-1 col-sm-7 col-xs-offset-1 col-xs-7 buttons-lang">
+  
 
-
-        <div dropdown class="box lang first">
-          <button type="button" dropdownToggle (click)="setNewLanguageImage($event)">
+        <div class="box lang first" appDropdown>
+          <button class="header-menu" type="button"  (click)="setNewLanguageImage($event)">
             <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
           </button>
-          <ul dropdownMenu role="menu">
-            <li role="menuitem" *ngFor="let lang of imageOfLanguages">
-              <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name" (click)="sendImageForDropDownBtn($event)">
+          <ul class="menu close dropdown-menu">
+            <li class="menu-item" *ngFor="let lang of imageOfLanguages">
+              <div class="language">
+                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name"  (click)="saveNameOfLang($event)">
               </div>
             </li>
           </ul>
         </div>
 
-
-
-
-
-        <div dropdown class="box lang last">
-          <button type="button" dropdownToggle (click)="setNewLanguageImage($event)">
-            <img [src]="currentLanguages.last.src" [name]="currentLanguages.last.name" data-order="last" class="img-responsive" >
+        <div class="box lang last" appDropdown>
+          <button class="header-menu" type="button"  (click)="setNewLanguageImage($event)">
+            <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
           </button>
-          <ul dropdownMenu role="menu" aria-labelledby="single-button">
-            <li role="menuitem" *ngFor="let lang of imageOfLanguages">
-              <div class="dropdown-item">
-                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="sendImageForDropDownBtn($event)">
+          <ul class="menu close dropdown-menu">
+            <li class="menu-item" *ngFor="let lang of imageOfLanguages">
+              <div class="language">
+                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name"  (click)="saveNameOfLang($event)">
               </div>
-            </li>
+            </li>   
           </ul>
+           
         </div>
-
-
       </div>
       <div class="clearfix"></div>
     </div>
@@ -120,16 +114,16 @@
     </div>
 
     <div class="select-step">
-      <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
+      <!--<div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
         <button type="submit" class="btn btn-success">Apply</button>
       </div>
 
       <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
         <button (click)="resetChanges($event)" class="btn btn-warning btn-center">Reset</button>
-      </div>
+      </div>-->
 
-      <div class="col-lg-4  col-md-4 col-sm-4 col-xs-12 submit">
-        <button (click)="cancelChangesMainMenu($event)" class="btn btn-primary pull-right">Main menu</button>
+      <div class="col-xs-12 submit">
+        <button type="submit" class="btn btn-primary pull-right">Main menu</button>
       </div>
 
       <div class="clearfix"></div>

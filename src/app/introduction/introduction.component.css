@@ -1,5 +1,5 @@
 h1 {
-  font-size: 4em;
+  font-size: 2.5em;
 }
 .start_box {
   min-height: 500px;
@@ -17,9 +17,6 @@ div.name label {
    padding: 0;
    text-align: right;
    margin-left: -15px;
-}
-input {
-    /*margin-left: 15px;*/
 }
 /*****intro******/
 .intro span, .intro h2 {
@@ -54,9 +51,6 @@ div.select-step {
 }
 /******** media **********/
 @media screen and (max-width: 992px)  {
-  h1 {
-    font-size: 3em;
-  }
   .intro span, .intro h2, .link {
     font-size: 1.5em;
   }
@@ -65,9 +59,6 @@ div.select-step {
   }
 }
 @media screen and (max-width: 500px)  {
-  h1{
-    font-size: 2em;
-  }
   .intro span, .intro h2, .link {
     font-size: 1em;
   }
@@ -88,6 +79,9 @@ div.select-step {
   }
   input {
       font-size: 1em;
+  }
+  h1 {
+    font-size: 2em;
   }
 }
 @media screen and (max-width: 320px)  {

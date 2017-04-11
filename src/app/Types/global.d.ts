@@ -16,7 +16,10 @@ type TCard = {
 
 type TInputData = {
     type:string,
-    languages:string,
+    languages: {
+        first: string,
+        last: string
+    },
     difficulty:string,
     username:string
 };
@@ -33,7 +36,20 @@ type TStoreData =  {
   type: string,
   state: boolean,
   difficulty: string,
-  languages: string,
+  languages: {
+        first: string,
+        last: string
+  },
   users: TUser[],
   countHiddenBlock: number
+};
+
+type TItemLang = {
+    name: string,
+    src: string
+};
+
+type TLanguages = {
+    first: TItemLang,
+    last: TItemLang
 };
