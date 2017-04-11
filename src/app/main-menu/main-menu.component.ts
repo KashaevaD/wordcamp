@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CreateGameService } from "./create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { Router} from '@angular/router';
-import { IntroductionService } from '../introduction/introduction.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -14,8 +13,7 @@ export class MainMenuComponent {
 
   constructor(private _createGameService: CreateGameService,
               private _router: Router,
-              private _localSrorage: LocalStorageService,
-              private _introService: IntroductionService) {
+              private _localSrorage: LocalStorageService) {
     if (!this._redirectToIntro()) {
       this._router.navigate(['/']);
     }
@@ -25,7 +23,7 @@ export class MainMenuComponent {
     return !!this._localSrorage.getLocalStorageValue("user");
   }
 
-  public startSingleGame(event): void {
+  public startSingleGame(event: Event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
     let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
     options.type = "single";
@@ -33,29 +31,14 @@ export class MainMenuComponent {
     this._createGameService.makePlayZone(options);
   }
 
-  public goToMultiComponent(event): void {
+  public goToMultiComponent(event: Event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
-
     this._router.navigate(['mainmenu/multi']);
   }
 
-  public goToOptionsOfGame(event): void {
+  public goToOptionsOfGame(event: Event): void {
     (event.target as HTMLElement).setAttribute("disabled", "true");
      this._router.navigate(['options']);
-  }
-
-  public showVideo(event) {
-    this.isOpenVideoIntro = !this.isOpenVideoIntro;
-    event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
-    this._introService.animate(
-      {duration: 1000,
-        timing: function(timeFraction) {
-            return timeFraction;
-        },
-        draw: function(progress) {
-            window.scrollTo(0, 0 + (progress * 600));
-        }
-    });
   }
 
 }

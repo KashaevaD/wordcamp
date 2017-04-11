@@ -24,7 +24,10 @@ export class ResultComponent implements OnInit {
   private _room: Subscription;
   private _model: TInputData = {
     type: '',
-    languages: '',
+    languages:{
+      first: '',
+      last: ''
+    },
     difficulty: '',
     username: '',
   };

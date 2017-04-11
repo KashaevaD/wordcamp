@@ -1,6 +1,7 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { LocalStorageService } from "../local-storage.service";
 import { DBService } from '../db.service';
+import { Subscription } from "rxjs";
 
 @Injectable()
 export class OptionsService {
@@ -11,8 +12,8 @@ export class OptionsService {
     this.getLangEmit = new EventEmitter();
   }
 
-  public setDefaultOptions(username: string) {
-    let options = {
+  public setDefaultOptions(username: string): void {
+    let options: TInputData = {
       username: username,
       difficulty: "small",
       languages : {
@@ -22,7 +23,7 @@ export class OptionsService {
       type: ""
     };
 
-    let dictionaryListObservable = this._dbService.getObjectFromFB(`dictionary/languagaesList`).subscribe(lang => {
+    let dictionaryListObservable: Subscription = this._dbService.getObjectFromFB(`dictionary/languagaesList`).subscribe(lang => {
 
       options.languages.first = this._getLanguage("first",lang);
       options.languages.last = this._getLanguage("last",lang);
@@ -38,8 +39,8 @@ export class OptionsService {
     return this._findExistLanguages(languagesList,browserLanguages );
   }
 
-  private _findExistLanguages(languagesList, currentLanguages) {
-    let name = "en";
+  private _findExistLanguages(languagesList: string[], currentLanguages:string[]): string{
+    let name: string = "en";
     currentLanguages.forEach (currentLanguages => {
       languagesList.forEach(languageName => {
         if (currentLanguages === languageName) name = languageName;
@@ -48,10 +49,10 @@ export class OptionsService {
     return name;
   }
 
-  private _getDifferentLangFromFirst(first): string[] {
-    let secondLanguage = "en";
+  private _getDifferentLangFromFirst(first: string): string[] {
+    let secondLanguage: string = "en";
     if(navigator['languages']){
-      let diffLang = navigator['languages']
+      let diffLang:string[] = navigator['languages']
         .map(item => {
           return item.slice(0, 2);
         })

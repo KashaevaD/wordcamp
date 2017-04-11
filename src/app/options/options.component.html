@@ -8,8 +8,7 @@
 
     <div class="form-group exists-name" *ngIf="!isEditing">
       <div class="col-lg-12  col-md-12 col-sm-12 col-xs-12 text-center">
-        <span>You NickName: <strong>{{menuGame.value.username}}</strong>!</span>
-        <img src="assets/img/pen.png" title="Edit name" (click)="setStateOfEditing()" class="pen-edit">
+        <span>You NickName: <strong class="editname" (click)="setStateOfEditing()">{{menuGame.value.username}}</strong></span>
       </div>
       <div class="clearfix"></div>
     </div>
@@ -36,10 +35,10 @@
           <button class="header-menu" type="button"  (click)="setNewLanguageImage($event)">
             <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
           </button>
-          <ul class="menu close">
+          <ul class="menu close dropdown-menu">
             <li class="menu-item" *ngFor="let lang of imageOfLanguages">
               <div class="language">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name"  (click)="sendImageForDropDownBtn($event)">
+                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name"  (click)="saveNameOfLang($event)">
               </div>
             </li>
           </ul>
@@ -49,42 +48,15 @@
           <button class="header-menu" type="button"  (click)="setNewLanguageImage($event)">
             <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
           </button>
-          <ul class="menu close">
+          <ul class="menu close dropdown-menu">
             <li class="menu-item" *ngFor="let lang of imageOfLanguages">
               <div class="language">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name"  (click)="sendImageForDropDownBtn($event)">
+                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name"  (click)="saveNameOfLang($event)">
               </div>
-            </li>
+            </li>   
           </ul>
+           
         </div>
-
-        <!--<div class="box lang last">
-          <button class="header-menu" type="button" appDropdown (click)="setNewLanguageImage($event)">
-            <img [src]="currentLanguages.first.src" [name]="currentLanguages.first.name" data-order="first" class="img-responsive"  >
-          </button>
-          <ul class="menu close">
-            <li class="menu-item" appDropdown *ngFor="let lang of imageOfLanguages">
-              <div class="language">
-                <img [src]="lang.src" class="languages" data-order="first" [name]="lang.name"  (click)="sendImageForDropDownBtn($event)">
-              </div>
-            </li>
-          </ul>
-        </div>-->
-
-        <!--<div  class="box lang last">
-          <button type="button" appDropdown (click)="setNewLanguageImage($event)">
-            <img [src]="currentLanguages.last.src" [name]="currentLanguages.last.name" data-order="last" class="img-responsive" >
-          </button>
-          <ul >
-            <li *ngFor="let lang of imageOfLanguages">
-              <div>
-                <img [src]="lang.src" class="languages" data-order="last" [name]="lang.name" (click)="sendImageForDropDownBtn($event)">
-              </div>
-            </li>
-          </ul>
-        </div>-->
-
-
       </div>
       <div class="clearfix"></div>
     </div>

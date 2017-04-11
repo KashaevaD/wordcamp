@@ -18,9 +18,6 @@ div.name label {
    text-align: right;
    margin-left: -15px;
 }
-input {
-    /*margin-left: 15px;*/
-}
 /*****intro******/
 .intro span, .intro h2 {
    font-size: 1.8em;
