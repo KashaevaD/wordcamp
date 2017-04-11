@@ -13,10 +13,10 @@ export class IntroductionService {
   constructor(private _router: Router,
               private _localSrorage: LocalStorageService) { }
 
-  public animate(options) {
-    let start = performance.now();
+  public animate(options): void {
+    let start:number = performance.now();
     requestAnimationFrame(function _animate(time) {
-        let timeFraction = (time - start) / options.duration;
+        let timeFraction: number = (time - start) / options.duration;
         if (timeFraction > 1) timeFraction = 1;
         let progress = options.timing(timeFraction);
         options.draw(progress);
@@ -29,8 +29,7 @@ export class IntroductionService {
   }
 
   public setDefaultName():string {
-      let rand = 0 - 0.5 + Math.random() * (this._defaltNickNames.length -  1);
-      rand = Math.floor(rand);
+      let rand:number = Math.round(Math.random() * (this._defaltNickNames.length - 1));    
       return this._defaltNickNames[rand];
   }
 

@@ -8,7 +8,7 @@ import { Router} from '@angular/router';
 @Injectable()
 export class JoinGameService {
 
-    public imageOfLanguages: any[] = [
+    public imageOfLanguages: TItemLang[] = [
     {
       src: "assets/img/icons/germany.svg",
       name: "de"

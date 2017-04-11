@@ -14,7 +14,7 @@ import { IntroductionService } from './introduction.service';
 export class IntroductionComponent {
 
   public isOpenVideoIntro:boolean;
-  public userName :string= "Unknown";
+  public userName :string;
 
   constructor(private _createGameService: CreateGameService,
               private _localStorage: LocalStorageService,
@@ -27,9 +27,9 @@ export class IntroductionComponent {
     this._introService.isShowMainPageForUser();
   }
 
-  public showVideo(event) {
+  public showVideo(event:Event): void {
     this.isOpenVideoIntro = !this.isOpenVideoIntro;
-    event.target.innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
+    (event.target as HTMLElement).innerHTML = (this.isOpenVideoIntro)? "Hide intro video↑": "Show intro video↓";
     this._introService.animate(
       {duration: 1000,
         timing: function(timeFraction) {
@@ -41,11 +41,11 @@ export class IntroductionComponent {
     });
   }
 
-  public allotAllText(e) {
-    e.target.select();
+  public allotAllText(e:Event): void {
+    (e.target as HTMLInputElement).select();
   }
 
-  public startSingleGameDefault() {
+  public startSingleGameDefault(): void {
     this._optionService.setDefaultOptions(this.userName);
     let sub = this._optionService.getLangEmit.subscribe(data => {
        this._localStorage.setLocalStorageValue("user", JSON.stringify(data));
@@ -56,19 +56,19 @@ export class IntroductionComponent {
 
   }
 
-  public goToOptions() {
+  public goToOptions():void {
     this._sendUserTo('options');
   }
 
-  private _sendUserTo(router: string) {
-     this._optionService.setDefaultOptions(this.userName);
-    let sub = this._optionService.getLangEmit.subscribe(data => {
+  private _sendUserTo(router: string): void {
+    this._optionService.setDefaultOptions(this.userName);
+    this._optionService.getLangEmit.subscribe(data => {
       this._localStorage.setLocalStorageValue("user", JSON.stringify(data));
       this._router.navigate([router]);
     });
   }
 
-  public goToMainMenu() {
+  public goToMainMenu(): void {
     this._sendUserTo('mainmenu');
   }
 
