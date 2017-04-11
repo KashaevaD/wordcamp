@@ -1,9 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LocalStorageService } from "../local-storage.service";
-import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
+import { JoinGameService } from "../main-menu/join-game.service";
+import {OptionsService} from "./options.service";
 
 @Component({
   selector: 'app-options-menu',
@@ -15,8 +16,11 @@ export class OptionsComponent implements OnDestroy {
   private menuGame: FormGroup;
   private defaultOptions: any;
   private _waitForUserSubscriber: Subscription;
+  private _showSubscriber: Subscription;
 
   public isEditing:boolean = false;
+  public isShow:boolean = false;
+  public isPrepareStartGame:boolean = false;
 
   public currentImageLanguage: EventTarget;
   public currentLanguages = {
@@ -34,17 +38,25 @@ export class OptionsComponent implements OnDestroy {
   constructor(private _build: FormBuilder,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _joinService: JoinGameService) {
+              private _joinService: JoinGameService,
+              private _optionsService: OptionsService) {
+
+    this._showSubscriber = this._optionsService.showOptions
+      .subscribe(status => {
+        this.isShow = true;
+        this.isPrepareStartGame = status;
+      });
+
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
     this._updateFormGroup();
     this._setLanguagePicture();
-
     document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
   }
 
   ngOnDestroy() {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+    this._showSubscriber.unsubscribe();
   }
 
   private _updateFormGroup(): void {
@@ -69,6 +81,21 @@ export class OptionsComponent implements OnDestroy {
       return;
     }
   }
+
+
+  public startGame(event){
+    event.preventDefault();
+    this.isShow = false;
+    this.isPrepareStartGame = false;
+    this._optionsService.startGame.emit(this.menuGame.value);
+  }
+
+
+  public closePopup(){
+    this.isPrepareStartGame = false;
+    this.isShow = false;
+  }
+
 
   public applyChanges(event): void {
     document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);

@@ -4,11 +4,16 @@ import { DBService } from '../db.service';
 
 @Injectable()
 export class OptionsService {
+
   public getLangEmit:EventEmitter<any>;
+  public startGame:EventEmitter<any>;
+  public showOptions:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
               private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
+    this.startGame = new EventEmitter();
+    this.showOptions = new EventEmitter();
   }
 
   public setDefaultOptions(username: string) {

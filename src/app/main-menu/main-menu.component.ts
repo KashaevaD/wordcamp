@@ -3,6 +3,7 @@ import { CreateGameService } from "./create-game.service";
 import { LocalStorageService } from "../local-storage.service";
 import { Router} from '@angular/router';
 import { IntroductionService } from '../introduction/introduction.service';
+import {OptionsService} from "../options/options.service";
 
 @Component({
   selector: 'app-main-menu',
@@ -15,7 +16,8 @@ export class MainMenuComponent {
   constructor(private _createGameService: CreateGameService,
               private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _introService: IntroductionService) {
+              private _introService: IntroductionService,
+              private _optionsService: OptionsService) {
     if (!this._redirectToIntro()) {
       this._router.navigate(['/']);
     }
@@ -23,6 +25,10 @@ export class MainMenuComponent {
 
   private _redirectToIntro(): boolean {
     return !!this._localSrorage.getLocalStorageValue("user");
+  }
+
+  public showOptions(status){
+    this._optionsService.showOptions.emit(status);
   }
 
   public startSingleGame(event): void {

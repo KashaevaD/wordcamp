@@ -35,7 +35,7 @@ const routes = [
     path: '', component: IntroductionComponent
   },
   {
-    path: "mainmenu", component: MainMenuComponent
+    path: "mainmenu", component: MainMenuComponent,
   },
   {
     path: "mainmenu/multi", component: MultiplayerMenuComponent
@@ -51,9 +51,6 @@ const routes = [
   },
   {
     path: "playzone/:id/result", component: ResultComponent
-  },
-  {
-    path: "options", component: OptionsComponent
   }
 ];
 

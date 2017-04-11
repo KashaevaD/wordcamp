@@ -6,6 +6,7 @@ import { JoinGameService } from "../join-game.service";
 import { DBService } from '../../db.service';
 import { CreateGameService } from "../create-game.service";
 import { Router} from '@angular/router';
+import {OptionsService} from "../../options/options.service";
 
 @Component({
   selector: 'app-multiplayer-menu',
@@ -23,9 +24,17 @@ export class MultiplayerMenuComponent  {
               private _localSrorage: LocalStorageService,
               private _createGameService: CreateGameService,
               private _router: Router,
-              private _dbService: DBService) {
+              private _dbService: DBService,
+              private _optionsService: OptionsService) {
+
+
+
    this.imageOfLanguages = this._joingameService.imageOfLanguages;
    this._updateRooms();
+  }
+
+  public showOptions(status){
+    this._optionsService.showOptions.emit(status);
   }
 
   private _updateRooms() {

@@ -21,7 +21,7 @@ export class IntroductionComponent {
               private _introService: IntroductionService,
               private _router: Router,
               private _optionService: OptionsService) {
-               
+
     this.isOpenVideoIntro = false;
     this.userName = this._introService.setDefaultName();
     this._introService.isShowMainPageForUser();
