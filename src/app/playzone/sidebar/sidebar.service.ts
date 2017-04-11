@@ -76,7 +76,8 @@ export class SidebarService {
   private changeTime():void {
     if (!this._time) {
       this.stopTimer();
-      if (this._activeUser.id === this._currentUserId) this.timeIsUp.emit();
+      if (this._activeUser.id === this._currentUserId) this.timeIsUp.emit(true);
+      else this.timeIsUp.emit(false);
     } else {
       this._time =  this._time - 1000;
       this.timeSend.emit(this._time);

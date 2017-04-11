@@ -5,11 +5,18 @@ import { Subscription } from "rxjs";
 
 @Injectable()
 export class OptionsService {
+
   public getLangEmit:EventEmitter<any>;
+  public createSingleGame:EventEmitter<any>;
+  public createMultiGame:EventEmitter<any>;
+  public showOptions:EventEmitter<any>;
 
   constructor(private _localSrorage: LocalStorageService,
               private _dbService: DBService) {
     this.getLangEmit = new EventEmitter();
+    this.createSingleGame = new EventEmitter();
+    this.createMultiGame = new EventEmitter();
+    this.showOptions = new EventEmitter();
   }
 
   public setDefaultOptions(username: string): void {

@@ -1,22 +1,26 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { LocalStorageService } from "../local-storage.service";
 import { JoinGameService } from "../main-menu/join-game.service";
 import { Router } from '@angular/router';
 import { Subscription } from "rxjs";
+import {OptionsService} from "./options.service";
 
 @Component({
   selector: 'app-options-menu',
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css'],
 })
-export class OptionsComponent implements OnDestroy {
+export class OptionsComponent implements OnInit, OnDestroy {
 
   private menuGame: FormGroup;
   private defaultOptions: any;
-  private _waitForUserSubscriber: Subscription;
+  private _showSubscriber: Subscription;
+  private _gameType: string;
+  public keyDownHandler: any;
 
   public isEditing:boolean = false;
+  public isShow:boolean = false;
 
   public currentImageLanguage: EventTarget;
   public currentLanguages: TLanguages = {
@@ -30,27 +34,42 @@ export class OptionsComponent implements OnDestroy {
     }
   };
   public imageOfLanguages: TItemLang[];
+  public getChangesFromForm: Subscription;
 
   constructor(private _build: FormBuilder,
-              private _router: Router,
               private _localSrorage: LocalStorageService,
-              private _joinService: JoinGameService) {
+              private _joinService: JoinGameService,
+              private _optionsService: OptionsService) {
+
+    this.keyDownHandler = this._changeOptionsByKeyEvent.bind(this);
+
+    this._showSubscriber = this._optionsService.showOptions
+      .subscribe(gameType =>  {
+        this.isShow = true;
+        this._gameType = gameType;
+        document.addEventListener("keydown", this.keyDownHandler);
+
+      });
+  }
+
+  ngOnInit(){
+
     this.imageOfLanguages = this._joinService.imageOfLanguages;
     this.defaultOptions = JSON.parse(this._localSrorage.getLocalStorageValue('user'));
-   
     this._updateFormGroup();
     this._setLanguagePicture();
 
-    document.addEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
-
-    this.menuGame.valueChanges.subscribe((value) => {
+    this.getChangesFromForm = this.menuGame.valueChanges.subscribe((value) => {
       this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
     });
   }
 
   ngOnDestroy() {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this));
+    document.removeEventListener("keydown", this.keyDownHandler);
+    this._showSubscriber.unsubscribe();
+    this.getChangesFromForm.unsubscribe();
   }
+
 
   private _updateFormGroup(): void {
     //reactive form for user
@@ -64,33 +83,37 @@ export class OptionsComponent implements OnDestroy {
     });
   }
 
-  public _changeOptionsByKeyEvent(event: Event): void { 
-    if ((event as KeyboardEvent).keyCode === 13 && (event.target as HTMLElement).tagName === "BODY") {
-      this.applyChanges(event);
-       event.preventDefault();
-      return;
+
+  public _changeOptionsByKeyEvent(event: Event): void {
+    let code = (event as KeyboardEvent).keyCode;
+    if (code === 13 || code === 27) {
+      event.preventDefault();
+      document.removeEventListener("keydown", this.keyDownHandler);
+      code === 13 ? this.startGame(event) : this.closePopup();
     }
   }
 
-  public applyChanges(event: Event): void {
-    document.removeEventListener("keydown", this._changeOptionsByKeyEvent.bind(this), true);
-    //this._router.navigate(['mainmenu']);
-   
-    //this._localSrorage.setLocalStorageValue("user", JSON.stringify(this.menuGame.value));
-     console.log("start");
-     event.preventDefault();
-  }
 
-  public closeOptions(event: Event) {
-    console.log("close");
+  public startGame(event){
     event.preventDefault();
+    (event.target as HTMLElement).setAttribute("disabled", "true");
+    document.removeEventListener("keydown", this.keyDownHandler);
+    this.getChangesFromForm.unsubscribe();
+    this.isShow = false;
+    this._gameType === 'multi' ? this._optionsService.createMultiGame.emit(this.menuGame.value) : this._optionsService.createSingleGame.emit(this.menuGame.value);
   }
 
-  public setStateOfEditing(): void {
+
+  public closePopup(){
+    document.removeEventListener("keydown", this.keyDownHandler);
+    this.isShow = false;
+    this.getChangesFromForm.unsubscribe();
+  }
+
+  public toogleStateOfEditing(): void {
     this.isEditing = !this.isEditing;
   }
-
-  public changeUserName(): void {
+  public resetStateOfEditing(): void {
     this.isEditing = false;
   }
 
