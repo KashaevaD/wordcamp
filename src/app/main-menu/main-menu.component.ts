@@ -41,8 +41,7 @@ export class MainMenuComponent implements OnDestroy{
     let options = JSON.parse(this._localSrorage.getLocalStorageValue("user"));
     options.type = "single";
     sessionStorage['userid'] = this._createGameService.getGeneratedRandomId().toString();
-    //console.log(options);
-   // this._createGameService.makePlayZone(options);
+    this._createGameService.makePlayZone(options);
   }
 
   public goToMultiComponent(event: Event): void {
