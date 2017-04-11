@@ -1,5 +1,8 @@
-.routing div.select.options div, .routing div.select .multi, .routing div.select .single  {
-  padding: 2% 0px 2% 0px ;
+.routing {
+  padding: 2%;
+}
+.routing .select {
+  padding-top: 10%;
 }
 img.type {
   height: 200px;
@@ -19,65 +22,24 @@ h1 {
 .select p {
   font-size: 2em;
 }
-.select.options p {
-  color: inherit;
-  font-size: 1.5em;
-}
-.options a.btn {
-  height: 80px;
-  padding: 0;
-  background: none;
-}
-.options a.btn:hover img{
-  display: none;
-}
-.options a.btn:hover {
-  background: url("/assets/img/settings.gif") no-repeat center;
-  background-size: auto 100%;
-  
-  margin: inherit;
-}
-.options .btn:hover p {
-  margin-top: 80px;
-}
-/*****intro******/
-.link {
-   font-size: 1.5em;
-   padding-top: 1%;
-   padding-bottom: 1%;
-   cursor:pointer;
-}
-
 /******** media **********/
 @media screen and (max-width: 992px)  {
-  .select p, .select.options p {
+  .select p {
     font-size: 1.6em;
-  }
-  img.type {
-    height: 150px;
-  }
-  img.options {
-    height: 70px;
   }
   div a.btn {
      width: 100%;
   }
 }
 @media screen and (max-width: 500px)  {
-  .select p, .select.options p {
+  .select p {
     font-size: 1.3em;
   }
   img.type {
     height: 100px;
   }
-  img.options {
-    height: 50px;
-  }
   div a.btn {
      width: 100%;
-  }
- .link {
-    font-size: 1em;
   }
   h1 {
     font-size: 2em;
@@ -87,14 +49,11 @@ h1 {
   h1{
     font-size: 1.8em;
   }
-  .select p, .select.options p {
+  .select p{
     font-size: 1em;
   }
   img.type {
     height: 80px;
-  }
-  img.options {
-    height: 50px;
   }
   div a.btn {
     width: 100%;
